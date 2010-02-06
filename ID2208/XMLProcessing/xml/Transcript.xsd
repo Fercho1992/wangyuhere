@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.example.org/Transcript"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:transcript="http://www.example.org/Transcript">
+
+    <element name="transcript" type="transcript:transcriptType"></element>
+
+	<complexType name="transcriptType">
+		<sequence>
+			<element name="name" type="string"></element>
+			<element name="university" type="string"></element>
+			<element name="degree" type="string"></element>
+			<element name="courses" type="transcript:coursesType"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="coursesType">
+		<sequence>
+			<element name="course" type="transcript:courseType" minOccurs="0"
+				maxOccurs="unbounded">
+			</element>
+    	</sequence>
+	</complexType>
+
+	<complexType name="courseType">
+		<sequence>
+			<element name="name" type="string"></element>
+			<element name="grade" type="transcript:gradeType"></element>
+			<element name="ect" type="transcript:ectType"></element>
+		</sequence>
+	</complexType>
+      
+
+    <simpleType name="gradeType">
+    	<restriction base="string">
+    		<pattern value="[A-F]"></pattern>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="ectType">
+    	<restriction base="decimal">
+    		<fractionDigits value="1"></fractionDigits>  
+    	</restriction>
+    </simpleType>
+</schema>
