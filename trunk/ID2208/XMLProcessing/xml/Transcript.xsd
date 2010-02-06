@@ -8,7 +8,7 @@
 		<sequence>
 			<element name="name" type="string"></element>
 			<element name="university" type="string"></element>
-			<element name="degree" type="string"></element>
+			<element name="degree" type="transcript:degreeType"></element>
 			<element name="courses" type="transcript:coursesType"></element>
 		</sequence>
 	</complexType>
@@ -39,6 +39,14 @@
     <simpleType name="ectType">
     	<restriction base="decimal">
     		<fractionDigits value="1"></fractionDigits>  
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="degreeType">
+    	<restriction base="string">
+    		<enumeration value="Bachelor"></enumeration>
+    		<enumeration value="Master"></enumeration>
+    		<enumeration value="Doctor"></enumeration>
     	</restriction>
     </simpleType>
 </schema>

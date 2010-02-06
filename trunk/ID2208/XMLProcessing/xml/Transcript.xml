@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transcript:transcript xmlns:transcript="http://www.example.org/Transcript" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/Transcript Transcript.xsd ">
-  <transcript:name>transcript:name</transcript:name>
-  <transcript:university>transcript:university</transcript:university>
-  <transcript:degree>transcript:degree</transcript:degree>
+  <transcript:name>John</transcript:name>
+  <transcript:university>KTH</transcript:university>
+  <transcript:degree>Master</transcript:degree>
   <transcript:courses>
   	<transcript:course>
-  		<transcript:course_name>transcript:name</transcript:course_name>
+  		<transcript:course_name>Web Service</transcript:course_name>
   		<transcript:grade>A</transcript:grade>
   		<transcript:ect>7.5</transcript:ect>
   	</transcript:course>
   	<transcript:course>
-  		<transcript:course_name>transcript:name</transcript:course_name>
+  		<transcript:course_name>Modern Method</transcript:course_name>
   		<transcript:grade>B</transcript:grade>
   		<transcript:ect>7.5</transcript:ect>
   	</transcript:course>
