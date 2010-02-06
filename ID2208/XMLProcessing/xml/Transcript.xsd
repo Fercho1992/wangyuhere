@@ -23,7 +23,7 @@
 
 	<complexType name="courseType">
 		<sequence>
-			<element name="name" type="string"></element>
+			<element name="course_name" type="string"></element>
 			<element name="grade" type="transcript:gradeType"></element>
 			<element name="ect" type="transcript:ectType"></element>
 		</sequence>
