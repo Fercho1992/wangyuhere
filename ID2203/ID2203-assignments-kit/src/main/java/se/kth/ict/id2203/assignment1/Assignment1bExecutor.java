@@ -1,11 +1,15 @@
 package se.kth.ict.id2203.assignment1;
 
+import se.kth.ict.id2203.epfd.EpfdInit.LinkType;
 import se.sics.kompics.launch.Scenario;
 import se.sics.kompics.launch.Topology;
 
 @SuppressWarnings("serial")
 public class Assignment1bExecutor {
 
+	public static LinkType LINKTYPE = LinkType.Pp2p;
+	public static int TIMEDELAY = 1000;
+	public static int DELTA = 500;
 	/**
 	 * @param args
 	 */
@@ -22,7 +26,7 @@ public class Assignment1bExecutor {
 				// link(2, 1, 3000, 0.5);
 				// link(3, 2, 3000, 0.5);
 				// link(4, 2, 3000, 0.5);
-				defaultLinks(5000, 0);
+				defaultLinks(2000, 0);
 			}
 		};
 

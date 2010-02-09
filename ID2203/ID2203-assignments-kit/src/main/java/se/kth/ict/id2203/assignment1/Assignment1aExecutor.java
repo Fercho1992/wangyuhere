@@ -17,20 +17,15 @@ public class Assignment1aExecutor {
 				node(3, "127.0.0.1", 22033);
 				node(4, "127.0.0.1", 22034);
 
-				// link(1, 2, 3000, 0.5).bidirectional();
-				// link(1, 2, 3000, 0.5);
-				// link(2, 1, 3000, 0.5);
-				// link(3, 2, 3000, 0.5);
-				// link(4, 2, 3000, 0.5);
 				defaultLinks(500, 0);
 			}
 		};
 
 		Scenario scenario1 = new Scenario(Assignment1aMain.class) {
 			{
-				command(1, "S500");
-				command(2, "S500");
-				command(3, "S500");
+				command(1, "S1000:X");
+				command(2, "S6000:X");
+				command(3, "S10000:X");
 				command(4, "S500");
 			}
 		};

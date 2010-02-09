@@ -9,6 +9,9 @@ import se.kth.ict.id2203.assignment1.applicatoin.Application1bInit;
 import se.kth.ict.id2203.epfd.Epfd;
 import se.kth.ict.id2203.epfd.EpfdInit;
 import se.kth.ict.id2203.epfd.EpfdLink;
+import se.kth.ict.id2203.flp2p.FairLossPointToPointLink;
+import se.kth.ict.id2203.flp2p.delay.DelayDropLink;
+import se.kth.ict.id2203.flp2p.delay.DelayDropLinkInit;
 import se.kth.ict.id2203.pp2p.PerfectPointToPointLink;
 import se.kth.ict.id2203.pp2p.delay.DelayLink;
 import se.kth.ict.id2203.pp2p.delay.DelayLinkInit;
@@ -54,6 +57,7 @@ public class Assignment1bMain extends ComponentDefinition {
 		Component time = create(JavaTimer.class);
 		Component network = create(MinaNetwork.class);
 		Component pp2p = create(DelayLink.class);
+		Component flp2p = create(DelayDropLink.class);
 		Component epfd = create(Epfd.class);
 		Component app = create(Application1b.class);
 
@@ -61,6 +65,7 @@ public class Assignment1bMain extends ComponentDefinition {
 		subscribe(handleFault, time.getControl());
 		subscribe(handleFault, network.getControl());
 		subscribe(handleFault, pp2p.getControl());
+		subscribe(handleFault, flp2p.getControl());
 		subscribe(handleFault, epfd.getControl());
 		subscribe(handleFault, app.getControl());
 
@@ -70,7 +75,9 @@ public class Assignment1bMain extends ComponentDefinition {
 
 		trigger(new MinaNetworkInit(self, 5), network.getControl());
 		trigger(new DelayLinkInit(topology), pp2p.getControl());
-		trigger(new EpfdInit(topology, 1000, 500), epfd.getControl());
+		trigger(new DelayDropLinkInit(topology, 0), flp2p.getControl());
+		trigger(new EpfdInit(topology, Assignment1bExecutor.TIMEDELAY, Assignment1bExecutor.DELTA,
+				Assignment1bExecutor.LINKTYPE), epfd.getControl());
 		trigger(new Application1bInit(commandScript, neighborSet, self), app
 				.getControl());
 
@@ -80,11 +87,17 @@ public class Assignment1bMain extends ComponentDefinition {
 		
 		connect(epfd.getNegative(PerfectPointToPointLink.class), pp2p
 				.getPositive(PerfectPointToPointLink.class));
+		connect(epfd.getNegative(FairLossPointToPointLink.class), flp2p
+				.getPositive(FairLossPointToPointLink.class));
 		connect(epfd.getNegative(Timer.class), time.getPositive(Timer.class));
 		
 		
 		connect(pp2p.getNegative(Timer.class), time.getPositive(Timer.class));
 		connect(pp2p.getNegative(Network.class), network
+				.getPositive(Network.class));
+		
+		connect(flp2p.getNegative(Timer.class), time.getPositive(Timer.class));
+		connect(flp2p.getNegative(Network.class), network
 				.getPositive(Network.class));
 	
 	}
