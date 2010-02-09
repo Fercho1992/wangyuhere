@@ -6,6 +6,9 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import se.kth.ict.id2203.epfd.EpfdInit.LinkType;
+import se.kth.ict.id2203.flp2p.FairLossPointToPointLink;
+import se.kth.ict.id2203.flp2p.Flp2pSend;
 import se.kth.ict.id2203.pfd.CheckTimeout;
 import se.kth.ict.id2203.pfd.HeartbeatMessage;
 import se.kth.ict.id2203.pfd.HeartbeatTimeout;
@@ -26,6 +29,7 @@ public class Epfd extends ComponentDefinition {
 	Negative<EpfdLink> epfd = negative(EpfdLink.class);
 	
 	Positive<PerfectPointToPointLink> pp2p = positive(PerfectPointToPointLink.class);
+	Positive<FairLossPointToPointLink> flp2p = positive(FairLossPointToPointLink.class);
 	Positive<Timer> timer = positive(Timer.class);
 	
 	private static int HEARTBEAT = 0;
@@ -41,12 +45,14 @@ public class Epfd extends ComponentDefinition {
 	private Set<Address> alive;
 	private Set<Address> suspected;
 	private Set<Address> all;
+	private LinkType type;
 	
 	public Epfd() {
 		subscribe(handleInit, control);
 		subscribe(handleHeartbeatTimeout, timer);
 		subscribe(handleCheckTimeout, timer);
 		subscribe(handleHeartbeatMessage, pp2p);
+		subscribe(handleFlp2pHeartbeatMessage, flp2p);
 		subscribe(handlePp2pDeliver, pp2p);
 		subscribe(handlePp2pSend, epfd);
 	}
@@ -58,6 +64,7 @@ public class Epfd extends ComponentDefinition {
 			topology = event.getTopology();
 			timeDelay = event.getTimeDelay();
 			delta = event.getDelta();
+			type = event.getType();
 			period = timeDelay;
 			self = topology.getSelfAddress();
 			
@@ -88,7 +95,12 @@ public class Epfd extends ComponentDefinition {
 		@Override
 		public void handle(HeartbeatTimeout event) {
 			for (Address a : all) {
-				trigger(new Pp2pSend(a, new HeartbeatMessage(self)), pp2p);
+				if(type == LinkType.Pp2p) {
+					trigger(new Pp2pSend(a, new HeartbeatMessage(self)), pp2p);
+				} else {
+					//logger.info("Send flp2p to "+a.getId());
+					trigger(new Flp2pSend(a, new Flp2pHeartbeatMessage(self)), flp2p);
+				}
 			}
 			startTimer(timeDelay, HEARTBEAT);
 		}
@@ -114,6 +126,16 @@ public class Epfd extends ComponentDefinition {
 			}
 			alive.clear();
 			startTimer(period, CHECK);
+		}
+		
+	};
+	
+	private Handler<Flp2pHeartbeatMessage> handleFlp2pHeartbeatMessage = new Handler<Flp2pHeartbeatMessage>() {
+
+		@Override
+		public void handle(Flp2pHeartbeatMessage event) {
+			//logger.info("Receiving heartbeat from "+event.getSource().getId());
+			alive.add(event.getSource());
 		}
 		
 	};
