@@ -7,13 +7,10 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import se.kth.ict.id2203.application.Application0;
-import se.kth.ict.id2203.application.Application0Init;
 import se.kth.ict.id2203.application.ApplicationContinue;
-import se.kth.ict.id2203.application.Flp2pMessage;
-import se.kth.ict.id2203.application.Pp2pMessage;
 import se.kth.ict.id2203.pfd.CrashEvent;
 import se.kth.ict.id2203.pfd.PfdLink;
+import se.kth.ict.id2203.pp2p.Pp2pSend;
 import se.sics.kompics.ComponentDefinition;
 import se.sics.kompics.Handler;
 import se.sics.kompics.Positive;
@@ -25,31 +22,29 @@ import se.sics.kompics.timer.Timer;
 public class Application1a extends ComponentDefinition {
 
 	Positive<PfdLink> pfd = positive(PfdLink.class);
-
 	Positive<Timer> timer = positive(Timer.class);
 
 	private static final Logger logger = LoggerFactory
-			.getLogger(Application0.class);
+			.getLogger(Application1a.class);
 
 	private String[] commands;
 	private int lastCommand;
 	private Set<Address> neighborSet;
 	private Address self;
-	
-	public Application1a() {
-		subscribe(handleCrashEvent, pfd);
-	}
-	
-	private Handler<CrashEvent> handleCrashEvent = new Handler<CrashEvent>() {
 
-		@Override
-		public void handle(CrashEvent event) {
-			logger.info(event.getCrashNode().getId() + " is crash!");
-		}
-		
-	};
-	Handler<Application0Init> handleInit = new Handler<Application0Init>() {
-		public void handle(Application0Init event) {
+	/**
+	 * Instantiates a new application0.
+	 */
+	public Application1a() {
+		subscribe(handleInit, control);
+		subscribe(handleStart, control);
+		subscribe(handleContinue, timer);
+		subscribe(handleCrashEvent, pfd);
+		subscribe(handlePp2pMessage, pfd);
+	}
+
+	Handler<Application1aInit> handleInit = new Handler<Application1aInit>() {
+		public void handle(Application1aInit event) {
 			commands = event.getCommandScript().split(":");
 			lastCommand = -1;
 			neighborSet = event.getNeighborSet();
@@ -69,15 +64,15 @@ public class Application1a extends ComponentDefinition {
 		}
 	};
 
+	Handler<CrashEvent> handleCrashEvent = new Handler<CrashEvent>() {
+		public void handle(CrashEvent event) {
+			logger.info("{} was crashed!", event.getCrashNode().getId());
+		}
+	};
+	
 	Handler<Pp2pMessage> handlePp2pMessage = new Handler<Pp2pMessage>() {
 		public void handle(Pp2pMessage event) {
 			logger.info("Received perfect message {}", event.getMessage());
-		}
-	};
-
-	Handler<Flp2pMessage> handleFlp2pMessage = new Handler<Flp2pMessage>() {
-		public void handle(Flp2pMessage event) {
-			logger.info("Received lossy message {}", event.getMessage());
 		}
 	};
 
@@ -99,6 +94,7 @@ public class Application1a extends ComponentDefinition {
 							doCommand(line);
 						} catch (Throwable e) {
 							e.printStackTrace();
+							break;
 						}
 					}
 				}
@@ -124,6 +120,8 @@ public class Application1a extends ComponentDefinition {
 		} else if (cmd.equals("help")) {
 			doHelp();
 			doNextCommand();
+		} else if (cmd.equals("")) {
+			doNextCommand();
 		} else {
 			logger.info("Bad command: '{}'. Try 'help'", cmd);
 			doNextCommand();
@@ -142,7 +140,7 @@ public class Application1a extends ComponentDefinition {
 	private final void doPerfect(String message) {
 		for (Address neighbor : neighborSet) {
 			logger.info("Sending perfect message {} to {}", message, neighbor);
-			//trigger(new Pp2pSend(neighbor, new Pp2pMessage(self, message)), pp2p);
+			trigger(new Pp2pSend(neighbor, new Pp2pMessage(self, message)), pfd);
 		}
 	}
 

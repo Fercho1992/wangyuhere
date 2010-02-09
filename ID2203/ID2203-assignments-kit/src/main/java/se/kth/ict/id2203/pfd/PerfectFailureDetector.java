@@ -4,6 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import se.kth.ict.id2203.pp2p.PerfectPointToPointLink;
+import se.kth.ict.id2203.pp2p.Pp2pDeliver;
 import se.kth.ict.id2203.pp2p.Pp2pSend;
 import se.sics.kompics.ComponentDefinition;
 import se.sics.kompics.Handler;
@@ -16,13 +17,15 @@ import se.sics.kompics.timer.Timer;
 
 public class PerfectFailureDetector extends ComponentDefinition {
 
+	Negative<PfdLink> pfd = negative(PfdLink.class);
+	
 	Positive<PerfectPointToPointLink> pp2p = positive(PerfectPointToPointLink.class);
 	Positive<Timer> timer = positive(Timer.class);
 	
-	Negative<PfdLink> pfd = negative(PfdLink.class);
-	
 	private static int HEARTBEAT = 0;
 	private static int CHECK = 1;
+	
+	//private static final Logger logger = LoggerFactory.getLogger(PerfectFailureDetector.class);
 	
 	private Address self;
 	private Topology topology;
@@ -37,7 +40,8 @@ public class PerfectFailureDetector extends ComponentDefinition {
 		subscribe(handleHeartbeatTimeout, timer);
 		subscribe(handleCheckTimeout, timer);
 		subscribe(handleHeartbeatMessage, pp2p);
-		
+		subscribe(handlePp2pDeliver, pp2p);
+		subscribe(handlePp2pSend, pfd);
 	}
 	
 	private Handler<PfdInit> handleInit = new Handler<PfdInit>() {
@@ -45,14 +49,25 @@ public class PerfectFailureDetector extends ComponentDefinition {
 		@Override
 		public void handle(PfdInit event) {
 			topology = event.getTopology();
+			interval = event.getInterval();
+			bound_delay = event.getBound_delay();
 			self = topology.getSelfAddress();
 			
-			all = topology.getNeighbors(self);
+			all = topology.getAllAddresses();
 			alive = new LinkedHashSet<Address>();
 			detected = new LinkedHashSet<Address>();
 			
 			startTimer(interval, HEARTBEAT);
 			startTimer(interval+bound_delay, CHECK);
+		}
+		
+	};
+	
+	private Handler<Pp2pSend> handlePp2pSend = new Handler<Pp2pSend>() {
+
+		@Override
+		public void handle(Pp2pSend event) {
+			trigger(event, pp2p);
 		}
 		
 	};
@@ -90,7 +105,17 @@ public class PerfectFailureDetector extends ComponentDefinition {
 
 		@Override
 		public void handle(HeartbeatMessage event) {
+			//logger.info("Receiving heartbeat from "+event.getSource().getId());
 			alive.add(event.getSource());
+		}
+		
+	};
+	
+	private Handler<Pp2pDeliver> handlePp2pDeliver = new Handler<Pp2pDeliver>() {
+
+		@Override
+		public void handle(Pp2pDeliver event) {
+			trigger(event, pfd);
 		}
 		
 	};
