@@ -1,8 +1,14 @@
-package se.kth.ict.id2203.pfd;
+package se.kth.ict.id2203.epfd;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import se.kth.ict.id2203.pfd.CheckTimeout;
+import se.kth.ict.id2203.pfd.HeartbeatMessage;
+import se.kth.ict.id2203.pfd.HeartbeatTimeout;
 import se.kth.ict.id2203.pp2p.PerfectPointToPointLink;
 import se.kth.ict.id2203.pp2p.Pp2pDeliver;
 import se.kth.ict.id2203.pp2p.Pp2pSend;
@@ -15,9 +21,9 @@ import se.sics.kompics.launch.Topology;
 import se.sics.kompics.timer.ScheduleTimeout;
 import se.sics.kompics.timer.Timer;
 
-public class PerfectFailureDetector extends ComponentDefinition {
+public class Epfd extends ComponentDefinition {
 
-	Negative<PfdLink> pfd = negative(PfdLink.class);
+	Negative<EpfdLink> epfd = negative(EpfdLink.class);
 	
 	Positive<PerfectPointToPointLink> pp2p = positive(PerfectPointToPointLink.class);
 	Positive<Timer> timer = positive(Timer.class);
@@ -25,41 +31,45 @@ public class PerfectFailureDetector extends ComponentDefinition {
 	private static int HEARTBEAT = 0;
 	private static int CHECK = 1;
 	
-	//private static final Logger logger = LoggerFactory.getLogger(PerfectFailureDetector.class);
+	private static final Logger logger = LoggerFactory.getLogger(Epfd.class);
 	
 	private Address self;
 	private Topology topology;
-	private int interval;
-	private int bound_delay;
+	private int timeDelay;
+	private int delta;
+	private int period;
 	private Set<Address> alive;
-	private Set<Address> detected;
+	private Set<Address> suspected;
 	private Set<Address> all;
 	
-	public PerfectFailureDetector() {
+	public Epfd() {
 		subscribe(handleInit, control);
 		subscribe(handleHeartbeatTimeout, timer);
 		subscribe(handleCheckTimeout, timer);
 		subscribe(handleHeartbeatMessage, pp2p);
 		subscribe(handlePp2pDeliver, pp2p);
-		subscribe(handlePp2pSend, pfd);
+		subscribe(handlePp2pSend, epfd);
 	}
 	
-	private Handler<PfdInit> handleInit = new Handler<PfdInit>() {
+	private Handler<EpfdInit> handleInit = new Handler<EpfdInit>() {
 
 		@Override
-		public void handle(PfdInit event) {
+		public void handle(EpfdInit event) {
 			topology = event.getTopology();
-			interval = event.getInterval();
-			bound_delay = event.getBound_delay();
+			timeDelay = event.getTimeDelay();
+			delta = event.getDelta();
+			period = timeDelay;
 			self = topology.getSelfAddress();
 			
 			all = topology.getAllAddresses();
 			alive = new LinkedHashSet<Address>();
 			alive.addAll(all);
-			detected = new LinkedHashSet<Address>();
+			suspected = new LinkedHashSet<Address>();
 			
-			startTimer(interval, HEARTBEAT);
-			startTimer(interval+bound_delay, CHECK);
+			logger.info("Timedelay={}, Delta={}", timeDelay, delta);
+			
+			startTimer(timeDelay, HEARTBEAT);
+			startTimer(period, CHECK);
 		}
 		
 	};
@@ -78,10 +88,9 @@ public class PerfectFailureDetector extends ComponentDefinition {
 		@Override
 		public void handle(HeartbeatTimeout event) {
 			for (Address a : all) {
-				trigger(new Pp2pSend(a, new HeartbeatMessage(self)),
-						pp2p);
+				trigger(new Pp2pSend(a, new HeartbeatMessage(self)), pp2p);
 			}
-			startTimer(interval, HEARTBEAT);
+			startTimer(timeDelay, HEARTBEAT);
 		}
 		
 	};
@@ -90,14 +99,21 @@ public class PerfectFailureDetector extends ComponentDefinition {
 
 		@Override
 		public void handle(CheckTimeout event) {
-			for(Address a : all)  {
-				if(!alive.contains(a) && !detected.contains(a)) {
-					detected.add(a);
-					trigger(new CrashEvent(a), pfd);
+			if(hasIntersection(alive, suspected)) {
+				period += delta;
+				logger.info("Increase period by "+delta+" and current period is " + period);
+			}
+			for(Address a : all) {
+				if(!alive.contains(a) && !suspected.contains(a)) {
+					suspected.add(a);
+					trigger(new Suspect(a, period), epfd);
+				} else if(alive.contains(a) && suspected.contains(a)) {
+					suspected.remove(a);
+					trigger(new Restore(a, period), epfd);
 				}
 			}
 			alive.clear();
-			startTimer(interval+bound_delay, CHECK);
+			startTimer(period, CHECK);
 		}
 		
 	};
@@ -116,7 +132,7 @@ public class PerfectFailureDetector extends ComponentDefinition {
 
 		@Override
 		public void handle(Pp2pDeliver event) {
-			trigger(event, pfd);
+			trigger(event, epfd);
 		}
 		
 	};
@@ -131,5 +147,11 @@ public class PerfectFailureDetector extends ComponentDefinition {
 		trigger(st, timer);
 	}
 	
+	private boolean hasIntersection(Set<Address> alive2, Set<Address> suspected2) {
+		for(Address a : alive2) {
+			if(suspected2.contains(a)) return true;
+		}
+		return false;
+	}
 	
 }

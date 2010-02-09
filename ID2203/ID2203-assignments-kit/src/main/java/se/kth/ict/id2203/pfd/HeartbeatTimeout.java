@@ -5,7 +5,7 @@ import se.sics.kompics.timer.Timeout;
 
 public class HeartbeatTimeout extends Timeout {
 
-	protected HeartbeatTimeout(ScheduleTimeout request) {
+	public HeartbeatTimeout(ScheduleTimeout request) {
 		super(request);
 	}
 

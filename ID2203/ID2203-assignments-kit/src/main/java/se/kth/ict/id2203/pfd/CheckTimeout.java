@@ -5,7 +5,7 @@ import se.sics.kompics.timer.Timeout;
 
 public class CheckTimeout extends Timeout {
 
-	protected CheckTimeout(ScheduleTimeout request) {
+	public CheckTimeout(ScheduleTimeout request) {
 		super(request);
 	}
 
