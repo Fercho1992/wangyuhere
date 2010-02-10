@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/ApplicantProfile" elementFormDefault="qualified" xmlns:applicantProfile="http://www.example.org/ApplicantProfile">
 
-    <element name="applicantProfile" type="applicantProfile:profileType"></element>
 
-    <complexType name="profileType">
-    	<sequence>
-    		<element name="gender">
-    			<simpleType>
-    				<restriction base="string">
-    					<enumeration value="male"></enumeration>
-    					<enumeration value="female"></enumeration>
-    				</restriction>
-    			</simpleType>
-    		</element>
-    		<element name="hobby" type="string"></element>
-    		<element name="personalStatement"
-    			type="string">
-    		</element>
-    		<element name="EnglishAbility" type="string"></element>
-    	</sequence>
-    	<attribute name="name" type="string" use="required"></attribute>
-    </complexType>
 
 </schema>
