@@ -21,6 +21,16 @@
     	<sequence>
     		<element name="age" type="int"></element>
     		<element name="country" type="string"></element>
+    		<element name="hobby" type="string"></element>
+    		<element name="gender">
+    			<simpleType>
+    				<restriction base="string">
+    					<enumeration value="male"></enumeration>
+    					<enumeration value="female"></enumeration>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    		<element name="personalStatement" type="string"></element>
     	</sequence>
     </complexType>
     
