@@ -1,37 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.example.org/ApplicantProfile"
-	elementFormDefault="qualified"
-	xmlns:applicantProfile="http://www.example.org/ApplicantProfile"
-	xmlns:p="http://www.example.org/ShortCV"
-	xmlns:transcripts="http://www.example.org/Transcripts"
-	xmlns:employmentRecord="http://www.example.org/EmploymentRecord" xmlns:companyInfo="http://www.example.org/CompanyInfo">
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/ApplicantProfile"
+	elementFormDefault="qualified" xmlns:applicantProfile="http://www.example.org/ApplicantProfile"
+	xmlns:p="http://www.example.org/ShortCV" xmlns:transcripts="http://www.example.org/Transcripts"
+	xmlns:employmentRecord="http://www.example.org/EmploymentRecord"
+	xmlns:companyInfo="http://www.example.org/CompanyInfo">
 
 
 
 
-	<import schemaLocation="ShortCV.xsd"
-		namespace="http://www.example.org/ShortCV">
+	<import schemaLocation="ShortCV.xsd" namespace="http://www.example.org/ShortCV">
 	</import>
-	<import schemaLocation="Transcripts.xsd"
-		namespace="http://www.example.org/Transcripts">
+	<import schemaLocation="Transcripts.xsd" namespace="http://www.example.org/Transcripts">
 	</import>
-	<import schemaLocation="EmplymentRecord.xsd"
-		namespace="http://www.example.org/EmploymentRecord">
+	<import schemaLocation="EmplymentRecord.xsd" namespace="http://www.example.org/EmploymentRecord">
 	</import>
 	<import schemaLocation="CompanyInfo.xsd" namespace="http://www.example.org/CompanyInfo"></import>
-	<element name="ApplicantProfile" type="string"></element>
+	<element name="applicantProfile" type="applicantProfile:applicantProfileType">
+	</element>
 
 
-	<complexType name="applicantProfile">
+	<complexType name="applicantProfileType">
 		<complexContent>
 			<extension base="p:cvType">
 				<sequence>
-					<element name="transcripts"
-						type="transcripts:transcriptsType">
+					<element name="education" type="applicantProfile:educationType">
 					</element>
-					<element name="employmentRecord"
-						type="employmentRecord:companiesType">
+					<element name="workExperience" type="applicantProfile:workExperienceType">
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="educationType">
+		<sequence>
+			<element name="educationItem" type="applicantProfile:educationItemType">
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="educationItemType">
+
+		<sequence>
+			<element name="university" type="string"></element>
+			<element name="degree" type="transcripts:degreeType"></element>
+			<element name="courses" type="transcripts:coursesType"></element>
+			<element name="gpa" type="float"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="workExperienceType">
+		<sequence>
+			<element name="work" type="applicantProfile:workType"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="workType">
+		<complexContent>
+			<extension base="employmentRecord:companyType">
+				<sequence>
+					<element name="classification" type="string"></element>
+					<element name="region">
+						<simpleType>
+							<restriction base="string">
+								<enumeration value="domestic"></enumeration>
+								<enumeration value="foreign"></enumeration>
+							</restriction>
+						</simpleType>
 					</element>
 				</sequence>
 			</extension>

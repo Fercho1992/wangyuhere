@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<applicantProfile:applicantProfile name="John" xmlns:applicantProfile="http://www.example.org/ApplicantProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/ApplicantProfile ApplicantProfile.xsd ">
-  <applicantProfile:gender>male</applicantProfile:gender>
-  <applicantProfile:hobby>coding</applicantProfile:hobby>
-  <applicantProfile:personalStatement>blabla</applicantProfile:personalStatement>
-  <applicantProfile:EnglishAbility>advanced</applicantProfile:EnglishAbility>
-</applicantProfile:applicantProfile>
