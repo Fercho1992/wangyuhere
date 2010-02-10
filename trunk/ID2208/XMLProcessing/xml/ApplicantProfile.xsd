@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/ApplicantProfile" elementFormDefault="qualified" xmlns:applicantProfile="http://www.example.org/ApplicantProfile">
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/ApplicantProfile"
+	elementFormDefault="qualified"
+	xmlns:applicantProfile="http://www.example.org/ApplicantProfile"
+	xmlns:p="http://www.example.org/ShortCV"
+	xmlns:transcripts="http://www.example.org/Transcripts"
+	xmlns:employmentRecord="http://www.example.org/EmploymentRecord" xmlns:companyInfo="http://www.example.org/CompanyInfo">
 
 
 
+
+	<import schemaLocation="ShortCV.xsd"
+		namespace="http://www.example.org/ShortCV">
+	</import>
+	<import schemaLocation="Transcripts.xsd"
+		namespace="http://www.example.org/Transcripts">
+	</import>
+	<import schemaLocation="EmplymentRecord.xsd"
+		namespace="http://www.example.org/EmploymentRecord">
+	</import>
+	<import schemaLocation="CompanyInfo.xsd" namespace="http://www.example.org/CompanyInfo"></import>
+	<element name="ApplicantProfile" type="string"></element>
+
+
+	<complexType name="applicantProfile">
+		<complexContent>
+			<extension base="p:cvType">
+				<sequence>
+					<element name="transcripts"
+						type="transcripts:transcriptsType">
+					</element>
+					<element name="employmentRecord"
+						type="employmentRecord:companiesType">
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
 </schema>
