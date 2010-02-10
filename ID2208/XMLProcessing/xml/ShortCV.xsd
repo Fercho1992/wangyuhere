@@ -7,29 +7,14 @@
     	<sequence>
     		<element name="personalInformation" type="shortCV:personalInfoType"></element>
     		<element name="contactInformation" type="shortCV:contactInfoType"></element>
-    		<element name="education" type="shortCV:educationType"></element>
-    		<element name="jobInformation" type="shortCV:jobInfoType"></element>
+    		<element name="education" type="string"></element>
+    		<element name="jobInformation" type="string"></element>
     	</sequence>
     	<attribute name="name" type="string" use="required"></attribute>
     </complexType>
 
 
 
-    <complexType name="educationType">
-    	<sequence>
-    		<element name="place" type="string"></element>
-    		<element name="peroid" type="string"></element>
-    		<element name="degree">
-    			<simpleType>
-    				<restriction base="string">
-    					<enumeration value="bachelor"></enumeration>
-    					<enumeration value="master"></enumeration>
-    					<enumeration value="doctor"></enumeration>
-    				</restriction>
-    			</simpleType>
-    		</element>
-    	</sequence>
-    </complexType>
     
 
     <complexType name="personalInfoType">
@@ -39,13 +24,6 @@
     	</sequence>
     </complexType>
     
-    <complexType name="jobInfoType">
-    	<sequence>
-    		<element name="currentJob" type="string"></element>
-    		<element name="employmentTerm" type="string"></element>
-    		<element name="location" type="string"></element>
-    	</sequence>
-    </complexType>
     
     <complexType name="contactInfoType">
     	<sequence>
