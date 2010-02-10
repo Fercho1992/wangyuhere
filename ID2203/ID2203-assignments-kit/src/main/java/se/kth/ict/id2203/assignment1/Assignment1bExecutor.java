@@ -64,8 +64,26 @@ public class Assignment1bExecutor {
 				command(4, "S500");
 			}
 		};
+		
+		Topology topology4 = new Topology() {
+			{
+				node(1, "127.0.0.1", 25031);
+				node(2, "127.0.0.1", 25032);
 
-		scenario2.executeOn(topology3);
+				defaultLinks(500, 0);
+			}
+		};
+		
+		Scenario exercise4 = new Scenario(Assignment1bMain.class) {
+			{
+				command(1, "S2000:Phello:S2000:X").recover("R:PI am alive", 3000);
+				command(2, "S2000");
+
+			}
+		};
+
+		exercise4.executeOn(topology4);
+		//scenario2.executeOn(topology3);
 		//scenario2.executeOn(topology2);
 		//scenario1.executeOn(topology1);
 

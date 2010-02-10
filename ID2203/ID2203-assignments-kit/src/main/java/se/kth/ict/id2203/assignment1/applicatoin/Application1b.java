@@ -79,7 +79,7 @@ public class Application1b extends ComponentDefinition {
 	
 	Handler<Pp2pMessage> handlePp2pMessage = new Handler<Pp2pMessage>() {
 		public void handle(Pp2pMessage event) {
-			logger.info("Received perfect message {}", event.getMessage());
+			logger.info("Received perfect message {} from {}", event.getMessage(), event.getSource());
 		}
 	};
 
@@ -129,12 +129,19 @@ public class Application1b extends ComponentDefinition {
 			doNextCommand();
 		} else if (cmd.equals("")) {
 			doNextCommand();
+		} else if (cmd.equals("R")) {
+			doRecovery();
+			doNextCommand();
 		} else {
 			logger.info("Bad command: '{}'. Try 'help'", cmd);
 			doNextCommand();
 		}
 	}
 
+	private final void doRecovery() {
+		doPerfect("I am recovering");
+	}
+	
 	private final void doHelp() {
 		logger.info("Available commands: P<m>, L<m>, S<n>, help, X");
 		logger.info("Pm: sends perfect message 'm' to all neighbors");

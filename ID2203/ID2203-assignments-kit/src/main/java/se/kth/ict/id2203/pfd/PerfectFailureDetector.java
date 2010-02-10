@@ -3,6 +3,9 @@ package se.kth.ict.id2203.pfd;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import se.kth.ict.id2203.pp2p.PerfectPointToPointLink;
 import se.kth.ict.id2203.pp2p.Pp2pDeliver;
 import se.kth.ict.id2203.pp2p.Pp2pSend;
@@ -25,7 +28,7 @@ public class PerfectFailureDetector extends ComponentDefinition {
 	private static int HEARTBEAT = 0;
 	private static int CHECK = 1;
 	
-	//private static final Logger logger = LoggerFactory.getLogger(PerfectFailureDetector.class);
+	private static final Logger logger = LoggerFactory.getLogger(PerfectFailureDetector.class);
 	
 	private Address self;
 	private Topology topology;
@@ -54,6 +57,7 @@ public class PerfectFailureDetector extends ComponentDefinition {
 			self = topology.getSelfAddress();
 			
 			all = topology.getAllAddresses();
+			all.remove(self);
 			alive = new LinkedHashSet<Address>();
 			alive.addAll(all);
 			detected = new LinkedHashSet<Address>();
@@ -82,6 +86,7 @@ public class PerfectFailureDetector extends ComponentDefinition {
 						pp2p);
 			}
 			startTimer(interval, HEARTBEAT);
+			//logger.info("send heartbeat");
 		}
 		
 	};
@@ -97,7 +102,8 @@ public class PerfectFailureDetector extends ComponentDefinition {
 				}
 			}
 			alive.clear();
-			startTimer(interval+bound_delay, CHECK);
+			startTimer(interval, CHECK);
+			//logger.info("checked");
 		}
 		
 	};

@@ -70,7 +70,7 @@ public class Assignment1aMain extends ComponentDefinition {
 
 		trigger(new MinaNetworkInit(self, 5), network.getControl());
 		trigger(new DelayLinkInit(topology), pp2p.getControl());
-		trigger(new PfdInit(topology, 1000, 1000), pfd.getControl());
+		trigger(new PfdInit(topology, 5000, 1000), pfd.getControl());
 		trigger(new Application1aInit(commandScript, neighborSet, self), app
 				.getControl());
 
