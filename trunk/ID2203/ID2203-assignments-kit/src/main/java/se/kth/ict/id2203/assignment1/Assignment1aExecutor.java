@@ -29,8 +29,17 @@ public class Assignment1aExecutor {
 				command(4, "S500");
 			}
 		};
+		Scenario scenario2 = new Scenario(Assignment1aMain.class) {
+			{
+				command(1, "S500");
+				command(2, "S500");
+				command(3, "S500");
+				command(4, "S500");
+			}
+		};
 
-		scenario1.executeOn(topology1);
+		scenario2.executeOn(topology1);
+		//scenario1.executeOn(topology1);
 
 	}
 
