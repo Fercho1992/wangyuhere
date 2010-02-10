@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.example.org/Transcripts"
+	xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:transcripts="http://www.example.org/Transcripts">
+
+	<import></import>
+	<element name="transcripts" type="transcripts:transcriptsType"></element>
+
+	<complexType name="transcriptsType">
+		<sequence>
+			<element name="transcript"
+				type="transcripts:transcriptType">
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="transcriptType">
+		<sequence>
+			<element name="name" type="string"></element>
+			<element name="university" type="string"></element>
+			<element name="degree" type="transcripts:degreeType"></element>
+			<element name="courses" type="transcripts:coursesType"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="coursesType">
+		<sequence>
+			<element name="course" type="transcripts:courseType"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="courseType">
+		<sequence>
+			<element name="course_name" type="string"></element>
+			<element name="grade" type="transcripts:gradeType"></element>
+			<element name="ect" type="transcripts:ectType"></element>
+		</sequence>
+	</complexType>
+
+
+	<simpleType name="gradeType">
+		<restriction base="string">
+			<pattern value="[A-F]"></pattern>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ectType">
+		<restriction base="decimal">
+			<fractionDigits value="1"></fractionDigits>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="degreeType">
+		<restriction base="string">
+			<enumeration value="Bachelor"></enumeration>
+			<enumeration value="Master"></enumeration>
+			<enumeration value="Doctor"></enumeration>
+		</restriction>
+	</simpleType>
+
+</schema>
