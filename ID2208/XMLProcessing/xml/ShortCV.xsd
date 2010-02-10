@@ -7,8 +7,6 @@
     	<sequence>
     		<element name="personalInformation" type="shortCV:personalInfoType"></element>
     		<element name="contactInformation" type="shortCV:contactInfoType"></element>
-    		<element name="education" type="string"></element>
-    		<element name="jobInformation" type="string"></element>
     	</sequence>
     	<attribute name="name" type="string" use="required"></attribute>
     </complexType>
