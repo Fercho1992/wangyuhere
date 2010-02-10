@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transcripts:transcripts xmlns:transcripts="http://www.example.org/Transcripts" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/Transcripts Transcripts.xsd ">
-	<transcripts:transcript>
-		<transcripts:name>John</transcripts:name>
-		<transcripts:university>KTH</transcripts:university>
-		<transcripts:degree>Master</transcripts:degree>
-		<transcripts:courses>
-			<transcripts:course>
-				<transcripts:course_name>Web Service</transcripts:course_name>
-				<transcripts:grade>A</transcripts:grade>
-				<transcripts:ect>7.5</transcripts:ect>
-			</transcripts:course>
-			<transcripts:course>
-				<transcripts:course_name>Modern Method</transcripts:course_name>
-				<transcripts:grade>B</transcripts:grade>
-				<transcripts:ect>7.5</transcripts:ect>
-			</transcripts:course>
-		</transcripts:courses>
-	</transcripts:transcript>
+  <transcript>
+    <name>Trevor</name>
+    <university>KTH</university>
+    <degree>Master</degree>
+    <courses>
+    	<course>
+    		<course_name>Web Services</course_name>
+    		<grade>C</grade>
+    		<ect>7.5</ect>
+    	</course>
+    	<course>
+    		<course_name>Software Engineering</course_name>
+    		<grade>B</grade>
+    		<ect>7.5</ect>
+    	</course></courses>
+  </transcript>
 </transcripts:transcripts>
