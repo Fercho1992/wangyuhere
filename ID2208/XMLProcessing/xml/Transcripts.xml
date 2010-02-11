@@ -7,6 +7,11 @@
     <courses>
     	<course>
     		<course_name>Web Services</course_name>
+    		<grade>A</grade>
+    		<ect>7.5</ect>
+    	</course>
+    	<course>
+    		<course_name>Java</course_name>
     		<grade>C</grade>
     		<ect>7.5</ect>
     	</course>
