@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:applicantProfile name="Trevor"
-	xmlns:ns2="http://www.example.org/ApplicantProfile" xmlns:ns4="http://www.example.org/EmploymentRecord"
-	xmlns:ns3="http://www.example.org/ShortCV" xmlns:ns5="http://www.example.org/CompanyInfo"
-	xmlns:ns6="http://www.example.org/Transcripts">
-	<ns3:personalInformation>
-		<ns3:age>26</ns3:age>
-		<ns3:country>Germany</ns3:country>
-		<ns3:hobby>Coding</ns3:hobby>
-		<ns3:gender>male</ns3:gender>
-		<ns3:personalStatement>I will never surrender!</ns3:personalStatement>
-	</ns3:personalInformation>
-	<ns3:contactInformation>
-		<ns3:email>Trevor@kth.se</ns3:email>
-		<ns3:phoneNo.>707070707</ns3:phoneNo.>
-	</ns3:contactInformation>
-	<ns2:education>
-		<ns2:educationItem>
-			<ns2:university>KTH</ns2:university>
-			<ns2:degree>Master</ns2:degree>
-			<ns2:courses>
-				<course>
-					<course_name>Web Services</course_name>
-					<grade>C</grade>
-					<ect>7.5</ect>
-				</course>
-				<course>
-					<course_name>Software Engineering</course_name>
-					<grade>B</grade>
-					<ect>7.5</ect>
-				</course>
-			</ns2:courses>
-			<ns2:gpa>3.5</ns2:gpa>
-		</ns2:educationItem>
-	</ns2:education>
-	<ns2:workExperience>
-		<ns2:work>
-			<ns4:name>Ericsson</ns4:name>
-			<ns4:positionorTitle>programmer</ns4:positionorTitle>
-			<ns4:lengthofTime>2 years</ns4:lengthofTime>
-			<ns2:classification>IT</ns2:classification>
-			<ns2:region>domestic</ns2:region>
-		</ns2:work>
-	</ns2:workExperience>
+<ns2:applicantProfile name="Trevor" xmlns:ns2="http://www.example.org/ApplicantProfile" xmlns:ns4="http://www.example.org/EmploymentRecord" xmlns:ns3="http://www.example.org/ShortCV" xmlns:ns5="http://www.example.org/CompanyInfo" xmlns:ns6="http://www.example.org/Transcripts">
+    <ns3:personalInformation>
+        <ns3:age>26</ns3:age>
+        <ns3:country>Germany</ns3:country>
+        <ns3:hobby>Coding</ns3:hobby>
+        <ns3:gender>male</ns3:gender>
+        <ns3:personalStatement>I will never surrender!</ns3:personalStatement>
+    </ns3:personalInformation>
+    <ns3:contactInformation>
+        <ns3:email>Trevor@kth.se</ns3:email>
+        <ns3:phoneNo.>707070707</ns3:phoneNo.>
+    </ns3:contactInformation>
+    <ns2:education>
+        <ns2:educationItem>
+            <ns2:university>KTH</ns2:university>
+            <ns2:degree>Master</ns2:degree>
+            <ns2:courses>
+                <course>
+                    <course_name>Web Services</course_name>
+                    <grade>A</grade>
+                    <ect>7.5</ect>
+                </course>
+                <course>
+                    <course_name>Java</course_name>
+                    <grade>C</grade>
+                    <ect>7.5</ect>
+                </course>
+                <course>
+                    <course_name>Software Engineering</course_name>
+                    <grade>B</grade>
+                    <ect>7.5</ect>
+                </course>
+            </ns2:courses>
+            <ns2:gpa>4.0</ns2:gpa>
+        </ns2:educationItem>
+    </ns2:education>
+    <ns2:workExperience>
+        <ns2:work>
+            <ns4:name>Ericsson</ns4:name>
+            <ns4:positionorTitle>programmer</ns4:positionorTitle>
+            <ns4:lengthofTime>2 years</ns4:lengthofTime>
+            <ns2:classification>IT</ns2:classification>
+            <ns2:region>domestic</ns2:region>
+        </ns2:work>
+    </ns2:workExperience>
 </ns2:applicantProfile>
