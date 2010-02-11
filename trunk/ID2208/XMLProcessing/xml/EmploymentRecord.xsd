@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema targetNamespace="http://www.example.org/EmploymentRecord"
 	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
-	xmlns:employmentRecord="http://www.example.org/EmploymentRecord" xmlns:companyInfo="http://www.example.org/CompanyInfo">
+	xmlns:employmentRecord="http://www.example.org/EmploymentRecord"
+	xmlns:companyInfo="http://www.example.org/CompanyInfo">
 
-
-	<import schemaLocation="CompanyInfo.xsd" namespace="http://www.example.org/CompanyInfo"></import>
-	<element name="employmentRecord"
-		type="employmentRecord:recordType">
+	<element name="employmentRecord" type="employmentRecord:recordType">
 	</element>
 
 
@@ -14,35 +12,29 @@
 		<sequence>
 			<element name="name" type="string"></element>
 			<element name="age" type="integer"></element>
-			<element name="companies"
-				type="employmentRecord:companiesType">
+			<element name="companies" type="employmentRecord:companiesType">
 			</element>
 		</sequence>
 
-		<attribute name="currentEmployment" type="string"
-			default="NO">
+		<attribute name="currentEmployment" type="string" default="NO">
 		</attribute>
 	</complexType>
 
 	<complexType name="companiesType">
 		<sequence>
 			<element name="company" type="employmentRecord:companyType"
-				maxOccurs="unbounded" minOccurs="1">
+				maxOccurs="unbounded" minOccurs="0">
 			</element>
 
 		</sequence>
 	</complexType>
 
 	<complexType name="companyType">
-		<complexContent>
-			<extension base="companyInfo:infoType">
-			<sequence>
+		<sequence>
 			<element name="name" type="string"></element>
 			<element name="positionorTitle" type="string"></element>
 			<element name="lengthofTime" type="string"></element>
-		    </sequence>
-			</extension>
-		</complexContent>
+		</sequence>
 	</complexType>
 
 
