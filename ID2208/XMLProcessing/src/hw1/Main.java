@@ -16,6 +16,7 @@ import hw1.sax.ShortCVHandler;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.util.Hashtable;
 import java.util.List;
@@ -28,6 +29,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -174,7 +180,18 @@ public class Main {
 			JAXBElement<ApplicantProfileType> xml = of.createApplicantProfile(apf);
 			JAXBContext jc = JAXBContext.newInstance( "hw1.jaxb.applicantProfile" );
 			Marshaller m = jc.createMarshaller();
+			m.setProperty("jaxb.formatted.output", true);
 	        m.marshal(xml, new BufferedWriter(new FileWriter("./xml/ApplicantProfile.xml")));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// using XSLT to transform the xml
+		try {
+			TransformerFactory f = TransformerFactory.newInstance();
+			Source s = new StreamSource("./xml/ApplicantProfile.xsl");
+			Transformer t = f.newTransformer(s);
+			t.transform(new StreamSource("./xml/ApplicantProfile.xml"), new StreamResult(new FileOutputStream("./xml/ApplicantProfile.html")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
