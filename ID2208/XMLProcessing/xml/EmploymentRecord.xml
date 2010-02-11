@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<employmentRecord:employmentRecord xmlns:companyInfo="http://www.example.org/CompanyInfo" xmlns:employmentRecord="http://www.example.org/EmploymentRecord" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/EmploymentRecord EmplymentRecord.xsd ">
+<employmentRecord:employmentRecord xmlns:employmentRecord="http://www.example.org/EmploymentRecord" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/EmploymentRecord EmploymentRecord.xsd ">
   <employmentRecord:name>Trevor</employmentRecord:name>
   <employmentRecord:age>26</employmentRecord:age>
   <employmentRecord:companies>
-    <employmentRecord:company name="Ericsson">
-      <companyInfo:classification>IT</companyInfo:classification>
-      <companyInfo:region>domestic</companyInfo:region>
-      <employmentRecord:name>Trevor</employmentRecord:name>
+    <employmentRecord:company>
+      <employmentRecord:name>Ericsson</employmentRecord:name>
       <employmentRecord:positionorTitle>programmer</employmentRecord:positionorTitle>
-      <employmentRecord:lengthofTime>2years</employmentRecord:lengthofTime>
+      <employmentRecord:lengthofTime>2 years</employmentRecord:lengthofTime>
     </employmentRecord:company>
   </employmentRecord:companies>
 </employmentRecord:employmentRecord>

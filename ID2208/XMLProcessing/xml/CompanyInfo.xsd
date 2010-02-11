@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/CompanyInfo" elementFormDefault="qualified" xmlns:companyInfo="http://www.example.org/CompanyInfo">
 
-    <element name="Companies" type="companyInfo:infoType"></element>
+    <element name="companies" type="companyInfo:companiesInfoType"></element>
 
     <complexType name="infoType">
     	<sequence>
@@ -16,5 +16,11 @@
     		</element>
     	</sequence>
     	<attribute name="name" type="string" use="required"></attribute>
+    </complexType>
+
+    <complexType name="companiesInfoType">
+    	<sequence>
+    		<element name="companyInfo" type="companyInfo:infoType" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
     </complexType>
 </schema>

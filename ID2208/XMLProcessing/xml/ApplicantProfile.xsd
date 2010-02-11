@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/ApplicantProfile"
-	elementFormDefault="qualified" xmlns:applicantProfile="http://www.example.org/ApplicantProfile"
-	xmlns:p="http://www.example.org/ShortCV" xmlns:transcripts="http://www.example.org/Transcripts"
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/ApplicantProfile"
+	elementFormDefault="qualified"
+	xmlns:applicantProfile="http://www.example.org/ApplicantProfile"
+	xmlns:p="http://www.example.org/ShortCV"
+	xmlns:transcripts="http://www.example.org/Transcripts"
 	xmlns:employmentRecord="http://www.example.org/EmploymentRecord"
 	xmlns:companyInfo="http://www.example.org/CompanyInfo">
 
 
 
 
-	<import schemaLocation="ShortCV.xsd" namespace="http://www.example.org/ShortCV">
+	<import schemaLocation="ShortCV.xsd"
+		namespace="http://www.example.org/ShortCV">
 	</import>
-	<import schemaLocation="Transcripts.xsd" namespace="http://www.example.org/Transcripts">
+	<import schemaLocation="Transcripts.xsd"
+		namespace="http://www.example.org/Transcripts">
 	</import>
-	<import schemaLocation="EmplymentRecord.xsd" namespace="http://www.example.org/EmploymentRecord">
+	<import schemaLocation="CompanyInfo.xsd"
+		namespace="http://www.example.org/CompanyInfo">
 	</import>
-	<import schemaLocation="CompanyInfo.xsd" namespace="http://www.example.org/CompanyInfo"></import>
-	<element name="applicantProfile" type="applicantProfile:applicantProfileType">
+	<import schemaLocation="EmploymentRecord.xsd" namespace="http://www.example.org/EmploymentRecord"></import>
+	<element name="applicantProfile"
+		type="applicantProfile:applicantProfileType">
 	</element>
 
 
@@ -23,9 +30,11 @@
 		<complexContent>
 			<extension base="p:cvType">
 				<sequence>
-					<element name="education" type="applicantProfile:educationType">
+					<element name="education"
+						type="applicantProfile:educationType">
 					</element>
-					<element name="workExperience" type="applicantProfile:workExperienceType">
+					<element name="workExperience"
+						type="applicantProfile:workExperienceType">
 					</element>
 				</sequence>
 			</extension>
@@ -34,7 +43,9 @@
 
 	<complexType name="educationType">
 		<sequence>
-			<element name="educationItem" type="applicantProfile:educationItemType">
+			<element name="educationItem"
+				type="applicantProfile:educationItemType" maxOccurs="unbounded"
+				minOccurs="0">
 			</element>
 		</sequence>
 	</complexType>
@@ -51,7 +62,9 @@
 
 	<complexType name="workExperienceType">
 		<sequence>
-			<element name="work" type="applicantProfile:workType"></element>
+			<element name="work" type="applicantProfile:workType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
 		</sequence>
 	</complexType>
 
