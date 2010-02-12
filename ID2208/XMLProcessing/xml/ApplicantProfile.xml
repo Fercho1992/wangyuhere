@@ -39,9 +39,16 @@
         <ns2:work>
             <ns4:name>Ericsson</ns4:name>
             <ns4:positionorTitle>programmer</ns4:positionorTitle>
-            <ns4:lengthofTime>2 years</ns4:lengthofTime>
+            <ns4:lengthofTime>2008.5 ~ present</ns4:lengthofTime>
             <ns2:classification>IT</ns2:classification>
             <ns2:region>domestic</ns2:region>
+        </ns2:work>
+        <ns2:work>
+            <ns4:name>IBM</ns4:name>
+            <ns4:positionorTitle>tester</ns4:positionorTitle>
+            <ns4:lengthofTime>2006.4 ~ 2008.4</ns4:lengthofTime>
+            <ns2:classification>IT</ns2:classification>
+            <ns2:region>foreign</ns2:region>
         </ns2:work>
     </ns2:workExperience>
 </ns2:applicantProfile>

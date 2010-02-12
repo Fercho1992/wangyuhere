@@ -97,26 +97,31 @@
   <tr>
     <td colspan="2"><span class="style1">Work Experience</span></td>
     </tr>
+    <xsl:for-each select="ns2:applicantProfile/ns2:workExperience/ns2:work">
   <tr>
     <td width="108">Duration:</td>
-    <td width="469"><xsl:value-of select="ns2:applicantProfile/ns2:workExperience/ns2:work/ns4:lengthofTime"/></td>
+    <td width="469"><xsl:value-of select="ns4:lengthofTime"/></td>
   </tr>
   <tr>
     <td>Company:</td>
-    <td><xsl:value-of select="ns2:applicantProfile/ns2:workExperience/ns2:work/ns4:name"/></td>
+    <td><xsl:value-of select="ns4:name"/></td>
   </tr>
   <tr>
     <td>Position:</td>
-    <td><xsl:value-of select="ns2:applicantProfile/ns2:workExperience/ns2:work/ns4:positionorTitle"/></td>
+    <td><xsl:value-of select="ns4:positionorTitle"/></td>
   </tr>
   <tr>
     <td>Classification:</td>
-    <td><xsl:value-of select="ns2:applicantProfile/ns2:workExperience/ns2:work/ns2:classification"/></td>
+    <td><xsl:value-of select="ns2:classification"/></td>
   </tr>
   <tr>
     <td>Region:</td>
-    <td><xsl:value-of select="ns2:applicantProfile/ns2:workExperience/ns2:work/ns2:region"/></td>
+    <td><xsl:value-of select="ns2:region"/></td>
   </tr>
+  <tr>
+  <td></td><td></td>
+  </tr>
+  </xsl:for-each>
 </table>
 </body>
 </html>

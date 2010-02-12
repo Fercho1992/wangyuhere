@@ -6,7 +6,12 @@
     <employmentRecord:company>
       <employmentRecord:name>Ericsson</employmentRecord:name>
       <employmentRecord:positionorTitle>programmer</employmentRecord:positionorTitle>
-      <employmentRecord:lengthofTime>2 years</employmentRecord:lengthofTime>
+      <employmentRecord:lengthofTime>2008.5 ~ present</employmentRecord:lengthofTime>
+    </employmentRecord:company>
+    <employmentRecord:company>
+      <employmentRecord:name>IBM</employmentRecord:name>
+      <employmentRecord:positionorTitle>tester</employmentRecord:positionorTitle>
+      <employmentRecord:lengthofTime>2006.4 ~ 2008.4</employmentRecord:lengthofTime>
     </employmentRecord:company>
   </employmentRecord:companies>
 </employmentRecord:employmentRecord>
