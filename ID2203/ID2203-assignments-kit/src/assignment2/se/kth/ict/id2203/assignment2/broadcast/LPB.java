@@ -37,7 +37,6 @@ public class LPB extends ComponentDefinition {
 	private Hashtable<Address, Integer> delivered;
 	private Set<DataMessage> pending;
 	private Set<DataMessage> stored;
-	// Correct: add lost to store all the lost messages
 	private Set<DataMessage> lost;
 	private Random random = new Random();
 
@@ -169,6 +168,7 @@ public class LPB extends ComponentDefinition {
 				}
 			}
 			if (!sent && event.getMaxrounds() > 0) {
+				logger.debug("forward gossip from {}", event.getSource());
 				gossip(new RequestMessage(event.getSource(), sm, snm, event
 						.getMaxrounds() - 1));
 			}
@@ -199,7 +199,7 @@ public class LPB extends ComponentDefinition {
 			logger.debug("gossip timeout");
 			Address sm = event.getSource();
 			int snm = event.getSn();
-			for (int seqnb = delivered.get(sm) + 1; seqnb < snm; seqnb++) {
+			for (int seqnb = delivered.get(sm) + 1; seqnb <= snm; seqnb++) {
 				DataMessage d = null;
 				if((d =exists(sm, seqnb)) != null) {
 					delivered.put(sm, seqnb);
