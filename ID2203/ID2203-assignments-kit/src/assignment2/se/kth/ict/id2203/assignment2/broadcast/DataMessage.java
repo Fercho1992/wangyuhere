@@ -6,23 +6,32 @@ import se.sics.kompics.address.Address;
 public class DataMessage extends Flp2pDeliver {
 
 	private final String message;
-	private final int sn;
+	private final int snm;
+	private final Address sm;
 	
 	protected DataMessage(Address source, String m, int s) {
 		super(source);
+		this.sm =source;
 		message = m;
-		sn = s;
+		snm = s;
 	}
 	
-	
+	public Address getSm() {
+		return sm;
+	}
 
 	public String getMessage() {
 		return message;
 	}
 
 
-	public int getSn() {
-		return sn;
+	public int getSnm() {
+		return snm;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("[%s,%s,%d]", sm, message, snm);
 	}
 
 	/**
