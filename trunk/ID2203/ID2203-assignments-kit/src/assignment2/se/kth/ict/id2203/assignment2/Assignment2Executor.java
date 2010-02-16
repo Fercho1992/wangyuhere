@@ -8,8 +8,8 @@ public class Assignment2Executor {
 
 	public static int fanout = 2;
 	public static int maxrounds = 3;
-	public static double storeThreshold = 0.1;
-	public static int timeDelay = 1000;
+	public static double storeThreshold = 0;
+	public static int timeDelay = 3000;
 	
 	/**
 	 * @param args
