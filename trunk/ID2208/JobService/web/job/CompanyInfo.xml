@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<companyInfo:companies xmlns:companyInfo="http://www.example.org/CompanyInfo"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.example.org/CompanyInfo CompanyInfo.xsd ">
+	<companyInfo:companyInfo name="Ericsson">
+		<companyInfo:classification>IT</companyInfo:classification>
+		<companyInfo:region>domestic</companyInfo:region>
+	</companyInfo:companyInfo>
+	<companyInfo:companyInfo name="IBM">
+		<companyInfo:classification>IT</companyInfo:classification>
+		<companyInfo:region>foreign</companyInfo:region>
+	</companyInfo:companyInfo>
+</companyInfo:companies>

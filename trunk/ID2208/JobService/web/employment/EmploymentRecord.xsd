@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.example.org/EmploymentRecord"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:employmentRecord="http://www.example.org/EmploymentRecord"
+	xmlns:companyInfo="http://www.example.org/CompanyInfo">
+
+	<element name="employmentRecord" type="employmentRecord:recordType">
+	</element>
+
+
+	<complexType name="recordType">
+		<sequence>
+			<element name="name" type="string"></element>
+			<element name="age" type="integer"></element>
+			<element name="companies" type="employmentRecord:companiesType">
+			</element>
+		</sequence>
+
+		<attribute name="currentEmployment" type="string" default="NO">
+		</attribute>
+	</complexType>
+
+	<complexType name="companiesType">
+		<sequence>
+			<element name="company" type="employmentRecord:companyType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+
+		</sequence>
+	</complexType>
+
+	<complexType name="companyType">
+		<sequence>
+			<element name="name" type="string"></element>
+			<element name="positionorTitle" type="string"></element>
+			<element name="lengthofTime" type="string"></element>
+		</sequence>
+	</complexType>
+
+
+
+
+	<simpleType name="positionType">
+		<restriction base="string">
+			<enumeration value="Technical"></enumeration>
+			<enumeration value="Management"></enumeration>
+			<enumeration value="Sales"></enumeration>
+		</restriction>
+	</simpleType>
+</schema>
