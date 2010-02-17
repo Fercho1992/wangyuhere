@@ -1,6 +1,8 @@
 package se.kth.ict.id2203.assignment2.broadcast;
 
+import java.util.Collections;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Random;
 import java.util.Set;
@@ -65,17 +67,19 @@ public class LPB extends ComponentDefinition {
 				delivered.put(a, 0);
 			}
 			lsn = 0;
-			pending = new LinkedHashSet<DataMessage>();
-			stored = new LinkedHashSet<DataMessage>();
-			lost = new LinkedHashSet<DataMessage>();
+			pending = Collections.synchronizedSet(new LinkedHashSet<DataMessage>());
+			stored = Collections.synchronizedSet(new LinkedHashSet<DataMessage>());
+			lost = Collections.synchronizedSet(new LinkedHashSet<DataMessage>());
 		}
 
 	};
 
 	private DataMessage exists(Address sm, int snm) {
-		for (DataMessage d : pending) {
-			if (d.getSm().equals(sm) && snm == d.getSnm()) {
-				return d;
+		synchronized(pending) {
+			for (DataMessage d : pending) {
+				if (d.getSm().equals(sm) && snm == d.getSnm()) {
+					return d;
+				}
 			}
 		}
 		return null;
@@ -188,6 +192,18 @@ public class LPB extends ComponentDefinition {
 			// Correct: only add pending when received sn > delivered sn + 1
 			} else if(event.getSnm() > delivered.get(sm) + 1) {
 				pending.add(event);
+			} else {
+				synchronized(lost){
+					Iterator<DataMessage> i = lost.iterator();
+					while(i.hasNext()) {
+						DataMessage dm = i.next();
+						if(dm.getSm().equals(event.getSm()) && dm.getSnm() == event.getSnm()) {
+							i.remove();
+							trigger(new LPBDeliver(sm, event.getMessage()), lpb);
+							logger.info("{} was retrived!", event);
+						}
+					}
+				}
 			}
 		}
 	};
