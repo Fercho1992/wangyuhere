@@ -51,7 +51,7 @@ public final class DelayDropLinkMessage extends Message {
 	 */
 	public DelayDropLinkMessage(Address source, Address destination,
 			Flp2pDeliver deliverEvent) {
-		super(source, destination, Transport.UDP);
+		super(source, destination, Transport.TCP);
 		this.deliverEvent = deliverEvent;
 	}
 

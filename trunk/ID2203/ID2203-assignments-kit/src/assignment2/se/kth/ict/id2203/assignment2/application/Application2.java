@@ -113,6 +113,25 @@ public class Application2 extends ComponentDefinition {
 		} else if (cmd.equals("help")) {
 			doHelp();
 			doNextCommand();
+		} else if(cmd.startsWith("A")) {
+			final int TIME = Integer.parseInt(cmd.substring(1));
+			Thread sender = new Thread("ApplicationThread") {
+				public void run() {
+					int i = 1;
+					while (true) {
+						doLPB(String.valueOf(i));
+						try {
+							Thread.sleep(TIME);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+							break;
+						}
+						i++;
+						if(i > 30) break;
+					}
+				}
+			};
+			sender.start();
 		} else if (cmd.trim().equals("")) {
 			doNextCommand();
 		} else {
@@ -124,6 +143,7 @@ public class Application2 extends ComponentDefinition {
 	private final void doHelp() {
 		logger.info("Available commands: B<m>, S<n>, help, X");
 		logger.info("Bm: LPB message 'm'");
+		logger.info("Axxx to repeated 30 broadcast every xxx milisec");
 		logger.info("Sn: sleeps 'n' milliseconds before the next command");
 		logger.info("help: shows this help message");
 		logger.info("X: terminates this process");
