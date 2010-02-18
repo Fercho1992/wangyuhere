@@ -153,6 +153,10 @@ public class LPB extends ComponentDefinition {
 				logger.debug("Start timeout");
 				startTimer(timeDelay, sm, snm);
 			}
+			// Correct: continue gossip for the lost message
+			for(DataMessage dm : lost) {
+				gossip(new RequestMessage(self, dm.getSm(), dm.getSnm(), maxrounds - 1));
+			}
 		}
 
 	};
