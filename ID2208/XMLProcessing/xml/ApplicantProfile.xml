@@ -27,6 +27,11 @@
                     <ect>7.5</ect>
                 </course>
                 <course>
+                    <course_name>C</course_name>
+                    <grade>B</grade>
+                    <ect>7.5</ect>
+                </course>
+                <course>
                     <course_name>Software Engineering</course_name>
                     <grade>B</grade>
                     <ect>7.5</ect>
