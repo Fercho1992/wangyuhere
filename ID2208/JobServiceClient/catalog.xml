@@ -2,4 +2,23 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:8080/JobService/JobService?wsdl" uri="xml-resources/web-service-references/JobService/wsdl/localhost_8080/JobService/JobService.wsdl"/>
     <system systemId="http://localhost:8080/JobService/JobService?xsd=1" uri="xml-resources/web-service-references/JobService/wsdl/localhost_8080/JobService/JobService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/JobService/UniversityService?wsdl" uri="xml-resources/web-service-references/UniversityService/wsdl/localhost_8080/JobService/UniversityService.wsdl"/>
+    <system systemId="http://localhost:8080/JobService/UniversityService?xsd=1" uri="xml-resources/web-service-references/UniversityService/wsdl/localhost_8080/JobService/UniversityService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/JobService/EmploymentService?wsdl" uri="xml-resources/web-service-references/EmploymentService/wsdl/localhost_8080/JobService/EmploymentService.wsdl"/>
+    <system systemId="http://localhost:8080/JobService/EmploymentService?xsd=1" uri="xml-resources/web-service-references/EmploymentService/wsdl/localhost_8080/JobService/EmploymentService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/JobService/CompanyService?wsdl" uri="xml-resources/web-service-references/CompanyService/wsdl/localhost_8080/JobService/CompanyService.wsdl"/>
+    <system systemId="http://localhost:8080/JobService/CompanyService?xsd=1" uri="xml-resources/web-service-references/CompanyService/wsdl/localhost_8080/JobService/CompanyService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/JobService/SearchJobService?wsdl" uri="xml-resources/web-service-references/SearchJobService/wsdl/localhost_8080/JobService/SearchJobService.wsdl"/>
+    <system systemId="http://localhost:8080/JobService/SearchJobService?xsd=1" uri="xml-resources/web-service-references/SearchJobService/wsdl/localhost_8080/JobService/SearchJobService.xsd_1.xsd"/>
 </catalog>
+
+
+
+
+
+
+
+
+
+
+
