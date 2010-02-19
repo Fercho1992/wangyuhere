@@ -40,7 +40,7 @@ public class SearchJob extends javax.swing.JDialog {
         txtKeyword = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        taResult = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -59,9 +59,9 @@ public class SearchJob extends javax.swing.JDialog {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        taResult.setColumns(20);
+        taResult.setRows(5);
+        jScrollPane1.setViewportView(taResult);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,7 +70,7 @@ public class SearchJob extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -88,7 +88,7 @@ public class SearchJob extends javax.swing.JDialog {
                     .addComponent(txtKeyword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -101,6 +101,30 @@ public class SearchJob extends javax.swing.JDialog {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
 
+        try { // Call Web Service Operation(async. callback)
+            com.jobservice.SearchJobService service = new com.jobservice.SearchJobService();
+            com.jobservice.SearchJob port = service.getSearchJobPort();
+            // TODO initialize WS operation arguments here
+            java.lang.String keyword = txtKeyword.getText();
+            javax.xml.ws.AsyncHandler<com.jobservice.SearchResponse> asyncHandler = new javax.xml.ws.AsyncHandler<com.jobservice.SearchResponse>() {
+                public void handleResponse(javax.xml.ws.Response<com.jobservice.SearchResponse> response) {
+                    try {
+                        // TODO process asynchronous response here
+                        com.jobservice.SearchResponse r = response.get();
+                        taResult.setText(r.getReturn());
+                    } catch(Exception ex) {
+                        // TODO handle exception
+                    }
+                }
+            };
+            java.util.concurrent.Future<? extends java.lang.Object> result = port.searchAsync(keyword, asyncHandler);
+            while(!result.isDone()) {
+                // do something
+                Thread.sleep(100);
+            }
+        } catch (Exception ex) {
+            // TODO handle custom exceptions here
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
@@ -124,7 +148,7 @@ public class SearchJob extends javax.swing.JDialog {
     private javax.swing.JButton btnSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea taResult;
     private javax.swing.JTextField txtKeyword;
     // End of variables declaration//GEN-END:variables
 

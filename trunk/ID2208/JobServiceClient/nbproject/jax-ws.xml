@@ -108,7 +108,6 @@
       <local-wsdl-file>localhost_8080/JobService/SearchJobService.wsdl</local-wsdl-file>
       <package-name>com.jobservice</package-name>
       <catalog-file>catalog.xml</catalog-file>
-      <use-dispatch>true</use-dispatch>
       <wsimport-options>
         <wsimport-option>
           <wsimport-option-name>extension</wsimport-option-name>

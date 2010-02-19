@@ -152,6 +152,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Search Job"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnJobActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
