@@ -35,5 +35,73 @@
         <delete dir="${build.generated.dir}/jax-wsCache/JobService"/>
         <delete dir="${build.generated.sources.dir}/jax-ws/jobserviceclient"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-JobService"/>
+    <target name="wsimport-client-UniversityService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/UniversityService"/>
+        <property name="wsdl-UniversityService" location="xml-resources/web-service-references/UniversityService/wsdl/localhost_8080/JobService/UniversityService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/UniversityService" destdir="${build.generated.dir}/jax-wsCache/UniversityService" wsdl="${wsdl-UniversityService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/JobService/UniversityService?wsdl" xendorsed="true">
+            <depends file="${wsdl-UniversityService}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/UniversityService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/UniversityService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-UniversityService" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/UniversityService"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/com/jobservice"/>
+    </target>
+    <target name="wsimport-client-EmploymentService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/EmploymentService"/>
+        <property name="wsdl-EmploymentService" location="xml-resources/web-service-references/EmploymentService/wsdl/localhost_8080/JobService/EmploymentService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/EmploymentService" destdir="${build.generated.dir}/jax-wsCache/EmploymentService" wsdl="${wsdl-EmploymentService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/JobService/EmploymentService?wsdl" xendorsed="true">
+            <depends file="${wsdl-EmploymentService}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/EmploymentService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/EmploymentService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-EmploymentService" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/EmploymentService"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/com/jobservice"/>
+    </target>
+    <target name="wsimport-client-CompanyService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/CompanyService"/>
+        <property name="wsdl-CompanyService" location="xml-resources/web-service-references/CompanyService/wsdl/localhost_8080/JobService/CompanyService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/CompanyService" destdir="${build.generated.dir}/jax-wsCache/CompanyService" wsdl="${wsdl-CompanyService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/JobService/CompanyService?wsdl" xendorsed="true">
+            <depends file="${wsdl-CompanyService}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/CompanyService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/CompanyService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-CompanyService" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/CompanyService"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/com/jobservice"/>
+    </target>
+    <target name="wsimport-client-SearchJobService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/SearchJobService"/>
+        <property name="wsdl-SearchJobService" location="xml-resources/web-service-references/SearchJobService/wsdl/localhost_8080/JobService/SearchJobService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/SearchJobService" destdir="${build.generated.dir}/jax-wsCache/SearchJobService" wsdl="${wsdl-SearchJobService}" catalog="catalog.xml" extension="true" verbose="true" wsdlLocation="http://localhost:8080/JobService/SearchJobService?wsdl" xendorsed="true">
+            <depends file="${wsdl-SearchJobService}"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/SearchJobService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/SearchJobService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-SearchJobService" depends="-init-project">
+        <delete dir="${build.generated.dir}/jax-wsCache/SearchJobService"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/com/jobservice"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-JobService, wsimport-client-UniversityService, wsimport-client-EmploymentService, wsimport-client-CompanyService, wsimport-client-SearchJobService"/>
 </project>
