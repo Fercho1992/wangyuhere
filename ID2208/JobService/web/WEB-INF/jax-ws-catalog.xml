@@ -2,5 +2,8 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:8080/JobService/JobService?wsdl" uri="wsdl/localhost_8080/JobService/JobService.wsdl"/>
     <system systemId="http://localhost:8080/JobService/JobService?xsd=1" uri="wsdl/localhost_8080/JobService/JobService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/JobService/SearchJobService?wsdl" uri="wsdl/localhost_8080/JobService/SearchJobService.wsdl"/>
+    <system systemId="http://localhost:8080/JobService/SearchJobService?xsd=1" uri="wsdl/localhost_8080/JobService/SearchJobService.xsd_1.xsd"/>
 </catalog>
+
 
