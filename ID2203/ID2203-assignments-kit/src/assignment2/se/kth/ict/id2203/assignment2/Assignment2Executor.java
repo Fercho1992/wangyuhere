@@ -22,7 +22,8 @@ public class Assignment2Executor {
 				node(3, "127.0.0.1", 22033);
 				node(4, "127.0.0.1", 22034);
 
-				defaultLinks(500, 0.6);
+				link(1, 2, 500, 0.5);
+				defaultLinks(500, 0);
 			}
 		};
 
