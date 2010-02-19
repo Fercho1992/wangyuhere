@@ -30,13 +30,8 @@ public class FileSystem {
             }
         } catch (Exception ex) {
             Logger.getLogger(University.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                fr.close();
-            } catch (IOException ex) {
-                Logger.getLogger(University.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
+        
         return sb.toString();
     }
 
@@ -48,12 +43,6 @@ public class FileSystem {
             fw.flush();
         } catch (IOException ex) {
             Logger.getLogger(FileSystem.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                fw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(FileSystem.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
