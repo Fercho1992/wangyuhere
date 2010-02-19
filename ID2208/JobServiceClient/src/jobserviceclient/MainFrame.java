@@ -89,6 +89,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         btnJob.setText("Search Job");
+        btnJob.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnJobActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -186,6 +191,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
         new CheckInfo(this, true).setVisible(true);
     }//GEN-LAST:event_btnInfoActionPerformed
+
+    private void btnJobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJobActionPerformed
+        new SearchJob(this, true).setVisible(true);
+    }//GEN-LAST:event_btnJobActionPerformed
 
     /**
      * @param args the command line arguments
