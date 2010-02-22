@@ -76,8 +76,8 @@ public class Assignment3bMain extends ComponentDefinition {
 		trigger(new MinaNetworkInit(self, 5), network.getControl());
 		trigger(new DelayLinkInit(topology), pp2p.getControl());
 		trigger(new BebInit(topology), beb.getControl());
-		trigger(new RiwcInit(), riwcm.getControl());
-		trigger(new Application3Init(), app.getControl());
+		trigger(new RiwcInit(topology), riwcm.getControl());
+		trigger(new Application3Init(commandScript, neighborSet, self), app.getControl());
 
 		// connect the components
 		connect(app.getNegative(Timer.class), time.getPositive(Timer.class));

@@ -5,9 +5,38 @@ import se.sics.kompics.address.Address;
 
 public class AckMessage extends Pp2pDeliver {
 
-	protected AckMessage(Address source) {
+	private final int register;
+	private final int reqid;
+	
+	protected AckMessage(Address source, int r, int req) {
 		super(source);
+		register = r;
+		reqid = req;
 	}
+	
+	
+
+	public int getRegister() {
+		return register;
+	}
+
+
+
+	public int getReqid() {
+		return reqid;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\n======WriteMessage=========\n");
+		sb.append("Source = " + getSource() + "\n");
+		sb.append("Register = " + register + "\n");
+		sb.append("Reqid = " + reqid + "\n");
+		sb.append("===========================\n");
+		return sb.toString();
+	}
+
 
 	/**
 	 * 

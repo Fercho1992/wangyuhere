@@ -7,7 +7,7 @@ import org.apache.log4j.PropertyConfigurator;
 import se.kth.ict.id2203.assignment3.application.Application3;
 import se.kth.ict.id2203.assignment3.application.Application3Init;
 import se.kth.ict.id2203.assignment3.atomicRegister.AtomicRegisterLink;
-import se.kth.ict.id2203.assignment3.atomicRegister.RIWCM;
+import se.kth.ict.id2203.assignment3.atomicRegister.RIWC;
 import se.kth.ict.id2203.assignment3.atomicRegister.RiwcInit;
 import se.kth.ict.id2203.assignment3.beb.Beb;
 import se.kth.ict.id2203.assignment3.beb.BebInit;
@@ -49,7 +49,7 @@ public class Assignment3aMain extends ComponentDefinition {
 		selfId = Integer.parseInt(args[0]);
 		commandScript = args[1];
 
-		Kompics.createAndStart(Assignment3bMain.class);
+		Kompics.createAndStart(Assignment3aMain.class);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class Assignment3aMain extends ComponentDefinition {
 		Component pp2p = create(DelayLink.class);
 		Component beb = create(Beb.class);
 		Component pfd = create(PerfectFailureDetector.class);
-		Component riwcm = create(RIWCM.class);
+		Component riwc = create(RIWC.class);
 		Component app = create(Application3.class);
 
 		// handle possible faults in the components
@@ -71,7 +71,7 @@ public class Assignment3aMain extends ComponentDefinition {
 		subscribe(handleFault, pp2p.getControl());
 		subscribe(handleFault, beb.getControl());
 		subscribe(handleFault, pfd.getControl());
-		subscribe(handleFault, riwcm.getControl());
+		subscribe(handleFault, riwc.getControl());
 		subscribe(handleFault, app.getControl());
 
 		// initialize the components
@@ -82,18 +82,17 @@ public class Assignment3aMain extends ComponentDefinition {
 		trigger(new DelayLinkInit(topology), pp2p.getControl());
 		trigger(new BebInit(topology), beb.getControl());
 		trigger(new PfdInit(topology, Assignment3Executor.Internal, Assignment3Executor.BoundDelay), pfd.getControl());
-		trigger(new RiwcInit(), riwcm.getControl());
-		trigger(new Application3Init(), app.getControl());
+		trigger(new RiwcInit(topology), riwc.getControl());
+		trigger(new Application3Init(commandScript, neighborSet, self), app.getControl());
 
 		// connect the components
 		connect(app.getNegative(Timer.class), time.getPositive(Timer.class));
-		connect(app.getNegative(AtomicRegisterLink.class), riwcm
+		connect(app.getNegative(AtomicRegisterLink.class), riwc
 				.getPositive(AtomicRegisterLink.class));
 
-		connect(riwcm.getNegative(PfdLink.class), pfd.getPositive(PfdLink.class));
-		connect(riwcm.getNegative(BebLink.class), beb
-				.getPositive(BebLink.class));
-		connect(riwcm.getNegative(PerfectPointToPointLink.class), beb
+		connect(riwc.getNegative(PfdLink.class), pfd.getPositive(PfdLink.class));
+		connect(riwc.getNegative(BebLink.class), beb.getPositive(BebLink.class));
+		connect(riwc.getNegative(PerfectPointToPointLink.class), pp2p
 				.getPositive(PerfectPointToPointLink.class));
 		
 		connect(pfd.getNegative(PerfectPointToPointLink.class), pp2p.getPositive(PerfectPointToPointLink.class));

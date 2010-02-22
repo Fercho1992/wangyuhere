@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.kth.ict.id2203.application.ApplicationContinue;
-import se.kth.ict.id2203.assignment1.applicatoin.Application1bInit;
 import se.kth.ict.id2203.assignment3.atomicRegister.AtomicRegisterLink;
 import se.kth.ict.id2203.assignment3.atomicRegister.ReadRequest;
 import se.kth.ict.id2203.assignment3.atomicRegister.ReadResponse;
@@ -24,6 +23,7 @@ public class Application3 extends ComponentDefinition {
 
 	Positive<Timer> timer = positive(Timer.class);
 	Positive<AtomicRegisterLink> arl = positive(AtomicRegisterLink.class);
+	//Positive<BebLink> bl = positive(BebLink.class);
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(Application3.class);
@@ -39,8 +39,8 @@ public class Application3 extends ComponentDefinition {
 		subscribe(handleWriteResponse, arl);
 	}
 
-	Handler<Application1bInit> handleInit = new Handler<Application1bInit>() {
-		public void handle(Application1bInit event) {
+	Handler<Application3Init> handleInit = new Handler<Application3Init>() {
+		public void handle(Application3Init event) {
 			commands = event.getCommandScript().split(":");
 			lastCommand = -1;
 		}
@@ -62,7 +62,7 @@ public class Application3 extends ComponentDefinition {
 
 		@Override
 		public void handle(ReadResponse event) {
-			// TODO Auto-generated method stub
+			logger.info("Read register[{}]={}", event.getRegister(), event.getValue());
 		}
 		
 	};
@@ -71,7 +71,7 @@ public class Application3 extends ComponentDefinition {
 
 		@Override
 		public void handle(WriteResponse event) {
-			// TODO Auto-generated method stub
+			logger.info("Write register[{}] Return!", event.getRegister());
 		}
 		
 	};
@@ -108,7 +108,7 @@ public class Application3 extends ComponentDefinition {
 
 	private void doCommand(String cmd) {
 		if (cmd.startsWith("W")) {
-			doWrite(cmd.substring(1));
+			doWrite(0, Integer.parseInt(cmd.substring(1)));
 			doNextCommand();
 		} else if (cmd.startsWith("D")) {
 			doSleep(Integer.parseInt(cmd.substring(1)));
@@ -118,7 +118,7 @@ public class Application3 extends ComponentDefinition {
 			doHelp();
 			doNextCommand();
 		} else if(cmd.startsWith("R")) {
-			doRead();
+			doRead(0);
 			doNextCommand();
 		} else if (cmd.trim().equals("")) {
 			doNextCommand();
@@ -137,12 +137,14 @@ public class Application3 extends ComponentDefinition {
 		logger.info("X: terminates this process");
 	}
 
-	private final void doWrite(String m) {
-		trigger(new WriteRequest(m), arl);
+	private final void doWrite(int r, int v) {
+		logger.info("Write register[{}]={}", r, v);
+		trigger(new WriteRequest(r, v), arl);
 	}
 	
-	private final void doRead() {
-		trigger(new ReadRequest(), arl);
+	private final void doRead(int r) {
+		logger.info("Read register[{}]", r);
+		trigger(new ReadRequest(r), arl);
 	}
 	
 	private void doSleep(long delay) {
