@@ -4,4 +4,10 @@ import se.sics.kompics.PortType;
 
 public class AtomicRegisterLink extends PortType {
 
+	{
+		positive(ReadResponse.class);
+		positive(WriteResponse.class);
+		negative(ReadRequest.class);
+		negative(WriteRequest.class);
+	}
 }

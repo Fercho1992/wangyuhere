@@ -4,14 +4,22 @@ import se.sics.kompics.Event;
 
 public class WriteRequest extends Event {
 
-	private final String value;
+	private final int register;
+	private final int value;
 	
-	public WriteRequest(String n) {
+	public WriteRequest(int r, int n) {
+		register = r;
 		value = n;
 	}
 
-	public String getValue() {
+	public int getValue() {
 		return value;
 	}
+
+	public int getRegister() {
+		return register;
+	}
+	
+	
 
 }
