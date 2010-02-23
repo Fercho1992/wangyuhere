@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.kth.ict.id2203.assignment3.beb.BebBroadcast;
-import se.kth.ict.id2203.assignment3.beb.BebDeliver;
 import se.kth.ict.id2203.assignment3.beb.BebLink;
 import se.kth.ict.id2203.pfd.CrashEvent;
 import se.kth.ict.id2203.pfd.PfdLink;
@@ -38,17 +37,17 @@ public class RIWC extends ComponentDefinition {
 	private ArrayList<Set<Address>> writeSet = new ArrayList<Set<Address>>(REGNUM);
 	private boolean[] reading = new boolean[REGNUM];
 	private int[] reqid = new int[REGNUM];
-	private int[] readval = new int[REGNUM];;
-	private int[] v = new int[REGNUM];;
-	private int[] ts = new int[REGNUM];;
-	private int[] mrank = new int[REGNUM];;
+	private int[] readval = new int[REGNUM];
+	private int[] v = new int[REGNUM];
+	private int[] ts = new int[REGNUM];
+	private int[] mrank = new int[REGNUM];
 	
 	
 	public RIWC() {
 		subscribe(handleInit, control);
 		subscribe(handleReadRequest, arl);
 		subscribe(handleWriteRequest, arl);
-		subscribe(handleBebDeliver, bl);
+		subscribe(handleWriteMessage, bl);
 		subscribe(handleAckMessage, pp2p);
 		subscribe(handleCrashEvent, pl);
 	}
@@ -71,8 +70,6 @@ public class RIWC extends ComponentDefinition {
 				ts[in] = 0;
 				mrank[in] = 0;				
 			}
-			
-			logger.debug("RIWC init");
 		}
 	
 	};
@@ -99,7 +96,7 @@ public class RIWC extends ComponentDefinition {
 			readval[r] = v[r];
 			WriteMessage wm = new WriteMessage(self, r, reqid[r], ts[r], mrank[r], v[r]);
 			trigger(new BebBroadcast(wm), bl);
-			logger.debug(wm.toString());
+			logger.debug("Read Request send", wm);
 		}
 		
 	};
@@ -114,27 +111,26 @@ public class RIWC extends ComponentDefinition {
 			writeSet.get(r).clear();
 			WriteMessage wm = new WriteMessage(self, r, reqid[r], ts[r]+1, i, val);
 			trigger(new BebBroadcast(wm), bl);
-			logger.debug(wm.toString());
+			logger.debug("Write Request send", wm);
 		}
 	};
 	
-	private Handler<BebDeliver> handleBebDeliver = new Handler<BebDeliver>() {
+	private Handler<WriteMessage> handleWriteMessage = new Handler<WriteMessage>() {
 
 		@Override
-		public void handle(BebDeliver event) {
-			WriteMessage wm = event.getMessage();
-			int r = wm.getRegister();
-			int id = wm.getReqid();
-			int t = wm.getTs();
-			int j = wm.getRank();
-			int val = wm.getValue();
+		public void handle(WriteMessage event) {
+			int r = event.getRegister();
+			int id = event.getReqid();
+			int t = event.getTs();
+			int j = event.getRank();
+			int val = event.getValue();
 			if(t>ts[r] && j>mrank[r]) {
 				v[r] = val;
 				ts[r] = t;
 				mrank[r] = j;
 			}
-			AckMessage am = new AckMessage(wm.getSource(), r, id);
-			trigger(new Pp2pSend(self, am), pp2p);
+			AckMessage am = new AckMessage(self, r, id);
+			trigger(new Pp2pSend(event.getSource(), am), pp2p);
 			logger.debug(am.toString());
 		}
 		
@@ -144,6 +140,7 @@ public class RIWC extends ComponentDefinition {
 
 		@Override
 		public void handle(AckMessage event) {
+			logger.debug("Receive Ack:{}", event);
 			int id = event.getReqid();
 			int r = event.getRegister();
 			if(id == reqid[r]) {

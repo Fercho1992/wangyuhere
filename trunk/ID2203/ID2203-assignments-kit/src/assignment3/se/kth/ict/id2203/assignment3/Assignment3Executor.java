@@ -30,8 +30,17 @@ public class Assignment3Executor {
 				command(3, "D10000:R");
 			}
 		};
+		
+		Scenario scenario2 = new Scenario(Assignment3bMain.class) {
+			{
+				command(1, "D30000");
+				command(2, "D500:W4:D25000");
+				command(3, "D10000:R");
+			}
+		};
 
-		scenario1.executeOn(topology1);
+		//scenario1.executeOn(topology1);
+		scenario2.executeOn(topology1);
 
 	}
 

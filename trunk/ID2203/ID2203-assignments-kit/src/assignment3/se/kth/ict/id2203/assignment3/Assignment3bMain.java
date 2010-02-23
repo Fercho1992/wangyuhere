@@ -86,7 +86,7 @@ public class Assignment3bMain extends ComponentDefinition {
 
 		connect(riwcm.getNegative(BebLink.class), beb
 				.getPositive(BebLink.class));
-		connect(riwcm.getNegative(PerfectPointToPointLink.class), beb
+		connect(riwcm.getNegative(PerfectPointToPointLink.class), pp2p
 				.getPositive(PerfectPointToPointLink.class));
 
 		connect(beb.getNegative(PerfectPointToPointLink.class), pp2p

@@ -17,6 +17,6 @@ public class CrashEvent extends Event {
 	
 	@Override
 	public String toString() {
-		return crashNode.toString() + "is crashed!";
+		return crashNode.toString() + " is crashed!";
 	}
 }
