@@ -1,27 +1,18 @@
 package se.kth.ict.id2203.assignment3.atomicRegister;
 
-import java.io.Serializable;
-
-import se.kth.ict.id2203.assignment3.beb.BebDeliver;
+import se.kth.ict.id2203.pp2p.Pp2pDeliver;
 import se.sics.kompics.address.Address;
 
-public class WriteMessage extends BebDeliver implements Serializable {
+public class ReadValueMessage extends Pp2pDeliver {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6178010430649566294L;
-	
 	private final int register;
 	private final int reqid;
 	private final int ts;
 	private final int rank;
 	private final int value;
-	private final Address source;
 	
-	public WriteMessage(Address source, int r, int i, int j, int k, int l) {
-		super();
-		this.source = source;
+	protected ReadValueMessage(Address source, int r, int i, int j, int k, int l) {
+		super(source);
 		register = r;
 		reqid = i;
 		ts = j;
@@ -48,16 +39,16 @@ public class WriteMessage extends BebDeliver implements Serializable {
 	public int getValue() {
 		return value;
 	}
-	
-	
-	public Address getSource() {
-		return source;
-	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7450275478629639764L;
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\n======WriteMessage=========\n");
+		sb.append("\n======ReadValueMessage======\n");
 		sb.append("Source = " + getSource() + "\n");
 		sb.append("Register = " + register + "\n");
 		sb.append("Reqid = " + reqid + "\n");
@@ -67,6 +58,4 @@ public class WriteMessage extends BebDeliver implements Serializable {
 		sb.append("===========================\n");
 		return sb.toString();
 	}
-	
-
 }
