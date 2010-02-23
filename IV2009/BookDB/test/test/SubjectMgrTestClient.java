@@ -85,14 +85,6 @@ public class SubjectMgrTestClient extends JFrame {
 		return taResult;
 	}
 
-	private JButton getJButton1() {
-		if (btnAll == null) {
-			btnAll = new JButton();
-			btnAll.setText("Get All");
-		}
-		return btnAll;
-	}
-
 	private JTextField getTxtName() {
 		if (txtName == null) {
 			txtName = new JTextField();
