@@ -84,9 +84,9 @@ public class RIWCM extends ComponentDefinition {
 			reading[r] = true;
 			readSet.get(r).clear();
 			writeSet.get(r).clear();
-			WriteMessage wm = new WriteMessage(self, r, reqid[r], 0, 0, 0);
-			trigger(new BebBroadcast(wm), bl);
-			logger.debug("Read Request send", wm);
+			ReadMessage rm = new ReadMessage(self, r, reqid[r]);
+			trigger(new BebBroadcast(rm), bl);
+			logger.debug("Write Request send {}", rm);
 		}
 
 	};
@@ -114,7 +114,7 @@ public class RIWCM extends ComponentDefinition {
 			int r = event.getRegister();
 			int id = event.getReqid();
 			ReadValueMessage rvm = new ReadValueMessage(self, r, id, ts[r], mrank[r], v[r]);
-			trigger(new Pp2pSend(self, rvm), pp2p);
+			trigger(new Pp2pSend(event.getSource(), rvm), pp2p);
 			logger.debug("Send ReadValueMessage {}", rvm);
 		}
 
@@ -124,6 +124,7 @@ public class RIWCM extends ComponentDefinition {
 
 		@Override
 		public void handle(ReadValueMessage event) {
+			logger.debug("Receive ReadValueMessage from {}", event.getSource());
 			int r = event.getRegister();
 			int id = event.getReqid();
 			int t = event.getTs();
@@ -155,6 +156,7 @@ public class RIWCM extends ComponentDefinition {
 					trigger(new BebBroadcast(wm), bl);
 					logger.debug("Check Read Set send {}", wm);
 				}
+				readSet.get(r).clear();
 			}
 		}
 	}
@@ -183,6 +185,7 @@ public class RIWCM extends ComponentDefinition {
 				v[r] = val;
 				ts[r] = t;
 				mrank[r] = j;
+				logger.debug("Change value to {}", val);
 			}
 			AckMessage am = new AckMessage(self, r, id);
 			trigger(new Pp2pSend(event.getSource(), am), pp2p);
@@ -199,6 +202,7 @@ public class RIWCM extends ComponentDefinition {
 			int id = event.getReqid();
 			if(id == reqid[r]) {
 				writeSet.get(r).add(event.getSource());
+				logger.debug("do check write set");
 				doCheckWriteSet();
 			}
 		}
@@ -213,6 +217,7 @@ public class RIWCM extends ComponentDefinition {
 				} else {
 					trigger(new WriteResponse(r), arl);
 				}
+				writeSet.get(r).clear();
 			}
 		}
 	}
