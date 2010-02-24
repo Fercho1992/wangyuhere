@@ -114,7 +114,7 @@ public class RIWC extends ComponentDefinition {
 			logger.debug("Write Request send", wm);
 		}
 	};
-	
+	// bebDeliver | pj, [Write, r, id, (t, j), val]
 	private Handler<WriteMessage> handleWriteMessage = new Handler<WriteMessage>() {
 
 		@Override
@@ -124,7 +124,7 @@ public class RIWC extends ComponentDefinition {
 			int t = event.getTs();
 			int j = event.getRank();
 			int val = event.getValue();
-			if(t>ts[r] && j>mrank[r]) {
+			if(t>ts[r] || (t == ts[r] && j>mrank[r])) {
 				v[r] = val;
 				ts[r] = t;
 				mrank[r] = j;
@@ -135,7 +135,7 @@ public class RIWC extends ComponentDefinition {
 		}
 		
 	};
-	
+	// pp2pDeliver | pj, [ACK, r, id]
 	private Handler<AckMessage> handleAckMessage = new Handler<AckMessage>() {
 
 		@Override
@@ -149,14 +149,14 @@ public class RIWC extends ComponentDefinition {
 			}
 		}
 	};
-	
+	// whether sub is a sub set of full
 	private boolean isSubSet(Set<Address> sub, Set<Address> full) {
 		for(Address a : sub) {
 			if(!full.contains(a)) return false;
 		}
 		return true;
 	}
-	
+	// exists r such that correct <= writeSet[r]
 	private void checkWriteSet() {
 		for(int r = 0; r < REGNUM; r++) {
 			if(isSubSet(correct, writeSet.get(r))) {

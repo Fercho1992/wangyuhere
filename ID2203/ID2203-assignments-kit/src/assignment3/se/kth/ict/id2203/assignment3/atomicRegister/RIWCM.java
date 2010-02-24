@@ -51,7 +51,7 @@ public class RIWCM extends ComponentDefinition {
 		subscribe(handleReadValueMessage, pp2p);
 		subscribe(handleAckMessage, pp2p);
 	}
-
+	// Init
 	private Handler<RiwcInit> handleInit = new Handler<RiwcInit>() {
 
 		@Override
@@ -74,7 +74,7 @@ public class RIWCM extends ComponentDefinition {
 		}
 
 	};
-
+	// nn-aRegRead | r
 	private Handler<ReadRequest> handleReadRequest = new Handler<ReadRequest>() {
 
 		@Override
@@ -86,10 +86,11 @@ public class RIWCM extends ComponentDefinition {
 			writeSet.get(r).clear();
 			ReadMessage rm = new ReadMessage(self, r, reqid[r]);
 			trigger(new BebBroadcast(rm), bl);
-			logger.debug("Write Request send {}", rm);
+			logger.debug("Read Request broadcast {}", rm);
 		}
 
 	};
+	// nn-aRegWrite | r, val
 	private Handler<WriteRequest> handleWriteRequest = new Handler<WriteRequest>() {
 
 		@Override
@@ -102,11 +103,11 @@ public class RIWCM extends ComponentDefinition {
 			writeSet.get(r).clear();
 			ReadMessage rm = new ReadMessage(self, r, reqid[r]);
 			trigger(new BebBroadcast(rm), bl);
-			logger.debug("Write Request send {}", rm);
+			logger.debug("Write Request broadcast {}", rm);
 		}
 
 	};
-
+	// bebDeliver | pj, [Read, r, reqid[r]]
 	private Handler<ReadMessage> handleReadMessage = new Handler<ReadMessage>() {
 
 		@Override
@@ -115,11 +116,11 @@ public class RIWCM extends ComponentDefinition {
 			int id = event.getReqid();
 			ReadValueMessage rvm = new ReadValueMessage(self, r, id, ts[r], mrank[r], v[r]);
 			trigger(new Pp2pSend(event.getSource(), rvm), pp2p);
-			logger.debug("Send ReadValueMessage {}", rvm);
+			logger.debug("Send ReadValueMessage to {} {}", event.getSource(), rvm);
 		}
 
 	};
-	
+	// pp2pDeliver | pj, [ReadVal, r, id (t, rk), val]
 	private Handler<ReadValueMessage> handleReadValueMessage = new Handler<ReadValueMessage>() {
 
 		@Override
@@ -138,7 +139,7 @@ public class RIWCM extends ComponentDefinition {
 		}
 
 	};
-	
+	// check exists r such that |readSet[r]| > N/2 and do...
 	private void doCheckReadSet() {
 		for(int r = 0; r < readSet.size(); r++) {
 			if(readSet.get(r).size() > N/2) {
@@ -150,17 +151,17 @@ public class RIWCM extends ComponentDefinition {
 				if(reading[r]) {
 					WriteMessage wm = new WriteMessage(self, r, reqid[r], t, rk, readval[r]);
 					trigger(new BebBroadcast(wm), bl);
-					logger.debug("Check Read Set send {}", wm);
+					logger.debug("Check Read Set for reading broadcast {}", wm);
 				} else {
 					WriteMessage wm = new WriteMessage(self, r, reqid[r], t+1, i, writeval[r]);
 					trigger(new BebBroadcast(wm), bl);
-					logger.debug("Check Read Set send {}", wm);
+					logger.debug("Check Read Set for writing broadcast {}", wm);
 				}
 				readSet.get(r).clear();
 			}
 		}
 	}
-	
+	// Get the ReadItem with the highest value in the Set
 	private ReadItem getHighestValue(Set<ReadItem> set) {
 		if(set.size() == 0) return null;
 		ReadItem max = set.iterator().next();
@@ -171,7 +172,7 @@ public class RIWCM extends ComponentDefinition {
 		}
 		return max;
 	}
-	
+	// bebDeliver | pj, [Write, r, id, (t, j), val]
 	private Handler<WriteMessage> handleWriteMessage = new Handler<WriteMessage>() {
 
 		@Override
@@ -181,7 +182,7 @@ public class RIWCM extends ComponentDefinition {
 			int t = event.getTs();
 			int j = event.getRank();
 			int val = event.getValue();
-			if(t>ts[r] && j>mrank[r]) {
+			if(t>ts[r] || (t == ts[r] && j>mrank[r])) {
 				v[r] = val;
 				ts[r] = t;
 				mrank[r] = j;
@@ -189,11 +190,11 @@ public class RIWCM extends ComponentDefinition {
 			}
 			AckMessage am = new AckMessage(self, r, id);
 			trigger(new Pp2pSend(event.getSource(), am), pp2p);
-			logger.debug("Send Ack {}", am);
+			logger.debug("Send Ack to {} {}", event.getSource(), am);
 		}
 
 	};
-
+	// pp2pDeliver | pj, [ACK, r, id]
 	private Handler<AckMessage> handleAckMessage = new Handler<AckMessage>() {
 
 		@Override
@@ -202,12 +203,11 @@ public class RIWCM extends ComponentDefinition {
 			int id = event.getReqid();
 			if(id == reqid[r]) {
 				writeSet.get(r).add(event.getSource());
-				logger.debug("do check write set");
 				doCheckWriteSet();
 			}
 		}
 	};
-	
+	// check exists r such that |writeSet[r]| > N/2 do ...
 	private void doCheckWriteSet() {
 		for(int r = 0; r < writeSet.size(); r++) {
 			if(writeSet.get(r).size() > N/2) {
