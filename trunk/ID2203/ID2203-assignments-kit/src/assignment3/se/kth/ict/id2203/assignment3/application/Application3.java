@@ -23,7 +23,6 @@ public class Application3 extends ComponentDefinition {
 
 	Positive<Timer> timer = positive(Timer.class);
 	Positive<AtomicRegisterLink> arl = positive(AtomicRegisterLink.class);
-	//Positive<BebLink> bl = positive(BebLink.class);
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(Application3.class);
@@ -54,7 +53,7 @@ public class Application3 extends ComponentDefinition {
 
 	Handler<ApplicationContinue> handleContinue = new Handler<ApplicationContinue>() {
 		public void handle(ApplicationContinue event) {
-			doNextCommand();
+			doNextCommand();	
 		}
 	};
 	
@@ -62,7 +61,8 @@ public class Application3 extends ComponentDefinition {
 
 		@Override
 		public void handle(ReadResponse event) {
-			logger.info("Read register[{}]={}", event.getRegister(), event.getValue());
+			logger.info("Response: Read register[{}]={}", event.getRegister(), event.getValue());
+			doNextCommand();
 		}
 		
 	};
@@ -71,7 +71,8 @@ public class Application3 extends ComponentDefinition {
 
 		@Override
 		public void handle(WriteResponse event) {
-			logger.info("Write register[{}] Return!", event.getRegister());
+			logger.info("Response: Write register[{}]", event.getRegister());
+			doNextCommand();
 		}
 		
 	};
@@ -109,7 +110,6 @@ public class Application3 extends ComponentDefinition {
 	private void doCommand(String cmd) {
 		if (cmd.startsWith("W")) {
 			doWrite(0, Integer.parseInt(cmd.substring(1)));
-			doNextCommand();
 		} else if (cmd.startsWith("D")) {
 			doSleep(Integer.parseInt(cmd.substring(1)));
 		} else if (cmd.startsWith("X")) {
@@ -119,7 +119,6 @@ public class Application3 extends ComponentDefinition {
 			doNextCommand();
 		} else if(cmd.startsWith("R")) {
 			doRead(0);
-			doNextCommand();
 		} else if (cmd.trim().equals("")) {
 			doNextCommand();
 		} else {
@@ -138,18 +137,17 @@ public class Application3 extends ComponentDefinition {
 	}
 
 	private final void doWrite(int r, int v) {
-		logger.info("Write register[{}]={}", r, v);
+		logger.info("Request: Write register[{}]={}", r, v);
 		trigger(new WriteRequest(r, v), arl);
 	}
 	
 	private final void doRead(int r) {
-		logger.info("Read register[{}]", r);
+		logger.info("Request: Read register[{}]", r);
 		trigger(new ReadRequest(r), arl);
 	}
 	
 	private void doSleep(long delay) {
 		logger.info("Sleeping {} milliseconds...", delay);
-
 		ScheduleTimeout st = new ScheduleTimeout(delay);
 		st.setTimeoutEvent(new ApplicationContinue(st));
 		trigger(st, timer);
