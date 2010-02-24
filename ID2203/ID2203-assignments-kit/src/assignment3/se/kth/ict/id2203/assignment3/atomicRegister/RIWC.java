@@ -166,6 +166,7 @@ public class RIWC extends ComponentDefinition {
 				} else {
 					trigger(new WriteResponse(r), arl);
 				}
+				writeSet.get(r).clear();
 			}
 		}
 	}
