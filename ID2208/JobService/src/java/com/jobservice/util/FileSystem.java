@@ -8,15 +8,17 @@ package com.jobservice.util;
 import com.jobservice.University;
 import hw1.Main;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class FileSystem {
 
-    public static String SERVER_PATH = "E:\\Study\\ID2208\\homework\\hw2\\JobService\\web\\";
+    public static String SERVER_PATH = "E:\\Study\\ID2212\\homework\\project\\JobService\\web\\";
 
     public static String readFile(String file) {
         StringBuilder sb = new StringBuilder();
@@ -48,5 +50,15 @@ public class FileSystem {
 
     public static void process(String profile, String trans, String record, String info, String cv){
         Main.process(SERVER_PATH + profile, SERVER_PATH + trans, SERVER_PATH + record, SERVER_PATH + info, SERVER_PATH + cv);
+    }
+
+    public static Properties getProperties(String file) {
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream(SERVER_PATH+file));
+        } catch (IOException ex) {
+            Logger.getLogger(FileSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return properties;
     }
 }
