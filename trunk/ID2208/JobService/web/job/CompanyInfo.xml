@@ -10,4 +10,12 @@
 		<companyInfo:classification>IT</companyInfo:classification>
 		<companyInfo:region>foreign</companyInfo:region>
 	</companyInfo:companyInfo>
+        <companyInfo:companyInfo name="Huawei">
+		<companyInfo:classification>IT</companyInfo:classification>
+		<companyInfo:region>foreign</companyInfo:region>
+	</companyInfo:companyInfo>
+	<companyInfo:companyInfo name="Oracle">
+		<companyInfo:classification>IT</companyInfo:classification>
+		<companyInfo:region>foreign</companyInfo:region>
+	</companyInfo:companyInfo>
 </companyInfo:companies>

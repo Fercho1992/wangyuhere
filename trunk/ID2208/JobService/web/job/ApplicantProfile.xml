@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:applicantProfile name="Trevor" xmlns:ns2="http://www.example.org/ApplicantProfile" xmlns:ns4="http://www.example.org/EmploymentRecord" xmlns:ns3="http://www.example.org/ShortCV" xmlns:ns5="http://www.example.org/CompanyInfo" xmlns:ns6="http://www.example.org/Transcripts">
+<ns2:applicantProfile name="Andy" xmlns:ns2="http://www.example.org/ApplicantProfile" xmlns:ns4="http://www.example.org/EmploymentRecord" xmlns:ns3="http://www.example.org/ShortCV" xmlns:ns5="http://www.example.org/CompanyInfo" xmlns:ns6="http://www.example.org/Transcripts">
     <ns3:personalInformation>
-        <ns3:age>26</ns3:age>
-        <ns3:country>Germany</ns3:country>
-        <ns3:hobby>Coding</ns3:hobby>
+        <ns3:age>27</ns3:age>
+        <ns3:country>Netherlands</ns3:country>
+        <ns3:hobby>X-Sports</ns3:hobby>
         <ns3:gender>male</ns3:gender>
-        <ns3:personalStatement>I will never surrender!</ns3:personalStatement>
+        <ns3:personalStatement>I'm the man!</ns3:personalStatement>
     </ns3:personalInformation>
     <ns3:contactInformation>
-        <ns3:email>Trevor@kth.se</ns3:email>
-        <ns3:phoneNo.>707070707</ns3:phoneNo.>
+        <ns3:email>Andy@kth.se</ns3:email>
+        <ns3:phoneNo.>712345678</ns3:phoneNo.>
     </ns3:contactInformation>
     <ns2:education>
         <ns2:educationItem>
-            <ns2:university>KTH</ns2:university>
+            <ns2:university>CTH</ns2:university>
             <ns2:degree>Master</ns2:degree>
             <ns2:courses>
                 <course>
-                    <course_name>Web Services</course_name>
-                    <grade>A</grade>
+                    <course_name>Distributed System</course_name>
+                    <grade>B</grade>
                     <ect>7.5</ect>
                 </course>
                 <course>
-                    <course_name>Java</course_name>
-                    <grade>C</grade>
+                    <course_name>MultiAgentSystem</course_name>
+                    <grade>A</grade>
                     <ect>7.5</ect>
                 </course>
                 <course>
@@ -33,7 +33,7 @@
                 </course>
                 <course>
                     <course_name>Software Engineering</course_name>
-                    <grade>B</grade>
+                    <grade>C</grade>
                     <ect>7.5</ect>
                 </course>
             </ns2:courses>
@@ -42,16 +42,16 @@
     </ns2:education>
     <ns2:workExperience>
         <ns2:work>
-            <ns4:name>Ericsson</ns4:name>
+            <ns4:name>Huawei</ns4:name>
             <ns4:positionorTitle>programmer</ns4:positionorTitle>
             <ns4:lengthofTime>2008.5 ~ present</ns4:lengthofTime>
             <ns2:classification>IT</ns2:classification>
-            <ns2:region>domestic</ns2:region>
+            <ns2:region>foreign</ns2:region>
         </ns2:work>
         <ns2:work>
-            <ns4:name>IBM</ns4:name>
+            <ns4:name>Oracle</ns4:name>
             <ns4:positionorTitle>tester</ns4:positionorTitle>
-            <ns4:lengthofTime>2006.4 ~ 2008.4</ns4:lengthofTime>
+            <ns4:lengthofTime>2005.4 ~ 2008.4</ns4:lengthofTime>
             <ns2:classification>IT</ns2:classification>
             <ns2:region>foreign</ns2:region>
         </ns2:work>
