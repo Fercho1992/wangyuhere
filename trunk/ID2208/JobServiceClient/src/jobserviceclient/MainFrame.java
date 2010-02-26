@@ -47,8 +47,6 @@ public class MainFrame extends javax.swing.JFrame {
         btnInfo = new javax.swing.JButton();
         btnJob = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jButton1.setText("Choose");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,6 +150,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File("."));
 
         fc.setDialogTitle("Open class File");
 
@@ -169,8 +168,8 @@ public class MainFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Input is empty!");
                 return;
             }
-            jobserviceclient.JobService service = new jobserviceclient.JobService();
-            jobserviceclient.Job port = service.getJobPort();
+            com.jobservice.JobService service = new com.jobservice.JobService();
+            com.jobservice.Job port = service.getJobPort();
 
             java.lang.String shortCV = FileSystem.readFile(txtCV.getText());
             java.lang.String name = txtName.getText();
