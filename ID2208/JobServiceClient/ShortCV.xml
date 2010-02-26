@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shortCV:shortCV name="Andy" xmlns:shortCV="http://www.example.org/ShortCV" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.example.org/ShortCV ShortCV.xsd ">
+  <shortCV:personalInformation>
+    <shortCV:age>27</shortCV:age>
+    <shortCV:country>Netherlands</shortCV:country>
+    <shortCV:hobby>X-Sports</shortCV:hobby>
+    <shortCV:gender>male</shortCV:gender>
+    <shortCV:personalStatement>I'm the man!</shortCV:personalStatement>
+  </shortCV:personalInformation>
+  <shortCV:contactInformation>
+    <shortCV:email>Andy@kth.se</shortCV:email>
+    <shortCV:phoneNo.>0712345678</shortCV:phoneNo.>
+  </shortCV:contactInformation>
+</shortCV:shortCV>
