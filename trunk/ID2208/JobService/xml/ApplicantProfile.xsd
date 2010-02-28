@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.example.org/ApplicantProfile"
+	elementFormDefault="qualified"
+	xmlns:applicantProfile="http://www.example.org/ApplicantProfile"
+	xmlns:p="http://www.example.org/ShortCV"
+	xmlns:transcripts="http://www.example.org/Transcripts"
+	xmlns:employmentRecord="http://www.example.org/EmploymentRecord"
+	xmlns:companyInfo="http://www.example.org/CompanyInfo">
+
+
+
+
+	<import schemaLocation="ShortCV.xsd"
+		namespace="http://www.example.org/ShortCV">
+	</import>
+	<import schemaLocation="Transcripts.xsd"
+		namespace="http://www.example.org/Transcripts">
+	</import>
+	<import schemaLocation="CompanyInfo.xsd"
+		namespace="http://www.example.org/CompanyInfo">
+	</import>
+	<import schemaLocation="EmploymentRecord.xsd" namespace="http://www.example.org/EmploymentRecord"></import>
+	<element name="applicantProfile"
+		type="applicantProfile:applicantProfileType">
+	</element>
+
+
+	<complexType name="applicantProfileType">
+		<complexContent>
+			<extension base="p:cvType">
+				<sequence>
+					<element name="education"
+						type="applicantProfile:educationType">
+					</element>
+					<element name="workExperience"
+						type="applicantProfile:workExperienceType">
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="educationType">
+		<sequence>
+			<element name="educationItem"
+				type="applicantProfile:educationItemType" maxOccurs="unbounded"
+				minOccurs="0">
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="educationItemType">
+
+		<sequence>
+			<element name="university" type="string"></element>
+			<element name="degree" type="transcripts:degreeType"></element>
+			<element name="courses" type="transcripts:coursesType"></element>
+			<element name="gpa" type="float"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="workExperienceType">
+		<sequence>
+			<element name="work" type="applicantProfile:workType"
+				maxOccurs="unbounded" minOccurs="0">
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="workType">
+		<complexContent>
+			<extension base="employmentRecord:companyType">
+				<sequence>
+					<element name="classification" type="string"></element>
+					<element name="region">
+						<simpleType>
+							<restriction base="string">
+								<enumeration value="domestic"></enumeration>
+								<enumeration value="foreign"></enumeration>
+							</restriction>
+						</simpleType>
+					</element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+</schema>
