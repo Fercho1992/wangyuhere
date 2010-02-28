@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8080/JobService/CompanyService?wsdl" uri="wsdl/localhost_8080/JobService/CompanyService.wsdl"/>
+    <system systemId="http://localhost:8080/JobService/CompanyService?xsd=1" uri="wsdl/localhost_8080/JobService/CompanyService.xsd_1.xsd"/>
+    <system systemId="http://localhost:47658/JobService/CompanyService?wsdl" uri="wsdl/localhost_47658/JobService/CompanyService.wsdl"/>
+    <system systemId="http://localhost:47658/JobService/CompanyService?xsd=1" uri="wsdl/localhost_47658/JobService/CompanyService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/JobService/EmploymentService?wsdl" uri="wsdl/localhost_8080/JobService/EmploymentService.wsdl"/>
+    <system systemId="http://localhost:8080/JobService/EmploymentService?xsd=1" uri="wsdl/localhost_8080/JobService/EmploymentService.xsd_1.xsd"/>
+    <system systemId="http://localhost:47658/JobService/EmploymentService?wsdl" uri="wsdl/localhost_47658/JobService/EmploymentService.wsdl"/>
+    <system systemId="http://localhost:47658/JobService/EmploymentService?xsd=1" uri="wsdl/localhost_47658/JobService/EmploymentService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/JobService/UniversityService?wsdl" uri="wsdl/localhost_8080/JobService/UniversityService.wsdl"/>
+    <system systemId="http://localhost:8080/JobService/UniversityService?xsd=1" uri="wsdl/localhost_8080/JobService/UniversityService.xsd_1.xsd"/>
+    <system systemId="http://localhost:47658/JobService/UniversityService?wsdl" uri="wsdl/localhost_47658/JobService/UniversityService.wsdl"/>
+    <system systemId="http://localhost:47658/JobService/UniversityService?xsd=1" uri="wsdl/localhost_47658/JobService/UniversityService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/JobService/JobService?wsdl" uri="wsdl/localhost_8080/JobService/JobService.wsdl"/>
+    <system systemId="http://localhost:8080/JobService/JobService?xsd=1" uri="wsdl/localhost_8080/JobService/JobService.xsd_1.xsd"/>
+    <system systemId="http://localhost:47658/JobService/JobService?wsdl" uri="wsdl/localhost_47658/JobService/JobService.wsdl"/>
+    <system systemId="http://localhost:47658/JobService/JobService?xsd=1" uri="wsdl/localhost_47658/JobService/JobService.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/JobService/SearchJobService?wsdl" uri="wsdl/localhost_8080/JobService/SearchJobService.wsdl"/>
+    <system systemId="http://localhost:8080/JobService/SearchJobService?xsd=1" uri="wsdl/localhost_8080/JobService/SearchJobService.xsd_1.xsd"/>
+    <system systemId="http://localhost:47658/JobService/SearchJobService?wsdl" uri="wsdl/localhost_47658/JobService/SearchJobService.wsdl"/>
+    <system systemId="http://localhost:47658/JobService/SearchJobService?xsd=1" uri="wsdl/localhost_47658/JobService/SearchJobService.xsd_1.xsd"/>
+</catalog>
+
