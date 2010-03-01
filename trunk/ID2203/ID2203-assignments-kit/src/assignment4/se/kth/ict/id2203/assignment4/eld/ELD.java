@@ -39,7 +39,7 @@ public class ELD extends ComponentDefinition {
 	public ELD() {
 		subscribe(handleEldInit, control);
 		subscribe(handleEldTimeout, timer);
-		subscribe(handleHeartbeat, eld);
+		subscribe(handleHeartbeat, pp2p);
 	}
 	
 	private Handler<EldInit> handleEldInit = new Handler<EldInit>() {
@@ -54,6 +54,7 @@ public class ELD extends ComponentDefinition {
 				trigger(new Pp2pSend(a, new Heartbeat(self)), pp2p);
 			}
 			candidateset = new LinkedHashSet<Address>();
+			period = event.getTimeDelay();
 			startTimer(period);
 			logger.debug("ELD initialized!");
 		}

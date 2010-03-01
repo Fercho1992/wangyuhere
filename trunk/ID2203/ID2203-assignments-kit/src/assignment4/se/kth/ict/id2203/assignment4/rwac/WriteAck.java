@@ -5,9 +5,34 @@ import se.sics.kompics.address.Address;
 
 public class WriteAck extends Pp2pDeliver {
 
-	protected WriteAck(Address source) {
+	private final Address id;
+	private final int ts;
+	
+	protected WriteAck(Address source, Address id, int ts) {
 		super(source);
-		// TODO Auto-generated constructor stub
+		this.id = id;
+		this.ts = ts;
+	}
+
+	public Address getId() {
+		return id;
+	}
+
+
+
+	public int getTs() {
+		return ts;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\n======WriteAck=========\n");
+		sb.append("Source = " + getSource() + "\n");
+		sb.append("id = " + id + "\n");
+		sb.append("ts = " + ts + "\n");
+		sb.append("===========================\n");
+		return sb.toString();
 	}
 
 	/**

@@ -5,6 +5,10 @@ import se.sics.kompics.address.Address;
 
 public class ReadMessage extends BebDeliver {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7142999876445001865L;
 	private final Address source;
 	private final Address id;
 	private final int tstamp;

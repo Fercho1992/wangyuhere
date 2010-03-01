@@ -5,9 +5,27 @@ import se.sics.kompics.address.Address;
 
 public class NAck extends Pp2pDeliver {
 
-	protected NAck(Address source) {
+	private final Address id;
+	protected NAck(Address source, Address id) {
 		super(source);
-		// TODO Auto-generated constructor stub
+		this.id = id;
+	}
+	
+	
+
+	public Address getId() {
+		return id;
+	}
+
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\n==========NAck===========\n");
+		sb.append("Source = " + getSource() + "\n");
+		sb.append("id = " + id + "\n");
+		sb.append("===========================\n");
+		return sb.toString();
 	}
 
 	/**

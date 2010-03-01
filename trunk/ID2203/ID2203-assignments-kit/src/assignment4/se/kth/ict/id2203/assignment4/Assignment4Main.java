@@ -4,11 +4,11 @@ import java.util.Set;
 
 import org.apache.log4j.PropertyConfigurator;
 
-import se.kth.ict.id2203.assignment3.application.Application3;
-import se.kth.ict.id2203.assignment3.application.Application3Init;
 import se.kth.ict.id2203.assignment3.beb.Beb;
 import se.kth.ict.id2203.assignment3.beb.BebInit;
 import se.kth.ict.id2203.assignment3.beb.BebLink;
+import se.kth.ict.id2203.assignment4.application.Application4;
+import se.kth.ict.id2203.assignment4.application.Application4Init;
 import se.kth.ict.id2203.assignment4.eld.ELD;
 import se.kth.ict.id2203.assignment4.eld.EldInit;
 import se.kth.ict.id2203.assignment4.eld.EldLink;
@@ -67,7 +67,7 @@ public class Assignment4Main extends ComponentDefinition {
 		Component eld = create(ELD.class);
 		Component rwac = create(RWAC.class);
 		Component puc = create(PUC.class);
-		Component app = create(Application3.class);
+		Component app = create(Application4.class);
 
 		// handle possible faults in the components
 		subscribe(handleFault, time.getControl());
@@ -89,7 +89,7 @@ public class Assignment4Main extends ComponentDefinition {
 		trigger(new EldInit(topology, Assignment4Executor.TIME_DELAY), eld.getControl());
 		trigger(new AcInit(topology), rwac.getControl());
 		trigger(new UcInit(topology), puc.getControl());
-		trigger(new Application3Init(commandScript, neighborSet, self), app.getControl());
+		trigger(new Application4Init(commandScript, neighborSet, self), app.getControl());
 
 		// connect the components
 		connect(app.getNegative(Timer.class), time.getPositive(Timer.class));
