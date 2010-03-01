@@ -21,5 +21,14 @@ public class AcPropose extends Event {
 		return value;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\n======AcPropose=========\n");
+		sb.append("id = " + id + "\n");
+		sb.append("value = " + value + "\n");
+		sb.append("===========================\n");
+		return sb.toString();
+	}
 	
 }
