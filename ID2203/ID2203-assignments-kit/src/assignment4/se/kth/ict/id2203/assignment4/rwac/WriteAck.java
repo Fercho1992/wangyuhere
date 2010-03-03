@@ -5,16 +5,16 @@ import se.sics.kompics.address.Address;
 
 public class WriteAck extends Pp2pDeliver {
 
-	private final Address id;
+	private final int id;
 	private final int ts;
 	
-	protected WriteAck(Address source, Address id, int ts) {
+	protected WriteAck(Address source, int id, int ts) {
 		super(source);
 		this.id = id;
 		this.ts = ts;
 	}
 
-	public Address getId() {
+	public int getId() {
 		return id;
 	}
 

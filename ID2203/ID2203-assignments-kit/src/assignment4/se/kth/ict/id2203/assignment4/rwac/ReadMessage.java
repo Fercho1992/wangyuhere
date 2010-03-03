@@ -10,9 +10,9 @@ public class ReadMessage extends BebDeliver {
 	 */
 	private static final long serialVersionUID = -7142999876445001865L;
 	private final Address source;
-	private final Address id;
+	private final int id;
 	private final int tstamp;
-	public ReadMessage(Address source, Address id, Integer t) {
+	public ReadMessage(Address source, int id, Integer t) {
 		this.source = source;
 		this.id = id;
 		tstamp = t;
@@ -22,7 +22,7 @@ public class ReadMessage extends BebDeliver {
 		return source;
 	}
 
-	public Address getId() {
+	public int getId() {
 		return id;
 	}
 	public int getTstamp() {

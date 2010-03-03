@@ -10,18 +10,18 @@ public class WriteMessage extends BebDeliver {
 	 */
 	private static final long serialVersionUID = 3183386845774064863L;
 	private final Address source;
-	private final Address id;
+	private final int id;
 	private final int ts;
 	private final int val;
 	
-	public WriteMessage(Address source, Address id, int ts, int val) {
+	public WriteMessage(Address source, int id, int ts, int val) {
 		this.source = source;
 		this.id = id;
 		this.ts = ts;
 		this.val = val;
 	}
 
-	public Address getId() {
+	public int getId() {
 		return id;
 	}
 

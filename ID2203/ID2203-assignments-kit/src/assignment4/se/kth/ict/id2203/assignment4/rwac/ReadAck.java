@@ -5,12 +5,12 @@ import se.sics.kompics.address.Address;
 
 public class ReadAck extends Pp2pDeliver {
 
-	private final Address id;
+	private final int id;
 	private final int wts;
 	private final int val;
 	private final int ts;
 	
-	protected ReadAck(Address source, Address id, int wts, int val, int ts) {
+	protected ReadAck(Address source, int id, int wts, int val, int ts) {
 		super(source);
 		this.id = id;
 		this.wts = wts;
@@ -20,7 +20,7 @@ public class ReadAck extends Pp2pDeliver {
 	
 	
 
-	public Address getId() {
+	public int getId() {
 		return id;
 	}
 

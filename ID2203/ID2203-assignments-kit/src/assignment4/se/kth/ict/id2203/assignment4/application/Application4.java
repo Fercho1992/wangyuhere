@@ -62,7 +62,7 @@ public class Application4 extends ComponentDefinition {
 
 		@Override
 		public void handle(UcDecide event) {
-			logger.info("UcDecide: decide value {} in {}", event.getVal(), event.getId().getId());
+			logger.info("UcDecide: decide value {} in {}", event.getVal(), event.getId());
 		}
 		
 	};
@@ -133,16 +133,7 @@ public class Application4 extends ComponentDefinition {
 
 	private void doPropose(int i, int j) {
 		logger.info("Propose: propose {} on {}", j, i);
-		trigger(new UcPropose(getAddress(i), j), uc);
-	}
-	
-	private Address getAddress(int i) {
-		for(Address a : all) {
-			if(a.getId() == i) {
-				return a;
-			}
-		}
-		return null;
+		trigger(new UcPropose(i, j), uc);
 	}
 	
 	private void printDecisions() {

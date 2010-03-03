@@ -1,19 +1,18 @@
 package se.kth.ict.id2203.assignment4.rwac;
 
 import se.sics.kompics.Event;
-import se.sics.kompics.address.Address;
 
 public class AcDecide extends Event {
 
-	private final Address id;
+	private final int id;
 	private final int val;
 	
-	public AcDecide(Address id, int val) {
+	public AcDecide(int id, int val) {
 		this.id = id;
 		this.val = val;
 	}
 
-	public Address getId() {
+	public int getId() {
 		return id;
 	}
 
