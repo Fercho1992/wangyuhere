@@ -5,15 +5,15 @@ import se.sics.kompics.address.Address;
 
 public class NAck extends Pp2pDeliver {
 
-	private final Address id;
-	protected NAck(Address source, Address id) {
+	private final int id;
+	protected NAck(Address source, int id) {
 		super(source);
 		this.id = id;
 	}
 	
 	
 
-	public Address getId() {
+	public int getId() {
 		return id;
 	}
 

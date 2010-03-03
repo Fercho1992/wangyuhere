@@ -18,7 +18,7 @@ import se.sics.kompics.timer.Timer;
 
 public class ELD extends ComponentDefinition {
 
-	public static final int DELTA = 1000;
+	public static final int DELTA = 200;
 	
 	private static final Logger logger = LoggerFactory
 	.getLogger(ELD.class);
@@ -57,6 +57,7 @@ public class ELD extends ComponentDefinition {
 			period = event.getTimeDelay();
 			startTimer(period);
 			logger.debug("ELD initialized!");
+			logger.debug("ELD select the leader:" + leader.toString());
 		}
 		
 	};
@@ -73,7 +74,6 @@ public class ELD extends ComponentDefinition {
 				}
 			}
 		}
-		logger.trace("ELD select the leader:" + l.toString());
 		return l;
 	}
 	
@@ -90,7 +90,7 @@ public class ELD extends ComponentDefinition {
 		@Override
 		public void handle(EldTimeout event) {
 			Address newleader = select(candidateset);
-			if(!leader.equals(newleader) && newleader != null) {
+			if(newleader != null && !leader.equals(newleader)) {
 				period = period + DELTA;
 				leader = newleader;
 				trigger(new Trust(leader), eld);

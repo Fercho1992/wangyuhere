@@ -30,11 +30,11 @@ public class PUC extends ComponentDefinition {
 	Positive<EldLink> eld = positive(EldLink.class);
 	
 	private Address self;
-	private Set<Address> seenIds;
+	private Set<Integer> seenIds;
 	private boolean leader;
-	private Hashtable<Address, Integer> proposal = new Hashtable<Address, Integer>();
-	private Hashtable<Address, Boolean> proposed = new Hashtable<Address, Boolean>();
-	private Hashtable<Address, Boolean> decided = new Hashtable<Address, Boolean>();
+	private Hashtable<Integer, Integer> proposal = new Hashtable<Integer, Integer>();
+	private Hashtable<Integer, Boolean> proposed = new Hashtable<Integer, Boolean>();
+	private Hashtable<Integer, Boolean> decided = new Hashtable<Integer, Boolean>();
 	
 	public PUC() {
 		subscribe(handleUcInit, control);
@@ -50,7 +50,7 @@ public class PUC extends ComponentDefinition {
 		public void handle(UcInit event) {
 			self = event.getTopology().getSelfAddress();
 			
-			seenIds = new LinkedHashSet<Address>();
+			seenIds = new LinkedHashSet<Integer>();
 			leader = false;
 			
 			logger.debug("PUC initialized!");
@@ -58,13 +58,20 @@ public class PUC extends ComponentDefinition {
 		
 	};
 	
-	private void initInstance(Address id) {
+	private void initInstance(int id) {
 		if(! seenIds.contains(id)) {
 			proposal.put(id, Integer.MIN_VALUE);
 			proposed.put(id, false);
 			decided.put(id, false);
 			seenIds.add(id);
 		}
+	}
+	
+	private void garbageCollect(int id) {
+		seenIds.remove(id);
+		proposal.remove(id);
+		proposed.remove(id);
+		decided.remove(id);
 	}
 	
 	private Handler<Trust> handleTrust = new Handler<Trust>() {
@@ -74,7 +81,7 @@ public class PUC extends ComponentDefinition {
 			Address pi = event.getLeader();
 			if(pi.equals(self)) {
 				leader = true;
-				for(Address id : seenIds) {
+				for(int id : seenIds) {
 					tryPropose(id);
 				}
 			} else {
@@ -89,7 +96,7 @@ public class PUC extends ComponentDefinition {
 		@Override
 		public void handle(UcPropose event) {
 			logger.debug("Receive UcPropose");
-			Address id = event.getId();
+			int id = event.getId();
 			int v = event.getVal();
 			
 			initInstance(id);
@@ -99,8 +106,8 @@ public class PUC extends ComponentDefinition {
 		
 	};
 	
-	private void tryPropose(Address id) {
-		if(leader && !proposed.get(id) && proposal.get(id) != Integer.MIN_VALUE) {
+	private void tryPropose(int id) {
+		if(leader || !proposed.get(id) || proposal.get(id) != Integer.MIN_VALUE) {
 			proposed.put(id, true);
 			AcPropose ap = new AcPropose(id, proposal.get(id));
 			trigger(ap, ac);
@@ -112,14 +119,16 @@ public class PUC extends ComponentDefinition {
 
 		@Override
 		public void handle(AcDecide event) {
-			Address id = event.getId();
+			logger.debug("Received AcDecide");
+			int id = event.getId();
 			int result = event.getVal();
 			
 			if(result != Integer.MIN_VALUE) {
 				trigger(new BebBroadcast(new Decided(id, result)), beb);
 			} else {
-				proposed.put(id, false);
-				tryPropose(id);
+				//proposed.put(id, false);
+				proposal.put(id, result);
+				//tryPropose(id);
 			}
 		}
 		
@@ -130,7 +139,7 @@ public class PUC extends ComponentDefinition {
 
 		@Override
 		public void handle(Decided event) {
-			Address id = event.getId();
+			int id = event.getId();
 			int v = event.getResult();
 			
 			initInstance(id);
@@ -138,6 +147,8 @@ public class PUC extends ComponentDefinition {
 			if(decided.get(id) == null || !decided.get(id)) {
 				decided.put(id, true);
 				trigger(new UcDecide(id, v), uc);
+				// Added Garbage Collect
+				//garbageCollect(id);
 			}
 		}
 		

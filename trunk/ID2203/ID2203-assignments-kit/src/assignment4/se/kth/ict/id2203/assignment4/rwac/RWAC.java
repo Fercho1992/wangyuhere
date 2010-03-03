@@ -29,15 +29,15 @@ public class RWAC extends ComponentDefinition {
 	
 	private Set<Address> all;
 	private Address self;
-	private Set<Address> seenIds;
+	private Set<Integer> seenIds;
 	private int majority;
-	private Hashtable<Address, Integer> tempValue = new Hashtable<Address, Integer>();
-	private Hashtable<Address, Integer> val = new Hashtable<Address, Integer>();
-	private Hashtable<Address, Integer> wAcks = new Hashtable<Address, Integer>();
-	private Hashtable<Address, Integer> rts = new Hashtable<Address, Integer>();
-	private Hashtable<Address, Integer> wts = new Hashtable<Address, Integer>();
-	private Hashtable<Address, Integer> tstamp = new Hashtable<Address, Integer>();
-	private Hashtable<Address, Set<int[]>> readSet = new Hashtable<Address, Set<int[]>>();
+	private Hashtable<Integer, Integer> tempValue = new Hashtable<Integer, Integer>();
+	private Hashtable<Integer, Integer> val = new Hashtable<Integer, Integer>();
+	private Hashtable<Integer, Integer> wAcks = new Hashtable<Integer, Integer>();
+	private Hashtable<Integer, Integer> rts = new Hashtable<Integer, Integer>();
+	private Hashtable<Integer, Integer> wts = new Hashtable<Integer, Integer>();
+	private Hashtable<Integer, Integer> tstamp = new Hashtable<Integer, Integer>();
+	private Hashtable<Integer, Set<int[]>> readSet = new Hashtable<Integer, Set<int[]>>();
 	
 	
 	public RWAC() {
@@ -58,7 +58,7 @@ public class RWAC extends ComponentDefinition {
 			all = event.getTopology().getAllAddresses();
 			self = event.getTopology().getSelfAddress();
 			
-			seenIds = new LinkedHashSet<Address>();
+			seenIds = new LinkedHashSet<Integer>();
 			majority = all.size()/2+1;
 			
 			logger.debug("RWAC initialized!");
@@ -66,7 +66,7 @@ public class RWAC extends ComponentDefinition {
 		
 	};
 	
-	private void initInstance(Address id) {
+	private void initInstance(int id) {
 		if(!seenIds.contains(id)) {
 			tempValue.put(id, Integer.MIN_VALUE);
 			val.put(id, Integer.MIN_VALUE);
@@ -83,7 +83,8 @@ public class RWAC extends ComponentDefinition {
 
 		@Override
 		public void handle(AcPropose event) {
-			Address id = event.getId();
+			logger.debug("Received AcPropose");
+			int id = event.getId();
 			int v = event.getValue();
 			int N = all.size();
 			initInstance(id);
@@ -102,19 +103,21 @@ public class RWAC extends ComponentDefinition {
 		@Override
 		public void handle(ReadMessage event) {
 			Address pj = event.getSource();
-			Address id = event.getId();
+			int id = event.getId();
 			int ts = event.getTstamp();
+			
+			logger.debug("Received ReadMessage from {}", pj);
 			
 			initInstance(id);
 			if(rts.get(id) >= ts || wts.get(id) >= ts) {
 				NAck ack = new NAck(self, id);
 				trigger(new Pp2pSend(pj, ack), pp2p);
-				logger.debug("Pp2psend NAck message {}", ack);
+				logger.debug("Pp2psend NAck message to {} {}", pj, ack);
 			} else {
 				rts.put(id, ts);
 				ReadAck ack = new ReadAck(self, id, wts.get(id), val.get(id), ts);
 				trigger(new Pp2pSend(pj, ack), pp2p);
-				logger.debug("Pp2psend ReadAck message {}", ack);
+				logger.debug("Pp2psend ReadAck message to {} {}",pj,ack);
 			}
 		}
 		
@@ -124,8 +127,9 @@ public class RWAC extends ComponentDefinition {
 
 		@Override
 		public void handle(NAck event) {
-			Address id = event.getId();
+			int id = event.getId();
 			
+			logger.debug("Received NAck from {}", event.getSource());
 			readSet.get(id).clear();
 			wAcks.put(id, 0);
 			AcDecide decide = new AcDecide(id, Integer.MIN_VALUE);
@@ -139,10 +143,12 @@ public class RWAC extends ComponentDefinition {
 
 		@Override
 		public void handle(ReadAck event) {
-			Address id = event.getId();
+			int id = event.getId();
 			int ts = event.getWts();
 			int v = event.getVal();
 			int sentts = event.getTs();
+			
+			logger.debug("Received ReadAck from {}", event.getSource());
 			
 			if(sentts == tstamp.get(id)) {
 				readSet.get(id).add(new int[]{ts, v});
@@ -171,21 +177,23 @@ public class RWAC extends ComponentDefinition {
 		@Override
 		public void handle(WriteMessage event) {
 			Address pj = event.getSource();
-			Address id = event.getId();
+			int id = event.getId();
 			int ts = event.getTs();
 			int v = event.getVal();
+			
+			logger.debug("Received WriteMessage from {}", event.getSource());
 			
 			initInstance(id);
 			if(rts.get(id) > ts || wts.get(id) > ts) {
 				NAck ack = new NAck(self, id);
 				trigger(new Pp2pSend(pj, ack), pp2p);
-				logger.debug("Pp2psend NAck message {}", ack);
+				logger.debug("Pp2psend NAck message to {} {}", pj, ack);
 			} else {
 				val.put(id, v);
 				rts.put(id, ts);
 				WriteAck ack = new WriteAck(self, id, ts);
 				trigger(new Pp2pSend(pj, ack), pp2p);
-				logger.debug("Pp2psend WriteAck message {}", ack);
+				logger.debug("Pp2psend WriteAck message to {} {}", pj, ack);
 			}
 		}
 		
@@ -195,8 +203,10 @@ public class RWAC extends ComponentDefinition {
 
 		@Override
 		public void handle(WriteAck event) {
-			Address id = event.getId();
+			int id = event.getId();
 			int sentts = event.getTs();
+			
+			logger.debug("Received WriteAck from {}", event.getSource());
 			
 			if(sentts == tstamp.get(id)) {
 				wAcks.put(id, wAcks.get(id) + 1);
