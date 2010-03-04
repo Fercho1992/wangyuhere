@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<datasources>
+<local-tx-datasource>
+    <jndi-name>jdbc/eLUX</jndi-name>
+    <connection-url>jdbc:odbc:eLUX</connection-url>
+    <driver-class>sun.jdbc.odbc.JdbcOdbcDriver</driver-class>
+    <user-name></user-name>
+    <password></password>
+    <min-pool-size>0</min-pool-size>
+    <max-pool-size>5</max-pool-size>
+</local-tx-datasource>
+</datasources>
