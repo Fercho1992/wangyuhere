@@ -11,11 +11,32 @@ public class Comment implements Serializable {
 	private int comID;
 	private String comContents;
 	private String comments;
+	private int comIDRef;
+	private int proID;
 
 	Comment(int comID, String comContents, String comments) {
 		this.comID = comID;
 		this.comContents = comContents;
 		this.comments = comments;
+	}
+
+	public Comment() {
+	}
+
+	public int getProID() {
+		return proID;
+	}
+
+	public void setProID(int proID) {
+		this.proID = proID;
+	}
+
+	public int getComIDRef() {
+		return comIDRef;
+	}
+
+	public void setComIDRef(int comIDRef) {
+		this.comIDRef = comIDRef;
 	}
 
 	public int getComID() {

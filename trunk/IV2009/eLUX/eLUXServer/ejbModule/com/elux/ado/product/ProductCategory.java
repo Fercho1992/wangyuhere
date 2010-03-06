@@ -16,6 +16,9 @@ public class ProductCategory implements Serializable {
 		this.proCatName = proCatName;
 	}
 
+	public ProductCategory() {
+	}
+
 	public int getProCatID() {
 		return proCatID;
 	}

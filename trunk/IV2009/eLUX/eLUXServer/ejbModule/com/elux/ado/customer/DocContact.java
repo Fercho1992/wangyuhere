@@ -15,7 +15,15 @@ public class DocContact implements Serializable {
 	private String docTime;
 	private int cusID;
 	private int perID;
+	private String content;
 	
+	
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
 	public int getDocID() {
 		return docID;
 	}
