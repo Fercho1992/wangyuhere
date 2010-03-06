@@ -1,4 +1,4 @@
-package com.elux.customermgr;
+package com.elux.manager.customermgr;
 
 import com.elux.ado.customer.Customer;
 
