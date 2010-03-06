@@ -1,6 +1,6 @@
 package com.elux.customermgr;
 
-import com.elux.ado.Customer;
+import com.elux.ado.customer.Customer;
 
 public interface CustomerMgr {
 

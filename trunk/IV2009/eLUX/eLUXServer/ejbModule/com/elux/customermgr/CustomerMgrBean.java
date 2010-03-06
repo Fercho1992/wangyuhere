@@ -10,7 +10,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.sql.DataSource;
 
-import com.elux.ado.Customer;
+import com.elux.ado.customer.Customer;
 
 @Remote(CustomerMgr.class)
 @Stateless(name = "CustomerMgr")
