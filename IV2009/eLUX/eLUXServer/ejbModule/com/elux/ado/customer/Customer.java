@@ -1,4 +1,4 @@
-package com.elux.ado;
+package com.elux.ado.customer;
 
 import java.io.Serializable;
 
