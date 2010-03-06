@@ -9,12 +9,26 @@ public class Product implements Serializable {
 	private static final long serialVersionUID = -5713192315928789434L;
 	private int proID;
 	private String proName;
-	private String proPrice;
+	private double proPrice;
+	private int proCatID;
 
-	Product(int proID, String proName, String proPrice) {
+	Product(int proID, String proName, double proPrice) {
 		this.proID = proID;
 		this.proName = proName;
 		this.proPrice = proPrice;
+	}
+
+	public Product() {
+	}
+	
+	
+
+	public int getProCatID() {
+		return proCatID;
+	}
+
+	public void setProCatID(int proCatID) {
+		this.proCatID = proCatID;
 	}
 
 	public int getProID() {
@@ -33,11 +47,11 @@ public class Product implements Serializable {
 		this.proName = proName;
 	}
 
-	public String getProPrice() {
+	public double getProPrice() {
 		return proPrice;
 	}
 
-	public void setProPrice(String proPrice) {
+	public void setProPrice(double proPrice) {
 		this.proPrice = proPrice;
 	}
 
