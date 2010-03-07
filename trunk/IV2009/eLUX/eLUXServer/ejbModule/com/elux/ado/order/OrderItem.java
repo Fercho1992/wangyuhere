@@ -8,25 +8,44 @@ public class OrderItem implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private int ordItermID;
+	private int ordItermAmount;
+	private double ordPrice;
+	private int ProID;
+	private int OrderID;
+	
 	public int getOrdItermID() {
 		return ordItermID;
 	}
 	public void setOrdItermID(int ordItermID) {
 		this.ordItermID = ordItermID;
 	}
-	public String getOrdItermAmount() {
+	public int getOrdItermAmount() {
 		return ordItermAmount;
 	}
-	public void setOrdItermAmount(String ordItermAmount) {
+	public void setOrdItermAmount(int ordItermAmount) {
 		this.ordItermAmount = ordItermAmount;
 	}
-	public float getOrdPrice() {
+	public double getOrdPrice() {
 		return ordPrice;
 	}
-	public void setOrdPrice(float ordPrice) {
+	public void setOrdPrice(double ordPrice) {
 		this.ordPrice = ordPrice;
 	}
-	private int ordItermID;
-	private String ordItermAmount;
-	private float ordPrice;
+	public int getProID() {
+		return ProID;
+	}
+	public void setProID(int proID) {
+		ProID = proID;
+	}
+	public int getOrderID() {
+		return OrderID;
+	}
+	public void setOrderID(int orderID) {
+		OrderID = orderID;
+	}
+	
+	
+	
 }
