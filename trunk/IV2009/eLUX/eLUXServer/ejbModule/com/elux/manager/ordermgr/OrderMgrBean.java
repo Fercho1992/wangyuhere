@@ -26,9 +26,11 @@ public class OrderMgrBean implements IOrderMgr {
 	Vector<Integer> unSentproID = new Vector<Integer>();
 	Vector<Integer> unSentproAmount = new Vector<Integer>();
 
-	public Order searchNonDelvOrder(String orderStatus)
+	public Vector<Order> searchNonDelvOrder(String orderStatus)
 			throws OrderMgrException {
 		try {
+			Vector<Order> nonDelvOrderList = new Vector<Order>();
+			
 			Connection con = dataSource.getConnection();
 			String query = "SELECT * FROM eLUX_Order WHERE OrderStatus = ?";
 			PreparedStatement stmt = con.prepareStatement(query);
@@ -39,9 +41,11 @@ public class OrderMgrBean implements IOrderMgr {
 			if (rs.next()) {
 				order = new Order(rs.getInt("OrdID"), rs
 						.getString("OrderStatus"), rs.getString("OrderTime"));
+				
+				nonDelvOrderList.addElement(order);
 			}
 
-			return order;
+			return nonDelvOrderList;
 
 		} catch (SQLException ex) {
 			throw new OrderMgrException("Get order info failed!",
