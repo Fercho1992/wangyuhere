@@ -16,7 +16,7 @@ public class ProductInfo implements Serializable {
 	private String name;
 	private double price;
 	private String category;
-	private int grade;
+	private double grade;
 	private Vector<Comment> comments;
 	public int getId() {
 		return id;
@@ -42,10 +42,10 @@ public class ProductInfo implements Serializable {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public int getGrade() {
+	public double getGrade() {
 		return grade;
 	}
-	public void setGrade(int grade) {
+	public void setGrade(double grade) {
 		this.grade = grade;
 	}
 	public Vector<Comment> getComments() {

@@ -7,15 +7,15 @@ public class Grade implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 8934987603596641369L;
-	private int graID;
+	private double graID;
 	private String grade;
 
-	Grade(int graID, String grade) {
+	Grade(double graID, String grade) {
 		this.graID = graID;
 		this.grade = grade;
 	}
 
-	public int getGraID() {
+	public double getGraID() {
 		return graID;
 	}
 
