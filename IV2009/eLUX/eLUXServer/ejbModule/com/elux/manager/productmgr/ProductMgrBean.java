@@ -121,7 +121,7 @@ public class ProductMgrBean implements IProductMgr{
 	}
 	
 	@Override
-	public int getGradeByProductID(int productID) throws ProductMgrException {
+	public double getGradeByProductID(int productID) throws ProductMgrException {
 		try {	
 			Connection con = dataSource.getConnection();
 			String query = "SELECT Avg(Grade) AS GradeAverage FROM eLUX_Grade WHERE (((eLUX_Grade.[ProID])=?))";
@@ -129,9 +129,9 @@ public class ProductMgrBean implements IProductMgr{
 			stmt.setInt(1, productID);
 			ResultSet rs = stmt.executeQuery();
 			
-			int result = 0;
+			double result = 0;
 			if(rs.next()) {
-				result = rs.getInt("GradeAverage");
+				result = rs.getDouble("GradeAverage");
 			}
 			
 			return result;

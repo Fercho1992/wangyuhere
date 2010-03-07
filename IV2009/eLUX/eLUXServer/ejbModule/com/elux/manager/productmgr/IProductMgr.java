@@ -9,6 +9,6 @@ public interface IProductMgr {
 	public ProductInfo getProductInfo(int productID) throws ProductMgrException;
 	public void gradeProduct(int proID, int cusID, int grade) throws ProductMgrException;
 	public Vector<ShortProductInfo> getProductShortInfo(int[] proIDs) throws ProductMgrException;
-	public int getGradeByProductID(int productID) throws ProductMgrException;
+	public double getGradeByProductID(int productID) throws ProductMgrException;
 	public Vector<Comment> getCommentsByProductID(int productID) throws ProductMgrException;
 }
