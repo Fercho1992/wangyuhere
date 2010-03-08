@@ -107,4 +107,27 @@ public class CustomerMgrBean implements ICustomerMgr {
 		}
 	}
 
+	@Override
+	public double getDiscount(int cusID, int proCatID)
+			throws CustomerMgrException {
+		try {
+			Connection con = dataSource.getConnection();
+			String query = "SELECT * FROM eLUX_Rebate WHERE CusID = ? AND ProCatID = ?";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, cusID);
+			stmt.setInt(2, proCatID);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				return rs.getDouble("Rebate");
+			}
+
+		} catch (SQLException ex) {
+			throw new CustomerMgrException("getDiscount failed!",
+					"Get Discount customer ID = " + cusID + " failed because of "
+							+ ex.getMessage());
+		}
+		return 1;
+	}
+
 }
