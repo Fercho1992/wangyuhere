@@ -11,6 +11,8 @@ import java.util.Vector;
 import javax.annotation.Resource;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.sql.DataSource;
 
 import com.elux.ado.order.Order;
@@ -18,6 +20,7 @@ import com.elux.ado.order.OrderItem;
 
 @Remote(IOrderMgr.class)
 @Stateless(name = "IOrderMgr")
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class OrderMgrBean implements IOrderMgr {
 
 	@Resource(mappedName = "java:/jdbc/eLUX")
