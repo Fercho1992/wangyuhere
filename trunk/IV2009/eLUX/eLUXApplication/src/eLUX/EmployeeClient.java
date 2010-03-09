@@ -26,6 +26,7 @@ public class EmployeeClient extends javax.swing.JFrame {
     private IEmployeeSys employeeSystem;
     private CustomerInfo customerInfo;
     private CheckStockInfo checkStockInfo;
+    private SaveCorrespondence saveCorrespondence;
     /** Creates new form EmployeeClient */
     public EmployeeClient() {
         initComponents();
@@ -43,6 +44,7 @@ public class EmployeeClient extends javax.swing.JFrame {
 
             customerInfo = new CustomerInfo(employeeSystem);
             checkStockInfo = new CheckStockInfo(employeeSystem);
+            saveCorrespondence = new SaveCorrespondence(employeeSystem);
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -80,7 +82,7 @@ public class EmployeeClient extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pMain.setLayout(new java.awt.GridLayout());
+        pMain.setLayout(new java.awt.GridLayout(1, 0));
 
         jMenu1.setText("Customer");
 
@@ -115,7 +117,12 @@ public class EmployeeClient extends javax.swing.JFrame {
 
         jMenu5.setText("Coorespondence");
 
-        jMenuItem5.setText("Save Coorespondence");
+        jMenuItem5.setText("Save Correspondence");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem5);
 
         jMenuBar1.add(jMenu5);
@@ -143,6 +150,10 @@ public class EmployeeClient extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         switchPanel(checkStockInfo);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        switchPanel(saveCorrespondence);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     public void showError(String message) {
         JOptionPane.showMessageDialog(this, message, "Error",
