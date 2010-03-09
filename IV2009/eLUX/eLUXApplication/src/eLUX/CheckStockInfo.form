@@ -35,14 +35,16 @@
                   <Component id="amount" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="slevel" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="wid" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="pname" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="pid" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="productNo" min="-2" pref="33" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="pid" alignment="0" max="32767" attributes="1"/>
+                      <Component id="pname" alignment="0" max="32767" attributes="1"/>
                   </Group>
               </Group>
               <EmptySpace pref="98" max="32767" attributes="0"/>
@@ -63,7 +65,7 @@
               <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="pid" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="pid" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -144,29 +146,14 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="pid">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel8"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="pname">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel9"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="wid">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel10"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="slevel">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel11"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="amount">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel12"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -79,16 +79,6 @@ public class CheckStockInfo extends javax.swing.JPanel {
 
         jLabel7.setText("Amount:");
 
-        pid.setText("jLabel8");
-
-        pname.setText("jLabel9");
-
-        wid.setText("jLabel10");
-
-        slevel.setText("jLabel11");
-
-        amount.setText("jLabel12");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -110,14 +100,15 @@ public class CheckStockInfo extends javax.swing.JPanel {
                     .addComponent(amount)
                     .addComponent(slevel)
                     .addComponent(wid)
-                    .addComponent(pname)
-                    .addComponent(pid)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(productNo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(pid, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pname, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(98, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -133,7 +124,7 @@ public class CheckStockInfo extends javax.swing.JPanel {
                 .addGap(62, 62, 62)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(pid))
+                    .addComponent(pid, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -156,6 +147,7 @@ public class CheckStockInfo extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+        try{
         StockInfo stockinfo = employeeSystem.getStockInfo(Integer.parseInt(stockNo.getText()),Integer.parseInt(productNo.getText()));
 
         pid.setText(String.valueOf(stockinfo.getProductID()));
@@ -163,6 +155,12 @@ public class CheckStockInfo extends javax.swing.JPanel {
         wid.setText(String.valueOf(stockinfo.getWareID()));
         slevel.setText(String.valueOf(stockinfo.getStockLevel()));
         amount.setText(String.valueOf(stockinfo.getAmount()));
+        
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            showError("there is no selected stock number or product number");
+        }
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
