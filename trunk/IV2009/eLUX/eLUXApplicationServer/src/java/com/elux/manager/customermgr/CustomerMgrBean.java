@@ -89,13 +89,14 @@ public class CustomerMgrBean implements ICustomerMgr {
 		try {
 			Connection con = dataSource.getConnection();
 
-			String query = "INSERT INTO eLUX_Customer (CusName, CusAddress, CusAddrforInvoice, CusEAddress) VALUES (?, ?, ?, ?)";
+			String query = "UPDATE eLUX_Customer SET CusName=?, CusAddress=?, CusAddrforInvoice=?, CusEAddress=? WHERE CusID=?";
 			PreparedStatement stmt = con.prepareStatement(query);
 
 			stmt.setString(1, customer.getCusName());
 			stmt.setString(2, customer.getCusAddress());
 			stmt.setString(3, customer.getCusAddrForInvoice());
 			stmt.setString(4, customer.getCusEAddress());
+            stmt.setInt(5, customer.getCusID());
 
 			stmt.executeUpdate();
 

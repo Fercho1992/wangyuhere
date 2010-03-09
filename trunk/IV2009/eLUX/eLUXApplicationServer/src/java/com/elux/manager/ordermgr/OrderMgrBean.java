@@ -81,21 +81,6 @@ public class OrderMgrBean implements IOrderMgr {
 
 	}
 
-	// public Vector<OrderItem> orderProduct(int cusID, int proID, int amount)
-	// throws OrderMgrException {
-	// Vector<OrderItem> nonSentOrderList = new Vector<OrderItem>();
-	//
-	// new Order().setCusID(cusID);
-	//
-	// OrderItem nonSentOrder = new OrderItem();
-	// nonSentOrder.setProID(proID);
-	// nonSentOrder.setOrdItermAmount(amount);
-	//
-	// nonSentOrderList.addElement(nonSentOrder);
-	// return nonSentOrderList;
-	//
-	// }
-
 	@Override
 	public void removeNonDelvOrder(int ordID) throws OrderMgrException {
 		try {
@@ -162,5 +147,29 @@ public class OrderMgrBean implements IOrderMgr {
 		}
 
 	}
+
+    public Order getOrder(int ordID) throws OrderMgrException {
+        try {
+			Connection con = dataSource.getConnection();
+			String query = "SELECT * FROM eLUX_Order WHERE OrdID = ?";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, ordID);
+			ResultSet rs = stmt.executeQuery();
+            if(rs.next()) {
+                Order order = new Order();
+                order.setCusID(rs.getInt("CusID"));
+                order.setOrdID(rs.getInt("OrdID"));
+                order.setOrdStatus(rs.getString("OrderStatus"));
+                order.setOrdTime(rs.getString("OrderTime"));
+                return order;
+            }
+
+		} catch (SQLException ex) {
+			throw new OrderMgrException("Delete non-order failed!",
+					"Order ID = " + ordID + " failed because of "
+							+ ex.getMessage());
+		}
+        return null;
+    }
 
 }
