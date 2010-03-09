@@ -36,6 +36,11 @@ public class CustomerInfo extends javax.swing.JPanel {
                 JOptionPane.ERROR_MESSAGE);
     }
 
+    public void showInfo(String message) {
+        JOptionPane.showMessageDialog(this, message, "Info",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -204,6 +209,8 @@ public class CustomerInfo extends javax.swing.JPanel {
             customer.setCusEAddress(txtEAddress.getText());
 
             employeeSystem.setCustomerInfo(customer);
+
+            showInfo("Updated successfully");
 
         } catch (Exception ex) {
             showError(ex.getMessage());
