@@ -32,7 +32,7 @@ public class SaveCorrespondence extends javax.swing.JPanel {
     public SaveCorrespondence(IEmployeeSys system) {
         initComponents();
         this.employeeSystem = system;
-        //updateCategory();
+        dContact = new DocContact();
     }
     //private int docID;
     //private String sTime;
