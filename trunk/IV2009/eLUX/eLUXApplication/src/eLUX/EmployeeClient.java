@@ -25,6 +25,7 @@ public class EmployeeClient extends javax.swing.JFrame {
 
     private IEmployeeSys employeeSystem;
     private CustomerInfo customerInfo;
+    private CheckStockInfo checkStockInfo;
     /** Creates new form EmployeeClient */
     public EmployeeClient() {
         initComponents();
@@ -41,6 +42,7 @@ public class EmployeeClient extends javax.swing.JFrame {
             employeeSystem = (IEmployeeSys) ctx.lookup("IEmployeeSys/remote");
 
             customerInfo = new CustomerInfo(employeeSystem);
+            checkStockInfo = new CheckStockInfo(employeeSystem);
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -102,6 +104,11 @@ public class EmployeeClient extends javax.swing.JFrame {
         jMenu4.setText("Stock");
 
         jMenuItem4.setText("Check Stock Info");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem4);
 
         jMenuBar1.add(jMenu4);
@@ -132,6 +139,10 @@ public class EmployeeClient extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         switchPanel(customerInfo);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        switchPanel(checkStockInfo);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     public void showError(String message) {
         JOptionPane.showMessageDialog(this, message, "Error",
