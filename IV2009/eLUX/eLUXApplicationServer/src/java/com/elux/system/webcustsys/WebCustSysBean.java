@@ -13,7 +13,11 @@ import com.elux.manager.productmgr.IProductMgr;
 import com.elux.manager.productmgr.ProductInfo;
 import com.elux.manager.productmgr.ProductMgrBean;
 import com.elux.manager.productmgr.ShortProductInfo;
+import javax.ejb.Remote;
+import javax.ejb.Stateless;
 
+@Remote(IWebCustSys.class)
+@Stateless(name = "IWebCustSys")
 public class WebCustSysBean implements IWebCustSys {
 
 	private IOrderMgr orderMgr = new OrderMgrBean();
