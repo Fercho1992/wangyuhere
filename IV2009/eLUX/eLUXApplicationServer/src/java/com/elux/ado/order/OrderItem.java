@@ -14,6 +14,12 @@ public class OrderItem implements Serializable{
 	private double ordPrice;
 	private int ProID;
 	private int OrderID;
+
+        public OrderItem(int amount, double price, int proID){
+            this.ordItermAmount = amount;
+            this.ordPrice = price;
+            this.ProID = proID;
+        }
 	
 	public int getOrdItermID() {
 		return ordItermID;

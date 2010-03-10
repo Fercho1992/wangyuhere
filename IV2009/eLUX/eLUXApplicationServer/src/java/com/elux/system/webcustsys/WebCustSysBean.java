@@ -2,7 +2,6 @@ package com.elux.system.webcustsys;
 
 import java.util.Vector;
 
-import com.elux.ado.order.Order;
 import com.elux.ado.order.OrderItem;
 import com.elux.ado.product.ProductCategory;
 import com.elux.manager.customermgr.CustomerMgrBean;
@@ -45,8 +44,8 @@ public class WebCustSysBean implements IWebCustSys {
 	}
 
 	@Override
-	public void sendOrder(Order order, Vector<OrderItem> orderItemList) {
-		orderMgr.sendOrder(order, orderItemList);
+	public void sendOrder(int cusID, Vector<OrderItem> orderItemList) {
+		orderMgr.sendOrder(cusID, orderItemList);
 	}
 
 }

@@ -99,7 +99,7 @@ public class OrderMgrBean implements IOrderMgr {
 	}
 
 	@Override
-	public void sendOrder(Order order, Vector<OrderItem> orderItemList)
+	public void sendOrder(int cusID, Vector<OrderItem> orderItemList)
 			throws OrderMgrException {
 		try {
 			Connection con = dataSource.getConnection();
@@ -108,7 +108,7 @@ public class OrderMgrBean implements IOrderMgr {
 			String query_order = "INSERT INTO eLUX_Order (OrderStatus, OrderTime, CusID) VALUES ('nondelivered',?,?)";
 			PreparedStatement stmt_order = con.prepareStatement(query_order);
 			stmt_order.setString(1, orderTime);
-			stmt_order.setInt(2, order.getCusID());
+			stmt_order.setInt(2, cusID);
 			int orderID = stmt_order.executeUpdate();
 
 			for (OrderItem item : orderItemList) {
@@ -126,8 +126,7 @@ public class OrderMgrBean implements IOrderMgr {
 					proCategoryID = rs_proCatPrice.getInt("ProCatID");
 					price = rs_proCatPrice.getDouble("ProPrice");
 				}
-				double rebate = this.getDiscount(order.getCusID(),
-						proCategoryID);
+				double rebate = this.getDiscount(cusID, proCategoryID);
 
 				double newprice = rebate * price;
 
