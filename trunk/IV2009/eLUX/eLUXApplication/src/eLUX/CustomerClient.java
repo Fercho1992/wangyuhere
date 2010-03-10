@@ -10,6 +10,7 @@
  */
 package eLUX;
 
+import com.elux.ado.order.OrderItem;
 import com.elux.ado.product.ProductCategory;
 import com.elux.manager.productmgr.ProductMgrException;
 import com.elux.manager.productmgr.ShortProductInfo;
@@ -30,7 +31,9 @@ public class CustomerClient extends javax.swing.JFrame {
 
     private IWebCustSys customerSys;
     private String rebate;
+    private String proName;
     private Hashtable<Integer, Integer> indexId = new Hashtable<Integer, Integer>();
+    private Vector<OrderItem> itemList = new Vector<OrderItem>();
 
     /** Creates new form CustomerClient */
     public CustomerClient() {
@@ -50,7 +53,7 @@ public class CustomerClient extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage());
             ex.printStackTrace();
         }
-        updateCategory();
+        
     }
 
     private void setEnable() {
@@ -87,7 +90,7 @@ public class CustomerClient extends javax.swing.JFrame {
     }
 
     private void updateRebate(int catID) {
-        lblDiscount.setText(String.valueOf(customerSys.getDiscount(Integer.parseInt(txtCusID.getText()), catID)));
+        lblDiscount.setText("Discount: " + String.valueOf(customerSys.getDiscount(Integer.parseInt(txtCusID.getText()), catID)));
         rebate = lblDiscount.getText();
     }
 
@@ -115,6 +118,11 @@ public class CustomerClient extends javax.swing.JFrame {
                 }
             });
         }
+    }
+
+    public Vector<OrderItem> addToCart(OrderItem item, String productName) {
+        itemList.addElement(item);
+        return itemList;
     }
 
     public void showError(String message) {
@@ -249,6 +257,7 @@ public class CustomerClient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCategoryActionPerformed
+        updateCategory();
         this.updateProducts(indexId.get(cbCategory.getSelectedIndex()));
         this.updateRebate(indexId.get(cbCategory.getSelectedIndex()));
     }//GEN-LAST:event_cbCategoryActionPerformed
@@ -263,7 +272,7 @@ public class CustomerClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnloginActionPerformed
 
     private void btnCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCartActionPerformed
-        new CustomerCart(this, true, customerSys, Integer.parseInt(txtCusID.getText())).setVisible(true);
+        new CustomerCart(this, true, customerSys, Integer.parseInt(txtCusID.getText()), this.itemList, proName).setVisible(true);
     }//GEN-LAST:event_btnCartActionPerformed
 
     /**

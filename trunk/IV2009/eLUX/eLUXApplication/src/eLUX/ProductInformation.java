@@ -27,16 +27,20 @@ public class ProductInformation extends javax.swing.JDialog {
     private int proID;
     private IWebCustSys cusSys;
     private String reb;
+    private CustomerClient client;
+    private String proName;
 
 
-    public ProductInformation(java.awt.Frame parent, boolean modal, int productID, IWebCustSys customerSys, String rebate) {
+    public ProductInformation(CustomerClient parent, boolean modal, int productID, IWebCustSys customerSys, String rebate) {
         super(parent, modal);
         initComponents();
 
+        this.client = parent;
         proID = productID;
         cusSys = customerSys;
         reb = rebate;
         lblID.setText("The Product you selected ID: " + String.valueOf(proID));
+        lblDiscount.setText("Rebate: " + reb);
         showInfo(productID);
     }
 
@@ -48,11 +52,11 @@ public class ProductInformation extends javax.swing.JDialog {
         ProductInfo productInfo = cusSys.getProductInfo(proID);
         Vector<Comment> comments = new Vector<Comment>();
 
-        String proName = "Product Name: " + productInfo.getName()+ "/n";
-        String proPrice = "Product Price: " + productInfo.getPrice() + "/n";
-        String proCate = "Belongs to Category: " + productInfo.getCategory()+ "/n";
-        String proGrade = "Grade: " + productInfo.getGrade()+ "/n";
-        String column = "----------------------------------/n";
+        proName = "Product Name: " + productInfo.getName()+ "\n";
+        String proPrice = "Product Price: " + productInfo.getPrice() + "\n";
+        String proCate = "Belongs to Category: " + productInfo.getCategory()+ "\n";
+        String proGrade = "Grade: " + productInfo.getGrade()+ "\n";
+        String column = "----------------------------------\n";
         txaContant.setText(proName + proPrice + proCate + proGrade + column);
 
         for(Comment list: comments){
@@ -96,9 +100,9 @@ public class ProductInformation extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Product Information");
 
-        txaContant.setBackground(javax.swing.UIManager.getDefaults().getColor("Label.background"));
         txaContant.setColumns(20);
         txaContant.setEditable(false);
+        txaContant.setLineWrap(true);
         txaContant.setRows(5);
         txaContant.setEnabled(false);
         jScrollPane1.setViewportView(txaContant);
@@ -114,7 +118,6 @@ public class ProductInformation extends javax.swing.JDialog {
 
         jLabel1.setText("Amount:");
 
-        txaComment.setBackground(javax.swing.UIManager.getDefaults().getColor("Label.background"));
         txaComment.setColumns(20);
         txaComment.setEditable(false);
         txaComment.setRows(5);
@@ -169,7 +172,7 @@ public class ProductInformation extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
-        new CustomerCart(this.addToCart(Integer.parseInt(txtAmount.getText()),Double.parseDouble(this.reb), this.proID));
+        client.addToCart(this.addToCart(Integer.parseInt(txtAmount.getText()),Double.parseDouble(this.reb), this.proID), proName);
     }//GEN-LAST:event_btnaddActionPerformed
 
     /**

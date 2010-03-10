@@ -27,6 +27,7 @@ public class EmployeeClient extends javax.swing.JFrame {
     private CustomerInfo customerInfo;
     private CheckStockInfo checkStockInfo;
     private SaveCorrespondence saveCorrespondence;
+    private RemoveNondeliveredOrder remoOrder;
     /** Creates new form EmployeeClient */
     public EmployeeClient() {
         initComponents();
@@ -45,6 +46,7 @@ public class EmployeeClient extends javax.swing.JFrame {
             customerInfo = new CustomerInfo(employeeSystem);
             checkStockInfo = new CheckStockInfo(employeeSystem);
             saveCorrespondence = new SaveCorrespondence(employeeSystem);
+            remoOrder = new RemoveNondeliveredOrder(employeeSystem);
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -81,6 +83,7 @@ public class EmployeeClient extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Employee Client");
 
         pMain.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -99,6 +102,11 @@ public class EmployeeClient extends javax.swing.JFrame {
         jMenu2.setText("Order");
 
         jMenuItem2.setText("Remove non-deliver order");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuBar1.add(jMenu2);
@@ -154,6 +162,10 @@ public class EmployeeClient extends javax.swing.JFrame {
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         switchPanel(saveCorrespondence);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        switchPanel(remoOrder);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     public void showError(String message) {
         JOptionPane.showMessageDialog(this, message, "Error",

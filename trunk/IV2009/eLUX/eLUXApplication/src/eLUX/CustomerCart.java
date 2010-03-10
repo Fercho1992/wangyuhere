@@ -23,32 +23,35 @@ import javax.swing.JOptionPane;
  */
 public class CustomerCart extends javax.swing.JDialog {
 
-    Vector<OrderItem> itemList = new Vector<OrderItem>();
+    private Vector<OrderItem> orderList = new Vector<OrderItem>();
     private IWebCustSys cusSys;
     private int customerID =0;
+    private String productName;
 
     /** Creates new form CustomerCart */
-    public CustomerCart(java.awt.Frame parent, boolean modal, IWebCustSys customerSys, int cusID) {
+    public CustomerCart(java.awt.Frame parent, boolean modal, IWebCustSys customerSys, int cusID, Vector<OrderItem> itemList, String proName) {
         super(parent, modal);
         initComponents();
-        addToList();
+
         cusSys = customerSys;
         customerID = cusID;
-    }
-    public CustomerCart(OrderItem item){
-        itemList.addElement(item);
+        orderList = itemList;
+        productName = proName;
+
+        addToList();
+        
     }
 
     private void addToList(){
         DefaultListModel list = new DefaultListModel();
-        for(OrderItem ordList: itemList) {
-            list.addElement(ordList.getProID() + "- Ordered Amount: " + ordList.getOrdItermAmount());
+        for(OrderItem ordList: orderList) {
+            list.addElement("Product: " + productName + " -- Ordered Amount: " + ordList.getOrdItermAmount());
         }
         listOrder.setModel(list);
     }
 
     private void remoOrder(){
-        itemList.removeElementAt(listOrder.getSelectedIndex());
+        orderList.removeElementAt(listOrder.getSelectedIndex());
         addToList();
     }
 
@@ -122,7 +125,7 @@ public class CustomerCart extends javax.swing.JDialog {
     private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
         int choice = JOptionPane.showConfirmDialog(this,"Send your Order now?","Decision",0);
             if(choice != 0) return;
-            else cusSys.sendOrder(customerID, itemList);
+            else cusSys.sendOrder(customerID, orderList);
     }//GEN-LAST:event_btnOrderActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -130,9 +133,12 @@ public class CustomerCart extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this,"Please select a Order Item to remove","Error",0);
             return;
         } else {
-            int choice = JOptionPane.showConfirmDialog(this,"Really want to remove the selected Order Item?","Decision",0);
+            int choice = JOptionPane.showConfirmDialog(this,"Really want to remove the selected Order Item?","Decision",3);
             if(choice != 0) return;
-            else remoOrder();}
+            else {
+                remoOrder();
+                JOptionPane.showMessageDialog(this,"Order Sent Successfully!");
+            }}
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
