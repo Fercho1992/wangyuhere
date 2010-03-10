@@ -26,6 +26,12 @@ public class OrderMgrBean implements IOrderMgr {
 	@Resource(mappedName = "java:/jdbc/eLUX")
 	private DataSource dataSource;
 
+        /**
+         *
+         * @param orderStatus
+         * @return
+         * @throws OrderMgrException
+         */
 	public Vector<Order> searchNonDelvOrder(String orderStatus)
 			throws OrderMgrException {
 		try {
@@ -55,6 +61,13 @@ public class OrderMgrBean implements IOrderMgr {
 		}
 	}
 
+        /**
+         *
+         * @param cusID
+         * @param proCatID
+         * @return
+         * @throws OrderMgrException
+         */
 	@Override
 	public double getDiscount(int cusID, int proCatID) throws OrderMgrException {
 		try {
