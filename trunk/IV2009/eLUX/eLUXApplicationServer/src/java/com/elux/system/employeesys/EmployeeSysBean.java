@@ -7,6 +7,7 @@ import com.elux.manager.customermgr.ICustomerMgr;
 import com.elux.manager.ordermgr.IOrderMgr;
 import com.elux.manager.warehousemgr.IWarehouseMgr;
 import com.elux.manager.warehousemgr.StockInfo;
+import java.util.Vector;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.naming.Context;
@@ -63,5 +64,9 @@ public class EmployeeSysBean implements IEmployeeSys {
     public Customer getCustomerInfoByOrderID(int ordID) {
         Order order = orderMgr.getOrder(ordID);
         return getCustomerInfo(order.getCusID());
+    }
+
+    public Vector<Order> searchNonDelvOrder(String orderStatus) {
+        return orderMgr.searchNonDelvOrder(orderStatus);
     }
 }

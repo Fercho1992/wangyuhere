@@ -3,7 +3,9 @@ package com.elux.system.employeesys;
 
 import com.elux.ado.customer.Customer;
 import com.elux.ado.customer.DocContact;
+import com.elux.ado.order.Order;
 import com.elux.manager.warehousemgr.StockInfo;
+import java.util.Vector;
 
 public interface IEmployeeSys {
 
@@ -14,6 +16,8 @@ public interface IEmployeeSys {
 	public void setCustomerInfo(Customer customer);
 
 	public void removeNonDelvOrder(int ordID);
+
+        public Vector<Order> searchNonDelvOrder(String orderStatus);
 
 	public StockInfo getStockInfo(int productID, int wareID);
 
