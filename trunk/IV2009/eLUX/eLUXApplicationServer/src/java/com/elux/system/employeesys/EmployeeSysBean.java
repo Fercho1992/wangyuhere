@@ -17,57 +17,51 @@ import javax.naming.NamingException;
 @Stateless(name = "IEmployeeSys")
 public class EmployeeSysBean implements IEmployeeSys {
 
-	private IOrderMgr orderMgr;
-	private ICustomerMgr customerMgr;
-	private IWarehouseMgr warehouseMgr;
+    private IOrderMgr orderMgr;
+    private ICustomerMgr customerMgr;
+    private IWarehouseMgr warehouseMgr;
 
     public EmployeeSysBean() throws NamingException {
         Context ctx = new InitialContext();
 
-            ctx.addToEnvironment(Context.INITIAL_CONTEXT_FACTORY,
-                    "org.jnp.interfaces.NamingContextFactory");
-            ctx.addToEnvironment(Context.PROVIDER_URL, "127.0.0.1:1099");
-            ctx.addToEnvironment("java.naming.factory.url.pkgs",
-                    "org.jboss.naming:org.jnp.interfaces");
+        ctx.addToEnvironment(Context.INITIAL_CONTEXT_FACTORY,
+                "org.jnp.interfaces.NamingContextFactory");
+        ctx.addToEnvironment(Context.PROVIDER_URL, "127.0.0.1:1099");
+        ctx.addToEnvironment("java.naming.factory.url.pkgs",
+                "org.jboss.naming:org.jnp.interfaces");
 
-            orderMgr = (IOrderMgr) ctx.lookup("IOrderMgr/remote");
-            customerMgr = (ICustomerMgr) ctx.lookup("ICustomerMgr/remote");
-            warehouseMgr = (IWarehouseMgr) ctx.lookup("IWarehouseMgr/remote");
+        orderMgr = (IOrderMgr) ctx.lookup("IOrderMgr/remote");
+        customerMgr = (ICustomerMgr) ctx.lookup("ICustomerMgr/remote");
+        warehouseMgr = (IWarehouseMgr) ctx.lookup("IWarehouseMgr/remote");
     }
 
-	@Override
-	public Customer getCustomerInfo(int cusID) {
-		// TODO Auto-generated method stub
-		return customerMgr.getCustomerInfo(cusID);
-	}
+    @Override
+    public Customer getCustomerInfo(int cusID) {
+        return customerMgr.getCustomerInfo(cusID);
+    }
 
-	@Override
-	public StockInfo getStockInfo(int productID, int wareID) {
-		// TODO Auto-generated method stub
-		return warehouseMgr.getStockInfo(productID, wareID);
-	}
+    @Override
+    public StockInfo getStockInfo(int productID, int wareID) {
+        return warehouseMgr.getStockInfo(productID, wareID);
+    }
 
-	@Override
-	public void removeNonDelvOrder(int ordID) {
-		// TODO Auto-generated method stub
-		orderMgr.removeNonDelvOrder(ordID);
-	}
+    @Override
+    public void removeNonDelvOrder(int ordID) {
+        orderMgr.removeNonDelvOrder(ordID);
+    }
 
-	@Override
-	public void saveCorrespondence(DocContact docContact) {
-		// TODO Auto-generated method stub
-		customerMgr.saveCorrespondence(docContact);
-	}
+    @Override
+    public void saveCorrespondence(DocContact docContact) {
+        customerMgr.saveCorrespondence(docContact);
+    }
 
-	@Override
-	public void setCustomerInfo(Customer customer) {
-		// TODO Auto-generated method stub
-		customerMgr.setCustomerInfo(customer);
-	}
+    @Override
+    public void setCustomerInfo(Customer customer) {
+        customerMgr.setCustomerInfo(customer);
+    }
 
     public Customer getCustomerInfoByOrderID(int ordID) {
         Order order = orderMgr.getOrder(ordID);
         return getCustomerInfo(order.getCusID());
     }
-
 }
