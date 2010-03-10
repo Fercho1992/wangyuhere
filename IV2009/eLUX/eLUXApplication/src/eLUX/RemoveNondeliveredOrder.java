@@ -8,41 +8,47 @@
  *
  * Created on 2010-3-10, 10:09:46
  */
-
 package eLUX;
+
 import com.elux.ado.order.Order;
 import com.elux.system.employeesys.IEmployeeSys;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author Administrator
  */
 public class RemoveNondeliveredOrder extends javax.swing.JPanel {
+
     private IEmployeeSys employeeSystem;
-    Vector<Order> order=new Vector<Order>();
-    private String orderstatus="";
+    Vector<Order> order = new Vector<Order>();
+    private String orderstatus = "";
+
     /** Creates new form RemoveNondeliveredOrder */
     public RemoveNondeliveredOrder(IEmployeeSys system) {
         initComponents();
-        orderstatus="not";
-        order=employeeSystem.searchNonDelvOrder(orderstatus);
+        this.employeeSystem = system;
+        orderstatus = "nondelivered";
+        order = employeeSystem.searchNonDelvOrder(orderstatus);
         addToList();
-        this.employeeSystem = system;   
+        
     }
-    private void addToList(){
+
+    private void addToList() {
         DefaultListModel list = new DefaultListModel();
-        for(Order ord: order) {
+        for (Order ord : order) {
             list.addElement(ord.getOrdID() + "- Ordered Time: " + ord.getOrdTime());
         }
         listOrder.setModel(list);
     }
 
-     private void remoOrder(){
+    private void remoOrder() {
         order.removeElementAt(listOrder.getSelectedIndex());
         addToList();
     }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -118,17 +124,18 @@ public class RemoveNondeliveredOrder extends javax.swing.JPanel {
 
     private void RemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveActionPerformed
         // TODO add your handling code here:
-         if(listOrder.getSelectedIndex() == -1){
-            JOptionPane.showMessageDialog(this,"Please select a Order to remove","Error",0);
+        if (listOrder.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a Order to remove", "Error", 0);
             return;
         } else {
-            int choice = JOptionPane.showConfirmDialog(this,"Really want to remove the selected Order Item?","Decision",0);
-            if(choice != 0) return;
-            else remoOrder();
+            int choice = JOptionPane.showConfirmDialog(this, "Really want to remove the selected Order Item?", "Decision", 0);
+            if (choice != 0) {
+                return;
+            } else {
+                remoOrder();
+            }
         }
     }//GEN-LAST:event_RemoveActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Remove;
     private javax.swing.JDialog jDialog1;
@@ -138,5 +145,4 @@ public class RemoveNondeliveredOrder extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList listOrder;
     // End of variables declaration//GEN-END:variables
-
 }
