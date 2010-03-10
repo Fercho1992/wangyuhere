@@ -61,7 +61,7 @@ public class CustomerClient extends javax.swing.JFrame {
         taProducts.setEnabled(true);
 
         jLabel1.setEnabled(false);
-        jLabel1.setText("Logged in as Customer ID:");
+        jLabel2.setText("Logged in as Customer ID: ");
         txtCusID.setEnabled(false);
         btnlogin.setEnabled(false);
     }
@@ -263,7 +263,7 @@ public class CustomerClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnloginActionPerformed
 
     private void btnCartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCartActionPerformed
-        new CustomerCart(this, true, customerSys, Integer.parseInt(txtCusID.getText()));
+        new CustomerCart(this, true, customerSys, Integer.parseInt(txtCusID.getText())).setVisible(true);
     }//GEN-LAST:event_btnCartActionPerformed
 
     /**

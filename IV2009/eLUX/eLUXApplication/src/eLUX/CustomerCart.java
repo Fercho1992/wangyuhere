@@ -15,6 +15,7 @@ import com.elux.ado.order.OrderItem;
 import com.elux.system.webcustsys.IWebCustSys;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,6 +47,11 @@ public class CustomerCart extends javax.swing.JDialog {
         listOrder.setModel(list);
     }
 
+    private void remoOrder(){
+        itemList.removeElementAt(listOrder.getSelectedIndex());
+        addToList();
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -58,6 +64,7 @@ public class CustomerCart extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         listOrder = new javax.swing.JList();
         btnOrder = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Customer Cart");
@@ -76,6 +83,13 @@ public class CustomerCart extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setText("Remove Order");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,7 +98,9 @@ public class CustomerCart extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btnOrder)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -92,8 +108,11 @@ public class CustomerCart extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                    .addComponent(btnOrder))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnOrder))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -101,8 +120,20 @@ public class CustomerCart extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
-        cusSys.sendOrder(customerID, itemList);
+        int choice = JOptionPane.showConfirmDialog(this,"Send your Order now?","Decision",0);
+            if(choice != 0) return;
+            else cusSys.sendOrder(customerID, itemList);
     }//GEN-LAST:event_btnOrderActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(listOrder.getSelectedIndex() == -1){
+            JOptionPane.showMessageDialog(this,"Please select a Order Item to remove","Error",0);
+            return;
+        } else {
+            int choice = JOptionPane.showConfirmDialog(this,"Really want to remove the selected Order Item?","Decision",0);
+            if(choice != 0) return;
+            else remoOrder();}
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
     * @param args the command line arguments
@@ -111,6 +142,7 @@ public class CustomerCart extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOrder;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList listOrder;
     // End of variables declaration//GEN-END:variables
