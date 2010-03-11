@@ -52,6 +52,9 @@ public class OrderMgrBean implements IOrderMgr {
 				nonDelvOrderList.addElement(order);
 			}
 
+            stmt.close();
+            con.close();
+
 			return nonDelvOrderList;
 
 		} catch (SQLException ex) {
@@ -83,6 +86,10 @@ public class OrderMgrBean implements IOrderMgr {
 				rebate = rs_rebate.getDouble("Rebate");
 			}
 
+            rs_rebate.close();
+            stmt_rebate.close();
+            con.close();
+
 			return rebate;
 
 		} catch (SQLException ex) {
@@ -102,6 +109,9 @@ public class OrderMgrBean implements IOrderMgr {
 			PreparedStatement stmt = con.prepareStatement(query);
 			stmt.setInt(1, ordID);
 			stmt.executeUpdate();
+
+            stmt.close();
+            con.close();
 
 		} catch (SQLException ex) {
 			throw new OrderMgrException("Delete non-order failed!",
@@ -123,6 +133,8 @@ public class OrderMgrBean implements IOrderMgr {
 			stmt_order.setString(1, orderTime);
 			stmt_order.setInt(2, cusID);
 			int orderID = stmt_order.executeUpdate();
+
+            stmt_order.close();
 
 			for (OrderItem item : orderItemList) {
 				item.setOrderID(orderID);
@@ -152,7 +164,11 @@ public class OrderMgrBean implements IOrderMgr {
 				stmt_orderItem.setInt(4, orderID);
 				stmt_orderItem.executeUpdate();
 
+                stmt_orderItem.close();
+
 			}
+
+            con.close();
 		} catch (SQLException ex) {
 			throw new OrderMgrException("Order Product failed!",
 					" failed because of " + ex.getMessage());
@@ -161,6 +177,7 @@ public class OrderMgrBean implements IOrderMgr {
 	}
 
     public Order getOrder(int ordID) throws OrderMgrException {
+        Order result = null;
         try {
 			Connection con = dataSource.getConnection();
 			String query = "SELECT * FROM eLUX_Order WHERE OrdID = ?";
@@ -173,15 +190,18 @@ public class OrderMgrBean implements IOrderMgr {
                 order.setOrdID(rs.getInt("OrdID"));
                 order.setOrdStatus(rs.getString("OrderStatus"));
                 order.setOrdTime(rs.getString("OrderTime"));
-                return order;
+                result = order;
             }
+            rs.close();
+            stmt.close();
+            con.close();
 
 		} catch (SQLException ex) {
 			throw new OrderMgrException("Delete non-order failed!",
 					"Order ID = " + ordID + " failed because of "
 							+ ex.getMessage());
 		}
-        return null;
+        return result;
     }
 
 }
