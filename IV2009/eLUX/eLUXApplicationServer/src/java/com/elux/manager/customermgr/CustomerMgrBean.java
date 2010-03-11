@@ -37,6 +37,10 @@ public class CustomerMgrBean implements ICustomerMgr {
 						.getString("CusEAddress"));
 			}
 
+            rs.close();
+            stmt.close();
+            con.close();
+
 			return customer;
 
 		} catch (SQLException ex) {
@@ -111,6 +115,7 @@ public class CustomerMgrBean implements ICustomerMgr {
 	@Override
 	public double getDiscount(int cusID, int proCatID)
 			throws CustomerMgrException {
+        double result = 1;
 		try {
 			Connection con = dataSource.getConnection();
 			String query = "SELECT * FROM eLUX_Rebate WHERE CusID = ? AND ProCatID = ?";
@@ -120,15 +125,20 @@ public class CustomerMgrBean implements ICustomerMgr {
 			ResultSet rs = stmt.executeQuery();
 
 			if (rs.next()) {
-				return rs.getDouble("Rebate");
+
+				result = rs.getDouble("Rebate");
 			}
+
+            rs.close();
+            stmt.close();
+            con.close();
 
 		} catch (SQLException ex) {
 			throw new CustomerMgrException("getDiscount failed!",
 					"Get Discount customer ID = " + cusID + " failed because of "
 							+ ex.getMessage());
 		}
-		return 1;
+		return result;
 	}
 
 }

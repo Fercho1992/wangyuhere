@@ -42,7 +42,11 @@ public class WarehouseMgrBean implements IWarehouseMgr {
 				stockinfo = new StockInfo(rs.getInt("ProID"), rs.getString("ProName"),
 						rs.getInt("WarID"), rs.getInt("LimitLevel"),
 						rs.getInt("Amount"));
-			} 
+			}
+
+            rs.close();
+            stmt.close();
+            con.close();
 			
 			return stockinfo;
 

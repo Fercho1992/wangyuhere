@@ -40,6 +40,9 @@ public class ProductMgrBean implements IProductMgr{
 				info.setPrice(rs.getDouble("ProPrice"));
 				results.add(info);
 			}
+            rs.close();
+            stmt.close();
+            con.close();
 			
 			return results;
 
@@ -67,6 +70,9 @@ public class ProductMgrBean implements IProductMgr{
 				pc.setProCatName(rs.getString("ProCatName"));
 				results.add(pc);
 			}
+            rs.close();
+            stmt.close();
+            con.close();
 			
 			return results;
 
@@ -87,6 +93,9 @@ public class ProductMgrBean implements IProductMgr{
 		if(rs.next()) {
 			name = rs.getString("ProCatName");
 		}
+        rs.close();
+        stmt.close();
+        con.close();
 		return name;
 	}
 
@@ -110,7 +119,10 @@ public class ProductMgrBean implements IProductMgr{
 				info.setGrade(getGradeByProductID(productID));
 				info.setComments(getCommentsByProductID(productID));
 			}
-			
+
+            rs.close();
+            stmt.close();
+            con.close();
 			return info;
 
 		} catch (SQLException ex) {
@@ -133,6 +145,10 @@ public class ProductMgrBean implements IProductMgr{
 			if(rs.next()) {
 				result = rs.getDouble("GradeAverage");
 			}
+
+            rs.close();
+            stmt.close();
+            con.close();
 			
 			return result;
 
@@ -160,7 +176,11 @@ public class ProductMgrBean implements IProductMgr{
 				c.setProID(productID);
 				result.add(c);
 			}
-			
+
+            rs.close();
+            stmt.close();
+            con.close();
+            
 			return result;
 
 		} catch (SQLException ex) {
