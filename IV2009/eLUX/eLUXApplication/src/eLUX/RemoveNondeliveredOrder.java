@@ -31,7 +31,7 @@ public class RemoveNondeliveredOrder extends javax.swing.JPanel {
         initComponents();
         this.employeeSystem = system;
         orderstatus = "nondelivered";
-        order = employeeSystem.searchNonDelvOrder(orderstatus);
+        order = employeeSystem.searchNonDelvOrder();
         addToList();
         
     }
