@@ -5,49 +5,35 @@ import java.util.Vector;
 import com.elux.ado.order.OrderItem;
 import com.elux.ado.product.ProductCategory;
 import com.elux.manager.productmgr.ProductInfo;
+import com.elux.manager.productmgr.ProductMgrException;
 import com.elux.manager.productmgr.ShortProductInfo;
 
 public interface IWebCustSys {
-/**
-	   * Get all the product categories .
-	   *
-	   * @param
-   	   * @return a list of Product Categories.
-	   * @throws ProductMgrException
-         */
-	public Vector<ProductCategory> getProductCategories();
-  /**
-	   * Get products' information under certain Category .
-	   *
-	   * @param input Category's ID.
-   	   * @return a series of Short Product Information, including: ID, Name, Price .
-	   * @throws ProductMgrException
-         */
-	public Vector<ShortProductInfo> getProductByCategory(int categoryID);
- /**
-	   * Get product's information according to ProductID.
-	   *
-	   * @param input ProductID is a int type.
-   	   * @return ProductInfo is a datatype class, including ID, name, price, category, grades and comments.
-	   * @throws ProductMgrException
-         */
-	public ProductInfo getProductInfo(int productID);
-	/**
-	   * get certain customer's discount about certain product's category .
-	   *
-	   * @param input Customer's ID is int.
-           * @param input Product Category's ID.
-	   * @return the discount is double type.
-	   * @throws CustomerMgrException
-	   */
-	public double getDiscount(int cusID, int proCatID);
-	/**
-	   * a list of orderitems consists an order.Put this order's information into database.
-	   *
-	   * @param input Customer's ID is int.
-           * @param OrderItem is a datatype including orderitem's information.
-	   * @return
-	   * @throws OrderMgrException
-	   */
-	public void sendOrder(int cusID, Vector<OrderItem> orderItemList);
+    /**
+     * Select all the product categories from database.
+     *
+     * @param
+     * @return a list of the Objects: ProductCategory.
+     * @throws ProductMgrException if a database access error occurs 
+     * or the given parameter is not a Statement constant indicating whether auto-generated keys should be returned
+     * or the SQL statement does not return a ResultSet object
+     */
+    public Vector<ProductCategory> getProductCategories() throws ProductMgrException;
+
+    /**
+     * Get products' information under certain Category .
+     *
+     * @param categoryID - the certain Category ID.
+     * @return a list of the Objects: ShortProductInfo, including: ID, Name, Price .
+     * @throws ProductMgrException if a database access error occurs
+     * or the given parameter is not a Statement constant indicating whether auto-generated keys should be returned
+     * or the SQL statement does not return a ResultSet object
+     */
+    public Vector<ShortProductInfo> getProductByCategory(int categoryID) throws ProductMgrException;
+
+    public ProductInfo getProductInfo(int productID);
+
+    public double getDiscount(int cusID, int proCatID);
+
+    public void sendOrder(int cusID, Vector<OrderItem> orderItemList);
 }
