@@ -6,8 +6,10 @@ import com.elux.ado.order.OrderItem;
 import com.elux.ado.product.ProductCategory;
 import com.elux.manager.customermgr.ICustomerMgr;
 import com.elux.manager.ordermgr.IOrderMgr;
+import com.elux.manager.ordermgr.OrderMgrException;
 import com.elux.manager.productmgr.IProductMgr;
 import com.elux.manager.productmgr.ProductInfo;
+import com.elux.manager.productmgr.ProductMgrException;
 import com.elux.manager.productmgr.ShortProductInfo;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -38,27 +40,27 @@ public class WebCustSysBean implements IWebCustSys {
     }
 
 	@Override
-	public double getDiscount(int cusID, int proCatID) {
+	public double getDiscount(int cusID, int proCatID) throws OrderMgrException {
 		return customerMgr.getDiscount(cusID, proCatID);
 	}
 
 	@Override
-	public Vector<ShortProductInfo> getProductByCategory(int categoryID) {
+	public Vector<ShortProductInfo> getProductByCategory(int categoryID) throws ProductMgrException {
 		return productMgr.getProductByCategory(categoryID);
 	}
 
 	@Override
-	public Vector<ProductCategory> getProductCategories() {
+	public Vector<ProductCategory> getProductCategories() throws ProductMgrException {
 		return productMgr.getProductCategories();
 	}
 
 	@Override
-	public ProductInfo getProductInfo(int productID) {
+	public ProductInfo getProductInfo(int productID) throws ProductMgrException {
 		return productMgr.getProductInfo(productID);
 	}
 
 	@Override
-	public void sendOrder(int cusID, Vector<OrderItem> orderItemList) {
+	public void sendOrder(int cusID, Vector<OrderItem> orderItemList) throws OrderMgrException {
 		orderMgr.sendOrder(cusID, orderItemList);
 	}
 
