@@ -26,17 +26,15 @@ public class CustomerCart extends javax.swing.JDialog {
     private Vector<OrderItem> orderList = new Vector<OrderItem>();
     private IWebCustSys cusSys;
     private int customerID =0;
-    private String productName;
 
     /** Creates new form CustomerCart */
-    public CustomerCart(java.awt.Frame parent, boolean modal, IWebCustSys customerSys, int cusID, Vector<OrderItem> itemList, String proName) {
+    public CustomerCart(java.awt.Frame parent, boolean modal, IWebCustSys customerSys, int cusID, Vector<OrderItem> itemList) {
         super(parent, modal);
         initComponents();
 
         cusSys = customerSys;
         customerID = cusID;
         orderList = itemList;
-        productName = proName;
 
         addToList();
         
@@ -45,6 +43,7 @@ public class CustomerCart extends javax.swing.JDialog {
     private void addToList(){
         DefaultListModel list = new DefaultListModel();
         for(OrderItem ordList: orderList) {
+            String productName = cusSys.getProductInfo(ordList.getProID()).getName();
             list.addElement("Product: " + productName + " -- Ordered Amount: " + ordList.getOrdItermAmount());
         }
         listOrder.setModel(list);
@@ -133,7 +132,7 @@ public class CustomerCart extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this,"Please select a Order Item to remove","Error",0);
             return;
         } else {
-            int choice = JOptionPane.showConfirmDialog(this,"Really want to remove the selected Order Item?","Decision",3);
+            int choice = JOptionPane.showConfirmDialog(this,"Really want to remove the selected Order Item?","Decision",0);
             if(choice != 0) return;
             else {
                 remoOrder();

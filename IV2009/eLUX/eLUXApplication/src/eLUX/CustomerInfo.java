@@ -177,6 +177,11 @@ public class CustomerInfo extends javax.swing.JPanel {
                 customer = employeeSystem.getCustomerInfo(Integer.parseInt(txtID.getText()));
             }
 
+            if(customer == null) {
+                showError("No customer was found!");
+                return;
+            }
+
             txtName.setText(customer.getCusName());
             txtAddress.setText(customer.getCusAddress());
             txtAddInvoice.setText(customer.getCusAddrForInvoice());
