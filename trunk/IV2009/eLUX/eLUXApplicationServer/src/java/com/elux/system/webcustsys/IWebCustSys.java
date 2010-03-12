@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.elux.ado.order.OrderItem;
 import com.elux.ado.product.ProductCategory;
+import com.elux.manager.customermgr.CustomerMgrException;
 import com.elux.manager.ordermgr.OrderMgrException;
 import com.elux.manager.productmgr.ProductInfo;
 import com.elux.manager.productmgr.ProductMgrException;
@@ -44,9 +45,9 @@ public interface IWebCustSys {
      * @param cusID - the specific customer's ID
      *        proCatID - the specific product category's ID
      * @return the double type number which is the discount of the specific category belongs to this specific customer.
-     * @throws ProductMgrException if execute SQL statements wrong or if input <= 0.
+     * @throws CustomerMgrException if execute SQL statements wrong or if input <= 0.
      */
-    public double getDiscount(int cusID, int proCatID) throws OrderMgrException;
+    public double getDiscount(int cusID, int proCatID) throws CustomerMgrException;
 
     /**
      * store this order's information into database.
@@ -54,7 +55,7 @@ public interface IWebCustSys {
      * @param cusID - the specific customer's ID.
      *        orderItemList - a list of Object: OrderItem which belongs to the specific customer.
      * @return
-     * @throws OrderMgrException if execute SQL statements wrong or orderItemList contains null element or if cusID <= 0.
+     * @throws OrderMgrException if execute SQL statements wrong or orderItemList contains OrderItem with null attribute or if cusID <= 0.
      */
     public void sendOrder(int cusID, Vector<OrderItem> orderItemList) throws OrderMgrException;
 }
