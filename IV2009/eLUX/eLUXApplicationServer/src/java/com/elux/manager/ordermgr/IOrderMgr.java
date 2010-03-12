@@ -48,6 +48,5 @@ public interface IOrderMgr {
 	   * @throws OrderMgrException
 	   */
 	public void sendOrder(int cusID, Vector<OrderItem> orderItemList) throws OrderMgrException;
-//	public Vector<Integer> getTop10ID() throws OrderMgrException;
 
 }

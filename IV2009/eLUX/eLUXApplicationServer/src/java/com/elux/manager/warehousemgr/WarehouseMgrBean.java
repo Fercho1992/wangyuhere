@@ -29,6 +29,10 @@ public class WarehouseMgrBean implements IWarehouseMgr {
          */
 	public StockInfo getStockInfo(int productID, int wareID)throws WarehouseMgrException{
 
+        if(productID <= 0 || wareID <= 0) {
+            String error = "Both product id and warehouse id should be positive integer";
+            throw new WarehouseMgrException(error, error);
+        }
 		try {
 			
 			Connection con = dataSource.getConnection();
