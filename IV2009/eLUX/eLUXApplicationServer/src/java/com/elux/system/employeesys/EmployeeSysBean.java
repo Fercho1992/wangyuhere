@@ -46,10 +46,18 @@ public class EmployeeSysBean implements IEmployeeSys {
         return warehouseMgr.getStockInfo(productID, wareID);
     }
 
-    @Override
-    public void removeNonDelvOrder(int ordID) {
-        orderMgr.removeNonDelvOrder(ordID);
-    }
+
+        @Override
+        public Vector<Order> searchNonDelvOrder(String orderStatus){
+            return orderMgr.searchNonDelvOrder(orderStatus);
+        }
+
+        @Override
+	public void removeNonDelvOrder(int ordID) {
+		// TODO Auto-generated method stub
+		orderMgr.removeNonDelvOrder(ordID);
+	}
+
 
     @Override
     public void saveCorrespondence(DocContact docContact) {

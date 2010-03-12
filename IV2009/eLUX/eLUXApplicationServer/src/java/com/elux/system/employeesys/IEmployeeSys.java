@@ -11,9 +11,10 @@ public interface IEmployeeSys {
 
 	public Customer getCustomerInfo(int cusID);
 
-    public Customer getCustomerInfoByOrderID(int ordID);
+         public Customer getCustomerInfoByOrderID(int ordID);
 
 	public void setCustomerInfo(Customer customer);
+        public Vector<Order> searchNonDelvOrder(String orderStatus);
 
 	public void removeNonDelvOrder(int ordID);
 
