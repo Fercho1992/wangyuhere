@@ -16,19 +16,26 @@ public interface IWebCustSys {
      * Select all the product categories from database.
      *
      * @param
-     * @return a list of the Objects: ProductCategory or an empty collection if there is no data about product category in database.
+     * @return Vector<ProductCategory> or an empty Vector if there is no data about product category in database.
      * @throws ProductMgrException if execute SQL statements wrong.
      */
     public Vector<ProductCategory> getProductCategories() throws ProductMgrException;
+
+
+
 
     /**
      * Get products' information under certain Category .
      *
      * @param categoryID - the specific Category's ID.
-     * @return a list of the Objects: ShortProductInfo or an empty cellection if categoryID cannot be found.
+     * @return Vector<ShortProductInfo> or an empty Vector if categoryID cannot be found.
      * @throws ProductMgrException if execute SQL statements wrong or if input <= 0.
      */
     public Vector<ShortProductInfo> getProductByCategory(int categoryID) throws ProductMgrException;
+
+
+
+
 
     /**
      * Get the specific product's information according to ProductID.
@@ -39,21 +46,29 @@ public interface IWebCustSys {
      */
     public ProductInfo getProductInfo(int productID) throws ProductMgrException;
 
+
+
+
+
     /**
      * Get the discount belongs to the specific customer about the specific product's category .
      *
      * @param cusID - the specific customer's ID
-     *        proCatID - the specific product category's ID
+     * @param proCatID - the specific product category's ID
      * @return the double type number which is the discount of the specific category belongs to this specific customer.
      * @throws CustomerMgrException if execute SQL statements wrong or if input <= 0.
      */
     public double getDiscount(int cusID, int proCatID) throws CustomerMgrException;
 
+
+
+
+
     /**
      * store this order's information into database.
      *
      * @param cusID - the specific customer's ID.
-     *        orderItemList - a list of Object: OrderItem which belongs to the specific customer.
+     * @param orderItemList - Vector<OrderItem>.
      * @return
      * @throws OrderMgrException if execute SQL statements wrong or orderItemList contains OrderItem with null attribute or if cusID <= 0.
      */
