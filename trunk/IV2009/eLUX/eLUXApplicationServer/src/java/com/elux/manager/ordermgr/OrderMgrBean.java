@@ -27,11 +27,12 @@ public class OrderMgrBean implements IOrderMgr {
 	private DataSource dataSource;
 
         /**
-         *
-         * @param orderStatus
-         * @return
-         * @throws OrderMgrException
-         */
+	   * Search Orders whose states are non-delivered .
+	   *
+	   * @param input order status is a string type.
+   	   * @return a series of orders which are non-delivered.
+	   * @throws OrderMgrException
+	   */
 	public Vector<Order> searchNonDelvOrder(String orderStatus)
 			throws OrderMgrException {
 		try {
@@ -72,6 +73,14 @@ public class OrderMgrBean implements IOrderMgr {
          * @throws OrderMgrException
          */
 	@Override
+        /**
+	   * get certain customer's discount about certain product's category .
+	   *
+	   * @param input Customer's ID is int.
+           * @param input Product Category's ID.
+	   * @return the discount is double type.
+	   * @throws OrderMgrException
+	   */
 	public double getDiscount(int cusID, int proCatID) throws OrderMgrException {
 		try {
 			Connection con = dataSource.getConnection();
@@ -102,6 +111,13 @@ public class OrderMgrBean implements IOrderMgr {
 	}
 
 	@Override
+        /**
+	   * remove orders, the orders' status must be non-delivered. .
+	   *
+	   * @param input Order's ID is int.
+           * @return
+	   * @throws OrderMgrException
+	   */
 	public void removeNonDelvOrder(int ordID) throws OrderMgrException {
 		try {
 			Connection con = dataSource.getConnection();
@@ -122,6 +138,14 @@ public class OrderMgrBean implements IOrderMgr {
 	}
 
 	@Override
+        /**
+	   * a list of orderitems consists an order.Put this order's information into database.
+	   *
+	   * @param input Customer's ID is int.
+           * @param OrderItem is a datatype including orderitem's information.
+	   * @return
+	   * @throws OrderMgrException
+	   */
 	public void sendOrder(int cusID, Vector<OrderItem> orderItemList)
 			throws OrderMgrException {
 		try {
@@ -176,6 +200,13 @@ public class OrderMgrBean implements IOrderMgr {
 
 	}
 
+        /**
+	   * get certain order's information according to order ID .
+	   *
+	   * @param input Order's ID is int.
+           * @return the Order is a datatype class, including order's information:CusID,OrdID,OrderStatus and Order time.
+	   * @throws OrderMgrException
+	   */
     public Order getOrder(int ordID) throws OrderMgrException {
         Order result = null;
         try {

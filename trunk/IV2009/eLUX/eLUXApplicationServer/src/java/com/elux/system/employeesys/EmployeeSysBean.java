@@ -46,18 +46,16 @@ public class EmployeeSysBean implements IEmployeeSys {
         return warehouseMgr.getStockInfo(productID, wareID);
     }
 
+    @Override
+    public Vector<Order> searchNonDelvOrder(String orderStatus) {
+        return orderMgr.searchNonDelvOrder(orderStatus);
+    }
 
-        @Override
-        public Vector<Order> searchNonDelvOrder(String orderStatus){
-            return orderMgr.searchNonDelvOrder(orderStatus);
-        }
-
-        @Override
-	public void removeNonDelvOrder(int ordID) {
-		// TODO Auto-generated method stub
-		orderMgr.removeNonDelvOrder(ordID);
-	}
-
+    @Override
+    public void removeNonDelvOrder(int ordID) {
+        // TODO Auto-generated method stub
+        orderMgr.removeNonDelvOrder(ordID);
+    }
 
     @Override
     public void saveCorrespondence(DocContact docContact) {
@@ -72,9 +70,5 @@ public class EmployeeSysBean implements IEmployeeSys {
     public Customer getCustomerInfoByOrderID(int ordID) {
         Order order = orderMgr.getOrder(ordID);
         return getCustomerInfo(order.getCusID());
-    }
-
-    public Vector<Order> searchNonDelvOrder(String orderStatus) {
-        return orderMgr.searchNonDelvOrder(orderStatus);
     }
 }
