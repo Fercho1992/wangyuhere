@@ -15,162 +15,163 @@ import com.elux.ado.customer.DocContact;
 
 @Remote(ICustomerMgr.class)
 @Stateless(name = "ICustomerMgr")
-
 public class CustomerMgrBean implements ICustomerMgr {
 
-	@Resource(mappedName = "java:/jdbc/eLUX")
-	private DataSource dataSource;
+    @Resource(mappedName = "java:/jdbc/eLUX")
+    private DataSource dataSource;
 
-	@Override
-        /**
-	   * through input customer's ID, get the customer's information
-	   *
-	   * @param input  customer's ID is a int type
-	   * @return Customer is a datatype class, including customer's infomation:ID,Name,Address,Address for invoice and Email address.
-	   * @throws CustomerMgrException
-	   */
-	public Customer getCustomerInfo(int cusID) throws CustomerMgrException {
-		try {
-			Connection con = dataSource.getConnection();
-			String query = "SELECT * FROM eLUX_Customer WHERE CusID = ?";
-			PreparedStatement stmt = con.prepareStatement(query);
-			stmt.setInt(1, cusID);
-			ResultSet rs = stmt.executeQuery();
+    @Override
+    /**
+     * through input customer's ID, get the customer's information
+     *
+     * @param input  customer's ID is int type
+     * @return Customer. If cusID doesn't exit, return null.
+     * @throws CustomerMgrException if  a database access error occurs
+     * or the given parameter is not a Statement constant indicating whether auto-generated keys should be returned
+     * or the SQL statement does not return a ResultSet object
+     */
+    public Customer getCustomerInfo(int cusID) throws CustomerMgrException {
+        try {
+            Connection con = dataSource.getConnection();
+            String query = "SELECT * FROM eLUX_Customer WHERE CusID = ?";
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setInt(1, cusID);
+            ResultSet rs = stmt.executeQuery();
 
-			Customer customer = null;
-			if (rs.next()) {
-				customer = new Customer(rs.getInt("CusID"), rs
-						.getString("CusName"), rs.getString("CusAddress"), rs
-						.getString("CusAddrforInvoice"), rs
-						.getString("CusEAddress"));
-			}
+            Customer customer = null;
+            if (rs.next()) {
+                customer = new Customer(rs.getInt("CusID"), rs.getString("CusName"), rs.getString("CusAddress"), rs.getString("CusAddrforInvoice"), rs.getString("CusEAddress"));
+            }
 
             rs.close();
             stmt.close();
             con.close();
 
-			return customer;
+            return customer;
 
-		} catch (SQLException ex) {
-			throw new CustomerMgrException("Get customer info failed!",
-					"Get customer ID = " + cusID + " failed because of "
-							+ ex.getMessage());
-		}
-	}
+        } catch (SQLException ex) {
+            throw new CustomerMgrException("Get customer info failed!",
+                    "Get customer ID = " + cusID + " failed because of "
+                    + ex.getMessage());
+        }
+    }
 
-	@Override
+    @Override
+    /**
+     * employees have contact with customers, employee should save this contact information.
+     *
+     * @param input object:DocContact
+     * @return
+     * @throws CustomerMgrException if input DocContact is null
+     * or if  a database access error occurs
+     * or the given parameter is not a Statement constant indicating whether auto-generated keys should be returned
+     * or he given SQL statement produces a ResultSet object
+     */
+    public void saveCorrespondence(DocContact docContact)
+            throws CustomerMgrException {
+        if (docContact == null) {
+            throw new CustomerMgrException(
+                    "Insert failed: Doc contact is missing",
+                    "saveCorrespondence() - the parameter docContact is null!");
+        }
 
-        /**
-	   * employees have contact with customers, employee should save this contact information.
-	   *
-	   * @param input type is DocContact, including the information that should be saved:start time, finish time,doc time,cusID, Personel ID and Content.
-	   * @return
-	   * @throws CustomerMgrException
-	   */
-	public void saveCorrespondence(DocContact docContact)
-			throws CustomerMgrException {
-		if (docContact == null) {
-			throw new CustomerMgrException(
-					"Insert failed: Doc contact is missing",
-					"saveCorrespondence() - the parameter docContact is null!");
-		}
+        try {
+            Connection con = dataSource.getConnection();
 
-		try {
-			Connection con = dataSource.getConnection();
+            String query = "INSERT INTO eLUX_DocContact (Starttime, Finishtime, Doctime, CusID, PerID, Content) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmt = con.prepareStatement(query);
 
-			String query = "INSERT INTO eLUX_DocContact (Starttime, Finishtime, Doctime, CusID, PerID, Content) VALUES (?, ?, ?, ?, ?, ?)";
-			PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1, docContact.getStartTime());
+            stmt.setString(2, docContact.getFinishTime());
+            stmt.setString(3, docContact.getDocTime());
+            stmt.setInt(4, docContact.getCusID());
+            stmt.setInt(5, docContact.getPerID());
+            stmt.setString(6, docContact.getContent());
 
-			stmt.setString(1, docContact.getStartTime());
-			stmt.setString(2, docContact.getFinishTime());
-			stmt.setString(3, docContact.getDocTime());
-			stmt.setInt(4, docContact.getCusID());
-			stmt.setInt(5, docContact.getPerID());
-			stmt.setString(6, docContact.getContent());
+            stmt.executeUpdate();
 
-			stmt.executeUpdate();
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            throw new CustomerMgrException("saveCorrespondence failed, database failure",
+                    "saveCorrespondence() failed: Database said: " + ex.getMessage());
+        }
 
-			stmt.close();
-			con.close();
-		} catch (SQLException ex) {
-			throw new CustomerMgrException("saveCorrespondence failed, database failure",
-					"saveCorrespondence() failed: Database said: " + ex.getMessage());
-		}
+    }
 
-	}
+    /**
+     * update customer's information.
+     *
+     * @param input object:Customer.
+     * @return
+     * @throws CustomerMgrException if input customer object is null
+     * or a database access error occurs
+     * or the given parameter is not a Statement constant indicating whether auto-generated keys should be returned
+     * or the given SQL statement produces a ResultSet object
+     */
+    public void setCustomerInfo(Customer customer) throws CustomerMgrException {
+        if (customer == null) {
+            throw new CustomerMgrException(
+                    "Insert failed: customer is missing",
+                    "setCustomerInfo() - the parameter customer is null!");
+        }
 
-        /**
-	   * update customer's information.
-	   *
-	   * @param input data type is Customer class,including customer's infomation:ID,Name,Address,Address for invoice and Email address.
-	   * @return
-	   * @throws CustomerMgrException
-	   */
-	public void setCustomerInfo(Customer customer) throws CustomerMgrException {
-		if (customer == null) {
-			throw new CustomerMgrException(
-					"Insert failed: customer is missing",
-					"setCustomerInfo() - the parameter customer is null!");
-		}
+        try {
+            Connection con = dataSource.getConnection();
 
-		try {
-			Connection con = dataSource.getConnection();
+            String query = "UPDATE eLUX_Customer SET CusName=?, CusAddress=?, CusAddrforInvoice=?, CusEAddress=? WHERE CusID=?";
+            PreparedStatement stmt = con.prepareStatement(query);
 
-			String query = "UPDATE eLUX_Customer SET CusName=?, CusAddress=?, CusAddrforInvoice=?, CusEAddress=? WHERE CusID=?";
-			PreparedStatement stmt = con.prepareStatement(query);
-
-			stmt.setString(1, customer.getCusName());
-			stmt.setString(2, customer.getCusAddress());
-			stmt.setString(3, customer.getCusAddrForInvoice());
-			stmt.setString(4, customer.getCusEAddress());
+            stmt.setString(1, customer.getCusName());
+            stmt.setString(2, customer.getCusAddress());
+            stmt.setString(3, customer.getCusAddrForInvoice());
+            stmt.setString(4, customer.getCusEAddress());
             stmt.setInt(5, customer.getCusID());
 
-			stmt.executeUpdate();
+            stmt.executeUpdate();
 
-			stmt.close();
-			con.close();
-		} catch (SQLException ex) {
-			throw new CustomerMgrException("setCustomerInfo failed, database failure",
-					"setCustomerInfo() failed: Database said: " + ex.getMessage());
-		}
-	}
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            throw new CustomerMgrException("setCustomerInfo failed, database failure",
+                    "setCustomerInfo() failed: Database said: " + ex.getMessage());
+        }
+    }
 
-	@Override
-
-        /**
-	   * get certain customer's discount about certain product's category .
-	   *
-	   * @param input Customer's ID is int.
-           * @param input Product Category's ID.
-	   * @return the discount is double type.
-	   * @throws CustomerMgrException
-	   */
-	public double getDiscount(int cusID, int proCatID)
-			throws CustomerMgrException {
+    @Override
+    /**
+     * get certain customer's discount about certain product's category .
+     *
+     * @param input Customer's ID is int.
+     * @param input Product Category's ID.
+     * @return the discount is double type.
+     * @throws CustomerMgrException
+     */
+    public double getDiscount(int cusID, int proCatID)
+            throws CustomerMgrException {
         double result = 1;
-		try {
-			Connection con = dataSource.getConnection();
-			String query = "SELECT * FROM eLUX_Rebate WHERE CusID = ? AND ProCatID = ?";
-			PreparedStatement stmt = con.prepareStatement(query);
-			stmt.setInt(1, cusID);
-			stmt.setInt(2, proCatID);
-			ResultSet rs = stmt.executeQuery();
+        try {
+            Connection con = dataSource.getConnection();
+            String query = "SELECT * FROM eLUX_Rebate WHERE CusID = ? AND ProCatID = ?";
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setInt(1, cusID);
+            stmt.setInt(2, proCatID);
+            ResultSet rs = stmt.executeQuery();
 
-			if (rs.next()) {
+            if (rs.next()) {
 
-				result = rs.getDouble("Rebate");
-			}
+                result = rs.getDouble("Rebate");
+            }
 
             rs.close();
             stmt.close();
             con.close();
 
-		} catch (SQLException ex) {
-			throw new CustomerMgrException("getDiscount failed!",
-					"Get Discount customer ID = " + cusID + " failed because of "
-							+ ex.getMessage());
-		}
-		return result;
-	}
-
+        } catch (SQLException ex) {
+            throw new CustomerMgrException("getDiscount failed!",
+                    "Get Discount customer ID = " + cusID + " failed because of "
+                    + ex.getMessage());
+        }
+        return result;
+    }
 }
