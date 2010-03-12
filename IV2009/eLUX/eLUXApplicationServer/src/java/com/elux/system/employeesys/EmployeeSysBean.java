@@ -47,8 +47,8 @@ public class EmployeeSysBean implements IEmployeeSys {
     }
 
     @Override
-    public Vector<Order> searchNonDelvOrder(String orderStatus) {
-        return orderMgr.searchNonDelvOrder(orderStatus);
+    public Vector<Order> searchNonDelvOrder() {
+        return orderMgr.searchNonDelvOrder();
     }
 
     @Override
@@ -66,7 +66,18 @@ public class EmployeeSysBean implements IEmployeeSys {
     public void setCustomerInfo(Customer customer) {
         customerMgr.setCustomerInfo(customer);
     }
-
+ /**
+     * through input order's ID, get the customer's information
+     *
+     * @param input  ordID is int type
+     * @return Customer. If ordID doesn't exit, return null.
+     * @throws OrderMgrException if  a database access error occurs
+     * or the given parameter is not a Statement constant indicating whether auto-generated keys should be returned
+     * or the SQL statement does not return a ResultSet object
+     * @throws CustomerMgrException if  a database access error occurs
+     * or the given parameter is not a Statement constant indicating whether auto-generated keys should be returned
+     * or the SQL statement does not return a ResultSet object
+     */
     public Customer getCustomerInfoByOrderID(int ordID) {
         Order order = orderMgr.getOrder(ordID);
         return getCustomerInfo(order.getCusID());

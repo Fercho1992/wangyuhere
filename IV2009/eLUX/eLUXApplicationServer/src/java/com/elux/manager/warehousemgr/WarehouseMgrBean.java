@@ -22,9 +22,9 @@ public class WarehouseMgrBean implements IWarehouseMgr {
         /**
 	   * Get stock information of a certain product at certain warehouse .
 	   *
-	   * @param input Product's ID.
-           * @param input warehouse's ID.
-   	   * @return StockInfo is a datatype class, including Product ID, Product Name, Warehouse ID, Stocklevel and account .
+	   * @param input int productID.
+           * @param input int wareID.
+   	   * @return StockInfo. If product ID or ware ID doesn't exit, return null
 	   * @throws WarehouseMgrException
          */
 	public StockInfo getStockInfo(int productID, int wareID)throws WarehouseMgrException{

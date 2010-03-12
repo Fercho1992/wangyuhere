@@ -13,7 +13,7 @@ public interface IOrderMgr {
    	   * @return a series of orders which are non-delivered.
 	   * @throws OrderMgrException
          */
-	public Vector<Order> searchNonDelvOrder(String orderStatus) throws OrderMgrException;
+	public Vector<Order> searchNonDelvOrder() throws OrderMgrException;
         /**
 	   * remove orders, the orders' status must be non-delivered. .
 	   *
