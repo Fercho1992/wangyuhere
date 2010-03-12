@@ -111,21 +111,18 @@ public class OrderMgrBean implements IOrderMgr {
 
     }
 
-    @Override
-    /**
-     * remove orders, the orders' status must be non-delivered. .
-     *
-     * @param input Order's ID is int.
-     * @return
-     * @throws OrderMgrException
-     */
-    public void removeNonDelvOrder(int ordID) throws OrderMgrException {
-        try {
-            Connection con = dataSource.getConnection();
-            String query = "DELETE * FROM eLUX_Order WHERE OrdID = ?";
-            PreparedStatement stmt = con.prepareStatement(query);
-            stmt.setInt(1, ordID);
-            stmt.executeUpdate();
+	@Override
+	public void removeNonDelvOrder(int ordID) throws OrderMgrException {
+		try {
+			Connection con = dataSource.getConnection();
+			String query = "DELETE * FROM eLUX_Order WHERE OrdID = ? AND OrderStatus = ?";
+			PreparedStatement stmt = con.prepareStatement(query);
+			stmt.setInt(1, ordID);
+            stmt.setString(2, "nondelivered");
+			if(stmt.executeUpdate() <= 0) {
+                String error = "Order "+ordID+" is already removed or delivered!!";
+                throw new OrderMgrException(error, error);
+            }
 
             stmt.close();
             con.close();
@@ -139,14 +136,6 @@ public class OrderMgrBean implements IOrderMgr {
     }
 
     @Override
-    /**
-     * a list of orderitems consists an order.Put this order's information into database.
-     *
-     * @param input Customer's ID is int.
-     * @param OrderItem is a datatype including orderitem's information.
-     * @return
-     * @throws OrderMgrException
-     */
     public void sendOrder(int cusID, Vector<OrderItem> orderItemList)
             throws OrderMgrException {
         try {

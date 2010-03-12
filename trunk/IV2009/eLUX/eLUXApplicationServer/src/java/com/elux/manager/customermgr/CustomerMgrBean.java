@@ -21,16 +21,12 @@ public class CustomerMgrBean implements ICustomerMgr {
     private DataSource dataSource;
 
     @Override
-    /**
-     * through input customer's ID, get the customer's information
-     *
-     * @param input  customer's ID is int type
-     * @return Customer. If cusID doesn't exit, return null.
-     * @throws CustomerMgrException if  a database access error occurs
-     * or the given parameter is not a Statement constant indicating whether auto-generated keys should be returned
-     * or the SQL statement does not return a ResultSet object
-     */
     public Customer getCustomerInfo(int cusID) throws CustomerMgrException {
+        if(cusID <= 0) {
+            String error = "Customer cannot be smaller than 0";
+             throw new CustomerMgrException(error, error);
+        }
+
         try {
             Connection con = dataSource.getConnection();
             String query = "SELECT * FROM eLUX_Customer WHERE CusID = ?";
@@ -57,16 +53,6 @@ public class CustomerMgrBean implements ICustomerMgr {
     }
 
     @Override
-    /**
-     * employees have contact with customers, employee should save this contact information.
-     *
-     * @param input object:DocContact
-     * @return
-     * @throws CustomerMgrException if input DocContact is null
-     * or if  a database access error occurs
-     * or the given parameter is not a Statement constant indicating whether auto-generated keys should be returned
-     * or he given SQL statement produces a ResultSet object
-     */
     public void saveCorrespondence(DocContact docContact)
             throws CustomerMgrException {
         if (docContact == null) {
@@ -99,16 +85,8 @@ public class CustomerMgrBean implements ICustomerMgr {
 
     }
 
-    /**
-     * update customer's information.
-     *
-     * @param input object:Customer.
-     * @return
-     * @throws CustomerMgrException if input customer object is null
-     * or a database access error occurs
-     * or the given parameter is not a Statement constant indicating whether auto-generated keys should be returned
-     * or the given SQL statement produces a ResultSet object
-     */
+
+    @Override
     public void setCustomerInfo(Customer customer) throws CustomerMgrException {
         if (customer == null) {
             throw new CustomerMgrException(
@@ -139,14 +117,6 @@ public class CustomerMgrBean implements ICustomerMgr {
     }
 
     @Override
-    /**
-     * get certain customer's discount about certain product's category .
-     *
-     * @param input Customer's ID is int.
-     * @param input Product Category's ID.
-     * @return the discount is double type.
-     * @throws CustomerMgrException
-     */
     public double getDiscount(int cusID, int proCatID)
             throws CustomerMgrException {
         double result = 1;

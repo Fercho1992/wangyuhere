@@ -43,7 +43,7 @@ public interface IEmployeeSys {
      * Search Orders whose states are non-delivered .
      *
      * @param
-     * @return Vector<Order>. If there is no nondelivered order, return null
+     * @return Vector<Order>. If there is no nondelivered order, empty vector is returned
      * @throws OrderMgrException if   execute SQL statements wrong
      */
     public Vector<Order> searchNonDelvOrder() throws OrderMgrException;
