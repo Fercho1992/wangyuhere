@@ -19,6 +19,14 @@ public class WarehouseMgrBean implements IWarehouseMgr {
 	private DataSource dataSource;
 
 	@Override
+        /**
+	   * Get stock information of a certain product at certain warehouse .
+	   *
+	   * @param input Product's ID.
+           * @param input warehouse's ID.
+   	   * @return StockInfo is a datatype class, including Product ID, Product Name, Warehouse ID, Stocklevel and account .
+	   * @throws WarehouseMgrException
+         */
 	public StockInfo getStockInfo(int productID, int wareID)throws WarehouseMgrException{
 
 		try {
@@ -35,10 +43,7 @@ public class WarehouseMgrBean implements IWarehouseMgr {
 			
 			StockInfo stockinfo = null;
 			if(rs.next()) {
-				/*stockinfo = new StockInfo(rs.getInt("ProductID"), rs.getString("ProductName"),
-						rs.getInt("WareID"), rs.getInt("StockLevel"),
-						rs.getInt("Amount"));
-						*/
+				
 				stockinfo = new StockInfo(rs.getInt("ProID"), rs.getString("ProName"),
 						rs.getInt("WarID"), rs.getInt("LimitLevel"),
 						rs.getInt("Amount"));
