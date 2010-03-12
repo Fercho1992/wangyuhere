@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import com.elux.ado.order.OrderItem;
 import com.elux.ado.product.ProductCategory;
+import com.elux.manager.customermgr.CustomerMgrException;
 import com.elux.manager.customermgr.ICustomerMgr;
 import com.elux.manager.ordermgr.IOrderMgr;
 import com.elux.manager.ordermgr.OrderMgrException;
@@ -40,7 +41,7 @@ public class WebCustSysBean implements IWebCustSys {
     }
 
 	@Override
-	public double getDiscount(int cusID, int proCatID) throws OrderMgrException {
+	public double getDiscount(int cusID, int proCatID) throws CustomerMgrException {
 		return customerMgr.getDiscount(cusID, proCatID);
 	}
 
