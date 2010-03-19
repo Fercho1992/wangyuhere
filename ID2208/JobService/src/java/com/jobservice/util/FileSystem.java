@@ -8,6 +8,7 @@ package com.jobservice.util;
 import com.jobservice.University;
 import hw1.Main;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -30,11 +31,18 @@ public class FileSystem {
                 sb.append(br.readLine());
                 sb.append("\n");
             }
+            fr.close();
         } catch (Exception ex) {
             Logger.getLogger(University.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return sb.toString();
+    }
+
+    public static void deleteFile(String file) {
+        File f = new File(SERVER_PATH+file);
+        System.out.println("Result:" + f.delete());
+        System.out.println("delete file "+file);
     }
 
     public static void writeFile(String file, String content) {
@@ -43,6 +51,7 @@ public class FileSystem {
             fw = new FileWriter(SERVER_PATH + file);
             fw.write(content);
             fw.flush();
+            fw.close();
         } catch (IOException ex) {
             Logger.getLogger(FileSystem.class.getName()).log(Level.SEVERE, null, ex);
         }
