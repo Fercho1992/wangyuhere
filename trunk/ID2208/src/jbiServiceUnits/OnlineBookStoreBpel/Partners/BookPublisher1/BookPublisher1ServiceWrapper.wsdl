@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="BookPublisher1ServiceWrapper" targetNamespace="http://enterprise.netbeans.org/bpel/BookPublisher1ServiceWrapper" xmlns:tns="http://enterprise.netbeans.org/bpel/BookPublisher1ServiceWrapper" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:ns="http://service.onlinebookstore.com/">
+    <import location="BookPublisher1Service.wsdl" namespace="http://service.onlinebookstore.com/"/>
+    <plnk:partnerLinkType name="BookPublisher1LinkType">
+        <plnk:role name="BookPublisher1Role" portType="ns:BookPublisher1"/>
+    </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="BookPublisher2LinkType">
+        <plnk:role name="BookPublisher1Role" portType="ns:BookPublisher1"/>
+    </plnk:partnerLinkType>
+</definitions>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.1.3.1-hudson-749-SNAPSHOT. --><xs:schema xmlns:tns="http://service.onlinebookstore.com/" xmlns:ns1="http://onlinebookstore.com/schema/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://service.onlinebookstore.com/">
+
+<xs:import namespace="http://onlinebookstore.com/schema/" schemaLocation="BookPublisherService_xsd_2.xsd"></xs:import>
+
+<xs:element name="orderBookPurchase" type="tns:orderBookPurchase"></xs:element>
+
+<xs:element name="orderBookPurchaseResponse" type="tns:orderBookPurchaseResponse"></xs:element>
+
+<xs:element name="purchaseCancel" type="tns:purchaseCancel"></xs:element>
+
+<xs:element name="purchaseCancelResponse" type="tns:purchaseCancelResponse"></xs:element>
+
+<xs:element name="searchBooks" type="tns:searchBooks"></xs:element>
+
+<xs:element name="searchBooksResponse" type="tns:searchBooksResponse"></xs:element>
+
+<xs:complexType name="searchBooks">
+<xs:sequence>
+<xs:element name="keyword" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="searchBooksResponse">
+<xs:sequence>
+<xs:element name="return" type="ns1:Book" minOccurs="0" maxOccurs="unbounded"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="purchaseCancel">
+<xs:sequence>
+<xs:element name="invoice" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="purchaseCancelResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="orderBookPurchase">
+<xs:sequence>
+<xs:element name="title" type="xs:string" minOccurs="0"></xs:element>
+<xs:element name="creditcard" type="xs:string" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="orderBookPurchaseResponse">
+<xs:sequence>
+<xs:element name="return" type="ns1:Order" minOccurs="0"></xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
