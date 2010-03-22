@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : books1.xml
+    Created on : March 22, 2010, 10:57 AM
+    Author     : wangyu
+    Description:
+        Purpose of the document follows.
+-->
+
+<ns0:books  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+   xmlns:ns1='http://onlinebookstore.com/schema/'
+   xmlns:ns0='http://xml.netbeans.org/schema/books'
+   xsi:schemaLocation='http://xml.netbeans.org/schema/books books.xsd'>
+    <ns0:book>
+        <ns1:title>Java</ns1:title>
+        <ns1:author>John</ns1:author>
+        <ns1:isbn>12345</ns1:isbn>
+        <ns1:price>400</ns1:price>
+    </ns0:book>
+
+</ns0:books>
