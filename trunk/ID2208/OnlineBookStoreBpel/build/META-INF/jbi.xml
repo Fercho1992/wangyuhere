@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns0="http://enterprise.netbeans.org/bpel/OnlineBookStoreBpel/onlineBookStore" xmlns:ns1="http://service.onlinebookstore.com/" xmlns:ns2="http://j2ee.netbeans.org/wsdl/OrderBook" xmlns:ns3="http://j2ee.netbeans.org/wsdl/ShipmentBook" xmlns:ns4="http://j2ee.netbeans.org/wsdl/BookStore" xmlns:ns5="http://enterprise.netbeans.org/bpel/OnlineBookStoreBpel/OrderBook" xmlns:ns6="http://enterprise.netbeans.org/bpel/OnlineBookStoreBpel/ShipmentBook" xmlns:ns7="http://www.sun.com/jbi/descriptor/service-unit" version="1.0">
+    <services binding-component="false">
+        <provides endpoint-name="OrderBookReturnPortTypeRole_myRole" interface-name="ns2:OrderBookReturnPortType" service-name="ns0:OrderBook">
+            <ns7:display-name>OrderBook</ns7:display-name>
+            <ns7:process-name>onlineBookStore</ns7:process-name>
+            <ns7:file-path>onlineBookStore.bpel</ns7:file-path>
+        </provides>
+        <provides endpoint-name="ShipmentBookReturnPortTypeRole_myRole" interface-name="ns3:ShipmentBookReturnPortType" service-name="ns0:Shipment">
+            <ns7:display-name>Shipment</ns7:display-name>
+            <ns7:process-name>onlineBookStore</ns7:process-name>
+            <ns7:file-path>onlineBookStore.bpel</ns7:file-path>
+        </provides>
+        <provides endpoint-name="BookStorePortTypeRole_myRole" interface-name="ns4:BookStorePortType" service-name="ns0:BookStore">
+            <ns7:display-name>BookStore</ns7:display-name>
+            <ns7:process-name>onlineBookStore</ns7:process-name>
+            <ns7:file-path>onlineBookStore.bpel</ns7:file-path>
+        </provides>
+        <provides endpoint-name="OrderBookPortTypeRole_myRole" interface-name="ns2:OrderBookPortType" service-name="ns5:OrderBook">
+            <ns7:display-name>OrderBook</ns7:display-name>
+            <ns7:process-name>OrderBook</ns7:process-name>
+            <ns7:file-path>OrderBook.bpel</ns7:file-path>
+        </provides>
+        <provides endpoint-name="ShipmentBookPortTypeRole_myRole" interface-name="ns3:ShipmentBookPortType" service-name="ns6:PartnerLink1">
+            <ns7:display-name>PartnerLink1</ns7:display-name>
+            <ns7:process-name>ShipmentBook</ns7:process-name>
+            <ns7:file-path>ShipmentBook.bpel</ns7:file-path>
+        </provides>
+        <consumes endpoint-name="AuthorizationRole_partnerRole" interface-name="ns1:Authorization" service-name="ns0:Authorization">
+            <ns7:display-name>Authorization</ns7:display-name>
+            <ns7:process-name>onlineBookStore</ns7:process-name>
+            <ns7:file-path>onlineBookStore.bpel</ns7:file-path>
+        </consumes>
+        <consumes endpoint-name="BookPublisherRole_partnerRole" interface-name="ns1:BookPublisher" service-name="ns0:Publisher1">
+            <ns7:display-name>Publisher1</ns7:display-name>
+            <ns7:process-name>onlineBookStore</ns7:process-name>
+            <ns7:file-path>onlineBookStore.bpel</ns7:file-path>
+        </consumes>
+        <consumes endpoint-name="BookPublisher1Role_partnerRole" interface-name="ns1:BookPublisher1" service-name="ns0:Publisher2">
+            <ns7:display-name>Publisher2</ns7:display-name>
+            <ns7:process-name>onlineBookStore</ns7:process-name>
+            <ns7:file-path>onlineBookStore.bpel</ns7:file-path>
+        </consumes>
+        <consumes endpoint-name="OrderBookPortTypeRole_partnerRole" interface-name="ns2:OrderBookPortType" service-name="ns0:OrderBook">
+            <ns7:display-name>OrderBook</ns7:display-name>
+            <ns7:process-name>onlineBookStore</ns7:process-name>
+            <ns7:file-path>onlineBookStore.bpel</ns7:file-path>
+        </consumes>
+        <consumes endpoint-name="ShipmentBookPortTypeRole_partnerRole" interface-name="ns3:ShipmentBookPortType" service-name="ns0:Shipment">
+            <ns7:display-name>Shipment</ns7:display-name>
+            <ns7:process-name>onlineBookStore</ns7:process-name>
+            <ns7:file-path>onlineBookStore.bpel</ns7:file-path>
+        </consumes>
+        <consumes endpoint-name="ShipmentServiceRole_partnerRole" interface-name="ns1:ShipmentService" service-name="ns0:OrderShipment">
+            <ns7:display-name>OrderShipment</ns7:display-name>
+            <ns7:process-name>onlineBookStore</ns7:process-name>
+            <ns7:file-path>onlineBookStore.bpel</ns7:file-path>
+        </consumes>
+        <consumes endpoint-name="BookPublisherRole_partnerRole" interface-name="ns1:BookPublisher" service-name="ns5:Publisher1">
+            <ns7:display-name>Publisher1</ns7:display-name>
+            <ns7:process-name>OrderBook</ns7:process-name>
+            <ns7:file-path>OrderBook.bpel</ns7:file-path>
+        </consumes>
+        <consumes endpoint-name="BookPublisher1Role_partnerRole" interface-name="ns1:BookPublisher1" service-name="ns5:Publish2">
+            <ns7:display-name>Publish2</ns7:display-name>
+            <ns7:process-name>OrderBook</ns7:process-name>
+            <ns7:file-path>OrderBook.bpel</ns7:file-path>
+        </consumes>
+        <consumes endpoint-name="OrderBookReturnPortTypeRole_partnerRole" interface-name="ns2:OrderBookReturnPortType" service-name="ns5:OrderBook">
+            <ns7:display-name>OrderBook</ns7:display-name>
+            <ns7:process-name>OrderBook</ns7:process-name>
+            <ns7:file-path>OrderBook.bpel</ns7:file-path>
+        </consumes>
+        <consumes endpoint-name="ShipmentServiceRole_partnerRole" interface-name="ns1:ShipmentService" service-name="ns6:Shipment">
+            <ns7:display-name>Shipment</ns7:display-name>
+            <ns7:process-name>ShipmentBook</ns7:process-name>
+            <ns7:file-path>ShipmentBook.bpel</ns7:file-path>
+        </consumes>
+        <consumes endpoint-name="ShipmentBookReturnPortTypeRole_partnerRole" interface-name="ns3:ShipmentBookReturnPortType" service-name="ns6:PartnerLink1">
+            <ns7:display-name>PartnerLink1</ns7:display-name>
+            <ns7:process-name>ShipmentBook</ns7:process-name>
+            <ns7:file-path>ShipmentBook.bpel</ns7:file-path>
+        </consumes>
+    </services>
+</jbi>
