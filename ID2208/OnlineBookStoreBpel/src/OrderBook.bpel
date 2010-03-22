@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process
+    name="OrderBook"
+    targetNamespace="http://enterprise.netbeans.org/bpel/OnlineBookStoreBpel/OrderBook"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/OnlineBookStoreBpel/OrderBook" xmlns:ns0="http://xml.netbeans.org/schema/BookStore" xmlns:ns1="http://onlinebookstore.com/schema/">
+    <import namespace="http://j2ee.netbeans.org/wsdl/OrderBook" location="Partners/OrderBook.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BookPublisherServiceWrapper" location="Partners/BookPublisher/BookPublisherServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://service.onlinebookstore.com/" location="Partners/BookPublisher/BookPublisherService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BookPublisher1ServiceWrapper" location="Partners/BookPublisher1/BookPublisher1ServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://service.onlinebookstore.com/" location="Partners/BookPublisher1/BookPublisher1Service.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <partnerLinks>
+        <partnerLink name="Publisher1" xmlns:tns="http://enterprise.netbeans.org/bpel/BookPublisherServiceWrapper" partnerLinkType="tns:BookPublisher1LinkType" partnerRole="BookPublisherRole"/>
+        <partnerLink name="Publish2" xmlns:tns="http://enterprise.netbeans.org/bpel/BookPublisher1ServiceWrapper" partnerLinkType="tns:BookPublisher2LinkType" partnerRole="BookPublisher1Role"/>
+        <partnerLink name="OrderBook" xmlns:tns="http://j2ee.netbeans.org/wsdl/OrderBook" partnerLinkType="tns:OrderBook" partnerRole="OrderBookReturnPortTypeRole" myRole="OrderBookPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="OrderBookPurchase1Out" xmlns:tns="http://service.onlinebookstore.com/" messageType="tns:orderBookPurchase1Response"/>
+        <variable name="OrderBookPurchase1In" xmlns:tns="http://service.onlinebookstore.com/" messageType="tns:orderBookPurchase1"/>
+        <variable name="OrderBookPurchaseOut" xmlns:tns="http://service.onlinebookstore.com/" messageType="tns:orderBookPurchaseResponse"/>
+        <variable name="OrderBookPurchaseIn" xmlns:tns="http://service.onlinebookstore.com/" messageType="tns:orderBookPurchase"/>
+        <variable name="OrderBookOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/OrderBook" messageType="tns:OrderBookOperationRequest"/>
+        <variable name="OrderBookReturnOperationIn" xmlns:tns="http://j2ee.netbeans.org/wsdl/OrderBook" messageType="tns:OrderBookOperationResponse"/>
+    </variables>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="OrderBook" operation="OrderBookOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/OrderBook" portType="tns:OrderBookPortType" variable="OrderBookOperationIn"/>
+        <if name="publish1or2">
+            <condition>$OrderBookOperationIn.input/ns0:publishid = 1</condition>
+            <sequence name="Sequence1">
+                <assign name="Assign1">
+                    <copy>
+                        <from>$OrderBookOperationIn.input/ns0:title</from>
+                        <to>$OrderBookPurchaseIn.parameters/title</to>
+                    </copy>
+                    <copy>
+                        <from>$OrderBookOperationIn.input/ns0:creditcard</from>
+                        <to>$OrderBookPurchaseIn.parameters/creditcard</to>
+                    </copy>
+                </assign>
+                <invoke name="Invoke2" partnerLink="Publisher1" operation="orderBookPurchase" xmlns:tns="http://service.onlinebookstore.com/" portType="tns:BookPublisher" inputVariable="OrderBookPurchaseIn" outputVariable="OrderBookPurchaseOut"/>
+                <assign name="Assign3">
+                    <copy>
+                        <from>$OrderBookPurchaseOut.parameters/return/ns1:invoice</from>
+                        <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:invoice</to>
+                    </copy>
+                    <copy>
+                        <from>$OrderBookPurchaseOut.parameters/return/ns1:creditcard</from>
+                        <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:creditcard</to>
+                    </copy>
+                    <copy>
+                        <from>$OrderBookPurchaseOut.parameters/return/ns1:location</from>
+                        <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:location</to>
+                    </copy>
+                    <copy>
+                        <from>$OrderBookPurchaseOut.parameters/return/ns1:book/ns1:title</from>
+                        <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:book/ns0:title</to>
+                    </copy>
+                    <copy>
+                        <from>$OrderBookPurchaseOut.parameters/return/ns1:book/ns1:author</from>
+                        <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:book/ns0:author</to>
+                    </copy>
+                    <copy>
+                        <from>$OrderBookPurchaseOut.parameters/return/ns1:book/ns1:isbn</from>
+                        <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:book/ns0:isbn</to>
+                    </copy>
+                    <copy>
+                        <from>$OrderBookPurchaseOut.parameters/return/ns1:book/ns1:price</from>
+                        <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:book/ns0:price</to>
+                    </copy>
+                    <copy>
+                        <from>$OrderBookPurchaseOut.parameters/return/ns1:status</from>
+                        <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:status</to>
+                    </copy>
+                </assign>
+            </sequence>
+            <else>
+                <sequence name="Sequence2">
+                    <assign name="Assign2">
+                        <copy>
+                            <from>$OrderBookOperationIn.input/ns0:title</from>
+                            <to>$OrderBookPurchase1In.parameters/title</to>
+                        </copy>
+                        <copy>
+                            <from>$OrderBookOperationIn.input/ns0:creditcard</from>
+                            <to>$OrderBookPurchase1In.parameters/creditcard</to>
+                        </copy>
+                    </assign>
+                    <invoke name="Invoke3" partnerLink="Publish2" operation="orderBookPurchase1" xmlns:tns="http://service.onlinebookstore.com/" portType="tns:BookPublisher1" inputVariable="OrderBookPurchase1In" outputVariable="OrderBookPurchase1Out"/>
+                    <assign name="Assign4">
+                        <copy>
+                            <from>$OrderBookPurchase1Out.parameters/return/ns1:invoice</from>
+                            <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:invoice</to>
+                        </copy>
+                        <copy>
+                            <from>$OrderBookPurchase1Out.parameters/return/ns1:creditcard</from>
+                            <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:creditcard</to>
+                        </copy>
+                        <copy>
+                            <from>$OrderBookPurchase1Out.parameters/return/ns1:location</from>
+                            <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:location</to>
+                        </copy>
+                        <copy>
+                            <from>$OrderBookPurchase1Out.parameters/return/ns1:book/ns1:title</from>
+                            <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:book/ns0:title</to>
+                        </copy>
+                        <copy>
+                            <from>$OrderBookPurchase1Out.parameters/return/ns1:book/ns1:author</from>
+                            <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:book/ns0:author</to>
+                        </copy>
+                        <copy>
+                            <from>$OrderBookPurchase1Out.parameters/return/ns1:book/ns1:isbn</from>
+                            <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:book/ns0:isbn</to>
+                        </copy>
+                        <copy>
+                            <from>$OrderBookPurchase1Out.parameters/return/ns1:book/ns1:price</from>
+                            <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:book/ns0:price</to>
+                        </copy>
+                        <copy>
+                            <from>$OrderBookPurchase1Out.parameters/return/ns1:status</from>
+                            <to>$OrderBookReturnOperationIn.input/ns0:return/ns0:status</to>
+                        </copy>
+                    </assign>
+                </sequence>
+            </else>
+        </if>
+        <invoke name="Invoke1" partnerLink="OrderBook" operation="OrderBookReturnOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/OrderBook" portType="tns:OrderBookReturnPortType" inputVariable="OrderBookReturnOperationIn"/>
+    </sequence>
+</process>
