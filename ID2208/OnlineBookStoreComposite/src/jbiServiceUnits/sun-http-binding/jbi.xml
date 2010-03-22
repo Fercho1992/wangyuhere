@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns1="http://j2ee.netbeans.org/wsdl/ShipmentBook" xmlns:ns2="http://enterprise.netbeans.org/bpel/OnlineBookStoreBpel/ShipmentBook" xmlns:ns3="http://enterprise.netbeans.org/bpel/OnlineBookStoreBpel/onlineBookStore" xmlns:ns4="http://j2ee.netbeans.org/wsdl/OrderBook" xmlns:ns5="http://enterprise.netbeans.org/bpel/OnlineBookStoreBpel/OrderBook" xmlns:ns6="http://j2ee.netbeans.org/wsdl/BookStore" xmlns:ns7="http://service.onlinebookstore.com/" version="1.0">
+    <services binding-component="true">
+        <provides endpoint-name="AuthorizationPort" interface-name="ns7:Authorization" service-name="ns7:AuthorizationService"/>
+        <provides endpoint-name="BookPublisherPort" interface-name="ns7:BookPublisher" service-name="ns7:BookPublisherService"/>
+        <provides endpoint-name="BookPublisher1Port" interface-name="ns7:BookPublisher1" service-name="ns7:BookPublisher1Service"/>
+        <provides endpoint-name="ShipmentServicePort" interface-name="ns7:ShipmentService" service-name="ns7:ShipmentServiceService"/>
+        <consumes endpoint-name="ShipmentBookPort" interface-name="ns1:ShipmentBookPortType" service-name="ns1:ShipmentBookService"/>
+        <consumes endpoint-name="ShipmentBookReturnPortTypeBindingPort" interface-name="ns1:ShipmentBookReturnPortType" service-name="ns1:ShipmentBookReturnService"/>
+        <consumes endpoint-name="OrderBookPort" interface-name="ns4:OrderBookPortType" service-name="ns4:OrderBookService"/>
+        <consumes endpoint-name="OrderBookReturnPortTypeBindingPort" interface-name="ns4:OrderBookReturnPortType" service-name="ns4:OrderBookReturnService"/>
+        <consumes endpoint-name="BookStorePort" interface-name="ns6:BookStorePortType" service-name="ns6:BookStoreService"/>
+    </services>
+</jbi>

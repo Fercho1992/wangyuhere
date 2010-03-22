@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" xmlns:ns1="http://j2ee.netbeans.org/wsdl/ShipmentBook" xmlns:ns2="http://enterprise.netbeans.org/bpel/OnlineBookStoreBpel/ShipmentBook" xmlns:ns3="http://enterprise.netbeans.org/bpel/OnlineBookStoreBpel/onlineBookStore" xmlns:ns4="http://j2ee.netbeans.org/wsdl/OrderBook" xmlns:ns5="http://enterprise.netbeans.org/bpel/OnlineBookStoreBpel/OrderBook" xmlns:ns6="http://j2ee.netbeans.org/wsdl/BookStore" xmlns:ns7="http://service.onlinebookstore.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/jbi ./jbi.xsd">
+    <service-assembly>
+        <identification>
+            <name>OnlineBookStoreComposite</name>
+            <description>Represents the Service Assembly of OnlineBookStoreComposite</description>
+        </identification>
+        <service-unit>
+            <identification>
+                <name>OnlineBookStoreComposite-OnlineBookStoreBpel</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>OnlineBookStoreBpel.jar</artifacts-zip>
+                <component-name>sun-bpel-engine</component-name>
+            </target>
+        </service-unit>
+        <service-unit>
+            <identification>
+                <name>OnlineBookStoreComposite-sun-http-binding</name>
+                <description>Represents this Service Unit</description>
+            </identification>
+            <target>
+                <artifacts-zip>sun-http-binding.jar</artifacts-zip>
+                <component-name>sun-http-binding</component-name>
+            </target>
+        </service-unit>
+        <connections>
+            <connection>
+                <consumer endpoint-name="ShipmentBookPort" service-name="ns1:ShipmentBookService"/>
+                <provider endpoint-name="ShipmentBookPortTypeRole_myRole" service-name="ns2:PartnerLink1"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="ShipmentBookReturnPortTypeBindingPort" service-name="ns1:ShipmentBookReturnService"/>
+                <provider endpoint-name="ShipmentBookReturnPortTypeRole_myRole" service-name="ns3:Shipment"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="OrderBookPort" service-name="ns4:OrderBookService"/>
+                <provider endpoint-name="OrderBookPortTypeRole_myRole" service-name="ns5:OrderBook"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="OrderBookReturnPortTypeBindingPort" service-name="ns4:OrderBookReturnService"/>
+                <provider endpoint-name="OrderBookReturnPortTypeRole_myRole" service-name="ns3:OrderBook"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="BookStorePort" service-name="ns6:BookStoreService"/>
+                <provider endpoint-name="BookStorePortTypeRole_myRole" service-name="ns3:BookStore"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="AuthorizationRole_partnerRole" service-name="ns3:Authorization"/>
+                <provider endpoint-name="AuthorizationPort" service-name="ns7:AuthorizationService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="OrderBookReturnPortTypeRole_partnerRole" service-name="ns5:OrderBook"/>
+                <provider endpoint-name="OrderBookReturnPortTypeRole_myRole" service-name="ns3:OrderBook"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="OrderBookPortTypeRole_partnerRole" service-name="ns3:OrderBook"/>
+                <provider endpoint-name="OrderBookPortTypeRole_myRole" service-name="ns5:OrderBook"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="BookPublisherRole_partnerRole" service-name="ns5:Publisher1"/>
+                <provider endpoint-name="BookPublisherPort" service-name="ns7:BookPublisherService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="BookPublisherRole_partnerRole" service-name="ns3:Publisher1"/>
+                <provider endpoint-name="BookPublisherPort" service-name="ns7:BookPublisherService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="BookPublisher1Role_partnerRole" service-name="ns5:Publish2"/>
+                <provider endpoint-name="BookPublisher1Port" service-name="ns7:BookPublisher1Service"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="BookPublisher1Role_partnerRole" service-name="ns3:Publisher2"/>
+                <provider endpoint-name="BookPublisher1Port" service-name="ns7:BookPublisher1Service"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="ShipmentServiceRole_partnerRole" service-name="ns2:Shipment"/>
+                <provider endpoint-name="ShipmentServicePort" service-name="ns7:ShipmentServiceService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="ShipmentServiceRole_partnerRole" service-name="ns3:OrderShipment"/>
+                <provider endpoint-name="ShipmentServicePort" service-name="ns7:ShipmentServiceService"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="ShipmentBookReturnPortTypeRole_partnerRole" service-name="ns2:PartnerLink1"/>
+                <provider endpoint-name="ShipmentBookReturnPortTypeRole_myRole" service-name="ns3:Shipment"/>
+            </connection>
+            <connection>
+                <consumer endpoint-name="ShipmentBookPortTypeRole_partnerRole" service-name="ns3:Shipment"/>
+                <provider endpoint-name="ShipmentBookPortTypeRole_myRole" service-name="ns2:PartnerLink1"/>
+            </connection>
+        </connections>
+    </service-assembly>
+</jbi>
