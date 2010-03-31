@@ -2,61 +2,41 @@
 //
 
 #include "stdafx.h"
-#include "SendMoreMoney.h"
-#include "SendMostMoney.h"
 #include "Sudoku.h"
 #include "Queens.h"
+#include <gecode/gist.hh>
 
 using namespace Gecode;
 
-void runSendMoreMoney();
-void runSendMostMoney();
 void runSudoku(int i, IntConLevel option = ICL_DEF);
-void runQueens(int n);
+void runQueens(int n, IntVarBranch op = INT_VAR_SIZE_MIN);
+void runQueensGist(int n);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	runSendMoreMoney();	
-	runSendMostMoney();
 	const int size = sizeof(examples)/sizeof(examples[0]);
 	for(int i = 0; i < size; i++) {
 		std::cout<<"=====================================";
 		runSudoku(i);
 	}
 	std::cout<<"\n============Using ICL_DEF============";
-	runSudoku(0, ICL_DEF);
+	runSudoku(5, ICL_DEF);
 	std::cout<<"\n============Using ICL_VAL============";
-	runSudoku(0, ICL_VAL);
+	runSudoku(5, ICL_VAL);
 	std::cout<<"\n============Using ICL_BND============";
-	runSudoku(0, ICL_BND);
+	runSudoku(5, ICL_BND);
 	std::cout<<"\n============Using ICL_DOM============";
-	runSudoku(0, ICL_DOM);
+	runSudoku(5, ICL_DOM);
 
 	std::cout<<"\n8 Queens solutions:\n";
 	runQueens(8);
+	std::cout<<"\n8 Queens using INT_VAR_SIZE_MAX\n";
+	runQueens(8, INT_VAR_SIZE_MAX);
+
+	runQueensGist(8);
 
 	system("PAUSE");
 	return 0;
-}
-
-void runSendMoreMoney() {
-	std::cout<<"\nSend more money:\n";
-	SendMoreMoney* m = new SendMoreMoney;
-	DFS<SendMoreMoney> e(m);
-	delete m;
-	while (SendMoreMoney* s = e.next()) {
-		s->print(); delete s;
-	}
-}
-
-void runSendMostMoney() {
-	std::cout<<"\nSend most money:\n";
-	SendMostMoney* m = new SendMostMoney;
-	BAB<SendMostMoney> e(m);
-	delete m;
-	while (SendMostMoney* s = e.next()) {
-		s->print(); delete s;
-	}
 }
 
 void runSudoku(int i, IntConLevel option) {
@@ -82,15 +62,25 @@ void runSudoku(int i, IntConLevel option) {
 	}
 }
 
-void runQueens(int n) {
-	Queens* q = new Queens(n);
+void runQueens(int n, IntVarBranch op) {
+	Queens* q = new Queens(n, op);
 	DFS<Queens> e(q);
 	delete q;
 	int i = 0;
 	while(Queens* qs = e.next()) {
 		i++;
+		std::cout<<"depth: "<<e.statistics().depth<<std::endl;
+		std::cout<<"memory: "<<e.statistics().memory<<std::endl;
+		std::cout<<"node: "<<e.statistics().node<<std::endl;
 		qs->print(std::cout);
 		delete qs;
 	}
 	std::cout<<"Number of solution "<<i<<std::endl;
+}
+
+void runQueensGist(int n) 
+{
+	Queens* q = new Queens(n);
+	Gist::dfs(q);
+	delete q;
 }
