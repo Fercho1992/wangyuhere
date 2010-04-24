@@ -1,0 +1,2100 @@
+html{
+	height:100%;
+}
+
+body {
+	background:#fff;
+	position:relative;
+	height:100%;
+}
+
+input[type="submit"]:hover{
+	cursor:pointer;
+}
+
+
+/*#downloadBtn{
+	padding:0 280px 50px 0;
+}*/
+
+
+#popup{
+	width:542px;
+	height:529px;
+	position:fixed;
+	z-index:999;
+	visibility:hidden;
+}
+
+#popup p{
+	color:#fff;
+	margin:3px 20px 0 0;
+	font:14px Trebuchet MS, Verdana, sans-serif;
+}
+
+#popup_top, #popup_bottom{
+	width:542px;
+	height:24px;
+}
+
+#popup_top{
+	background:url(../gfx/popup_top_bg.png) no-repeat;
+}
+
+#popup_main{
+	background:url(../gfx/popup_bg.png) repeat;
+	width:542px;
+	height:481px;
+}
+
+#popup_bottom{
+	background:url(../gfx/popup_bottom_bg.png) no-repeat;
+}
+
+
+#popup .content{
+	background:#fff;
+	border:1px solid #ccc;
+	width:502px;
+	height:461px;
+	overflow:auto;
+	margin:0 auto 0 auto;
+	padding:10px 0 10px 0;
+}
+
+#popup .content p{
+	font:12px Trebuchet MS, Vedana, sans-serif;
+	color:#333;
+	margin:0 0 10px 10px;
+	width:482px;
+}
+
+#popup .content p.text{
+	font:14px Trebuchet MS, verdana, sans-serif;
+}
+
+#popup a#close_popup:link{
+	color:#fff;
+	text-decoration:none;
+}
+#popup a#close_popup:visited{
+	color:#fff;
+	text-decoration:none;
+}
+#popup a#close_popup:hover{
+	color:#fff;
+	text-decoration:underline;
+}
+#popup a#close_popup:active{
+	color:#fff;
+	text-decoration:none;
+}
+
+#popup .content a:link{
+	color:#3366ff;
+	text-decoration:underline;
+}
+#popup .content a:visited{
+	color:#3366ff;
+	text-decoration:underline;
+}
+#popup .content a:hover{
+	color:#3366ff;
+	text-decoration:none;
+}
+#popup .content a:active{
+	color:#3366ff;
+	text-decoration:underline;
+}
+
+
+#screenshot{
+	position:absolute;
+	border:1px solid #ccc;
+	background:#333;
+	padding:5px;
+	display:none;
+	color:#fff;
+}
+
+.fb_visible_loggedin, .fb_visible_loggedout {
+	display: none;
+}
+
+p.errormsg{
+	color:#ff0000;
+}
+p.success{
+	color:green;
+}
+
+/*Headers */
+
+h1{
+	font:40px Trebuchet MS, Verdana, sans-serif;
+	color:#000;
+	font-weight:bold;
+	margin:0 0 10px 0;
+}
+
+h1.startpage{
+	color:#6699ff;
+	margin:50px 0 0 0;
+}
+
+h2{
+	font:24px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+h2.startpage{
+	margin:30px 0 0 0;;
+}
+
+h2.about{
+	margin:20px 0 0 0;
+}
+
+h3{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	font-weight:bold;
+}
+
+h3.startpage{
+	margin:0 0 10px 0;
+}
+
+h3.surftrain{
+	margin:10px 0 3px 0;
+}
+
+h3.settings{
+	margin:10px 0 10px 20px;
+}
+
+#surftrain_departures_startpage h2{
+	margin:0 0 20px 0;
+}
+
+
+/* Headers End */
+
+
+/* Wrapper */
+#wrapper{
+	width:960px;
+	min-height:100%; 		/* Crappy IE 7 height-hack starts here */
+	height:auto !important; /* Continues here */
+	height:100%; 			/* And ends here */
+	margin:0 auto 0 auto;
+}
+
+
+#wrapper .sublinks a:link{
+	text-decoration:underline;
+	color:#333;
+}
+#wrapper .sublinks a:visited{
+	text-decoration:underline;
+	color:#333;
+}
+#wrapper .sublinks a:hover{
+	text-decoration:none;
+	color:#000;
+}
+#wrapper .sublinks a:active{
+	text-decoration:underline;
+	color:#333;
+}
+
+/* Wrapper end */
+
+/* Header */
+
+#header{
+	width:960px;
+	height:150px;
+	border:1px solid #fff;
+}
+
+#header p{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+#header a:link.name{
+	color:#6699ff;
+	text-decoration:none;
+}
+#header a:visited.name{
+	color:#6699ff;
+	text-decoration:none;
+}
+#header a:hover.name{
+	color:#6699ff;
+	text-decoration:underline;
+}
+#header a:active.name{
+	color:#6699ff;
+	text-decoration:none;
+}
+
+#header a:link.homepage{
+	color:#ffcc00;
+	text-decoration:none;
+}
+#header a:visited.homepage{
+	color:#ffcc00;
+	text-decoration:none;
+}
+#header a:hover.homepage{
+	color:#ffcc00;
+	text-decoration:underline;
+}
+#header a:active.homepage{
+	color:#ffcc00;
+	text-decoration:none;
+}
+
+#header .content{
+	margin:20px 20px 0 20px;
+}
+
+#header .logo{
+	width:280px;
+}
+
+#header .latest_message{
+	width:280px;
+	text-align:center;
+	padding:10px 0 0 0;
+}
+
+#header .latest_message .message{
+	margin:0 0 15px 0;
+}
+
+
+
+/* Header End */
+
+/* Menu */
+
+#menu{
+	width:960px;
+}
+
+#menu .left{
+	width:24px;
+	height:46px;
+	background:url(../image/menu_left_bg.jpg) no-repeat;
+}
+
+#menu .main{
+	width:916px;
+	height:46px;
+	background:url(../image/menu_main_bg.jpg) repeat-x;
+}
+
+#menu .right{
+	width:20px;
+	height:46px;
+	background:url(../image/menu_right_bg.jpg) no-repeat;
+}
+
+#menu ul{
+	padding:12px 0 0 0;
+}
+
+#menu ul li{
+	display:inline;
+	font:20px Trebuchet MS, Verdana, sans-serif;
+	margin:0 40px 0 0;
+}
+
+
+#menu ul li a:link{
+	color:#fff;
+	text-decoration:none;
+}
+
+#menu ul li a:visited{
+	color:#fff;
+	text-decoration:none;
+}
+#menu ul li a:hover{
+	color:#663333;
+	text-decoration:none;
+}
+#menu ul li a:active{
+	color:#fff;
+	text-decoration:none;
+}
+
+#menu ul li a#active:link{
+	color:#663333;
+}
+#menu ul li a#active:visited{
+	color:#663333;
+}
+#menu ul li a#active:hover{
+	color:#663333;
+}
+#menu ul li a#active:active{
+	color:#663333;
+}
+
+#wrapper .submenu_left{
+	width:10px;
+	height:30px;
+	margin:0 0 0 25px;
+	background:url(../image/submenu_left_bg.jpg) no-repeat;
+}
+
+#wrapper .submenu{
+	width:auto;
+	height:30px;
+	background:url(../image/submenu_bg.jpg) repeat-x;
+	padding:6px 0 0 0;
+}
+
+#wrapper .submenu_right{
+	width:11px;
+	height:30px;
+	background:url(../image/submenu_right_bg.jpg) no-repeat;
+}
+
+#wrapper .submenu a:link{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#fff;
+	text-decoration:none;
+	margin:0 10px 0 0;
+}
+#wrapper .submenu a:visited{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#fff;
+	text-decoration:none;
+	margin:0 10px 0 0;
+}
+#wrapper .submenu a:hover{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#fff;
+	text-decoration:underline;	
+	margin:0 10px 0 0;
+}
+#wrapper .submenu a:active{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#fff;
+	text-decoration:none;
+	margin:0 10px 0 0;
+}
+
+/* Menu End */
+
+/*Main Content */
+
+/* Startpage */
+
+#main_content{
+	width:920px;
+	padding:20px 20px 0 20px;
+}
+
+#main_content .left_content{
+	width:580px;
+	height:auto;
+}
+
+#main_content .right_content{
+	width:280px;
+	height:auto;
+	margin:0 0 0 60px;
+}
+
+#main_content .right_content p{
+	/*font:13px Trebuchet MS, Verdana, sans-serif;*/
+	color:#333;
+}
+
+#account_settings a:link,
+#main_content .right_content a:link{
+	color:#333;
+	text-decoration:underline;
+}
+#account_settings a:visited,
+#main_content .right_content a:visited{
+	color:#333;
+	text-decoration:underline;
+}
+#account_settings a:hover,
+#main_content .right_content a:hover{
+	color:#000;
+	text-decoration:none;
+}
+#account_settings a:active,
+#main_content .right_content a:active{
+	color:#333;
+	text-decoration:underline;
+}
+
+
+#main_content .right_content h2 a:link{
+	color:#6699ff;
+	text-decoration:underline;
+}
+#main_content .right_content h2 a:visited{
+	color:#6699ff;
+	text-decoration:underline;
+}
+#main_content .right_content h2 a:hover{
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content .right_content h2 a:active{
+	color:#6699ff;
+	text-decoration:underline;
+}
+
+
+#main_content .left_content .video{
+	width:300px;
+	height:200px;
+	margin:0 20px 0 0;
+}
+
+#main_content .left_content .start_text{
+	width:250px;
+}
+
+#main_content .right_content .start_text{
+	width:250px;
+	height:auto;
+}
+
+#main_content .left_content .start_text p{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	margin:5px 0 0 0;
+}
+
+#main_content .left_content .stats{
+	margin:30px 0 0 0;
+	padding:0 0 5px 0;
+	border-bottom:1px solid #ccc;
+}
+
+#main_content .left_content .stats p{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+
+#main_content .left_content .surftrain{
+	margin:30px 0 0 0;
+	padding:0 0 5px 0;
+	border-bottom:1px solid #ccc;
+}
+
+#main_content .left_content .surftrain p{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+#main_content div.stats a:link,
+#main_content p.arrived a:link,
+#main_content p.more_link a:link,
+#main_content .left_content .more_surftrain a:link,
+#main_content .left_content .start_text a:link{
+	color:#333;
+	text-decoration:underline;
+}
+#main_content div.stats a:visited,
+#main_content p.arrived a:visited,
+#main_content p.more_link a:visited,
+#main_content .left_content .more_surftrain a:visited,
+#main_content .left_content .start_text a:visited{
+	color:#333;
+	text-decoration:underline;
+}
+#main_content div.stats a:hover,
+#main_content p.arrived a:hover,
+#main_content p.more_link a:hover,
+#main_content .left_content .more_surftrain a:hover,
+#main_content .left_content .start_text a:hover{
+	color:#333;
+	text-decoration:none;
+}
+#main_content div.stats a:active,
+#main_content p.arrived a:active,
+#main_content p.more_link a:active,
+#main_content .left_content .more_surftrain a:active,
+#main_content .left_content .start_text a:active{
+	color:#333;
+	text-decoration:underline;
+}
+
+
+#main_content .left_content .surftrain h3{
+	margin:15px 0 0 0;
+}
+
+#main_content .left_content .surftrain p.more_surftrain,
+#main_content .left_content .surftrain p.more_link{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	margin:10px 0 0 0;
+}
+
+#main_content .left_content .surftrain p.arrived{
+	font:14px trebuchet MS, Verdana sans-serif;
+	color:#333;
+}
+
+#main_content .right_content .download_btn{
+	margin:10px 0 0 0;
+	width:280px;
+	height:74px;
+	/*background:url(../gfx/download_btn.jpg) no-repeat; This is declared in the index.php file */
+}
+
+#main_content .right_content p.download_link{
+	margin:-30px 0 20px 40px;
+	color:#fff;
+}
+
+/* See what can be deleted below here */
+
+#main_content .left_content #surftrain_departures_startpage, #main_content .right_content #list_startpage{
+	margin:50px 0 0 0;
+}
+
+#main_content .left_content #surftrain_departures_startpage p{
+	font:16px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+#main_content .left_content #surftrain_departures_startpage p.full{
+	font:16px Trebuchet MS, Verdana, sans-serif;
+	color:#ff0000;
+}
+#main_content .left_content #surftrain_departures_startpage p.more_departures{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	margin:20px 0 0 0;
+}
+
+#main_content .left_content #surftrain_departures_startpage div.odd{
+	height:30px;
+	padding:10px 0 0 0;
+	width:580px;
+	background:url(../gfx/odd_row_bg.jpg) repeat;
+}
+#main_content .left_content #surftrain_departures_startpage div.even{
+	height:30px;
+	padding:10px 0 0 0;
+	width:580px;
+	background:#fff;
+}
+
+#main_content .left_content #surftrain_departures_startpage div.plus_minus,
+#main_content .left_content #surftrain_departures_surftrain div.plus_minus{
+	width:25px;
+}
+#main_content .left_content #surftrain_departures_startpage div.name,
+#main_content .left_content #surftrain_departures_surftrain div.name{
+	width:180px;
+}
+#main_content .left_content #surftrain_departures_startpage div.time,
+#main_content .left_content #surftrain_departures_surftrain div.time{
+	width:50px;
+}
+#main_content .left_content #surftrain_departures_startpage div.date,
+#main_content .left_content #surftrain_departures_surftrain div.date{
+	width:140px;
+}
+#main_content .left_content #surftrain_departures_startpage div.ongoing,
+#main_content .left_content #surftrain_departures_surftrain div.ongoing{
+	width:190px;
+}
+#main_content .left_content #surftrain_departures_startpage div.locomotive_pic,
+#main_content .left_content #surftrain_departures_surftrain div.locomotive_pic{
+	width:25px;
+	padding:3px 0 0 0;
+}
+#main_content .left_content #surftrain_departures_startpage div.locomotive,
+#main_content .left_content #surftrain_departures_surftrain div.locomotive{
+	width:115px;
+}
+
+
+#main_content .left_content #surftrain_departures_startpage div.surftrain_info,
+#main_content .left_content #surftrain_departures_surftrain div.surftrain_info{
+	padding:0 20px 5px 25px;
+	border-bottom:1px solid #ccc;
+}
+
+#main_content .left_content #surftrain_departures_startpage div.surftrain_info p,
+#main_content .left_content #surftrain_departures_surftrain div.surftrain_info p{
+	font-size:12px;
+	margin:5px 0 0 0;
+}
+
+
+#main_content .left_content #surftrain_departures_startpage div.surftrain_info a:link,
+#main_content .left_content #surftrain_departures_surftrain div.surftrain_info a:link{
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content .left_content #surftrain_departures_startpage div.surftrain_info a:visited,
+#main_content .left_content #surftrain_departures_surftrain div.surftrain_info a:visited{
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content .left_content #surftrain_departures_startpage div.surftrain_info a:hover,
+#main_content .left_content #surftrain_departures_surftrain div.surftrain_info a:hover{
+	color:#6699ff;
+	text-decoration:underline;
+}
+#main_content .left_content #surftrain_departures_startpage div.surftrain_info a:active,
+#main_content .left_content #surftrain_departures_surftrain div.surftrain_info a:active{
+	color:#6699ff;
+	text-decoration:none;
+}
+
+
+
+
+
+
+
+#main_content .left_content #surftrain_departures_startpage a:link{
+	color:#333;
+	text-decoration:none;
+}
+#main_content .left_content #surftrain_departures_startpage a:visited{
+	color:#333;
+	text-decoration:none;
+}
+#main_content .left_content #surftrain_departures_startpage a:hover{
+	color:#333;
+	text-decoration:underline;
+}
+#main_content .left_content #surftrain_departures_startpage a:active{
+	color:#333;
+	text-decoration:none;
+}
+
+#main_content .left_content #surftrain_departures_surftrain a:link{
+	color:#336699;
+	text-decoration:none;
+}
+#main_content .left_content #surftrain_departures_surftrain a:visited{
+	color:#336699;
+	text-decoration:none;	
+}
+#main_content .left_content #surftrain_departures_surftrain a:hover{
+	color:#336699;
+	text-decoration:underline;	
+}
+#main_content .left_content #surftrain_departures_surftrain a:active{
+	color:#336699;
+	text-decoration:none;	
+}
+
+
+#main_content .left_content #surftrain_departures_surftrain div.ticket a:link{
+	color:#333;
+	font-size:12px;
+	text-decoration:underline;
+}
+#main_content .left_content #surftrain_departures_surftrain div.ticket a:visited{
+	color:#333;
+	font-size:12px;
+	text-decoration:underline;
+}
+#main_content .left_content #surftrain_departures_surftrain div.ticket a:hover{
+	color:#333;
+	font-size:12px;
+	text-decoration:none;
+}
+#main_content .left_content #surftrain_departures_surftrain div.ticket a:active{
+	color:#333;
+	font-size:12px;
+	text-decoration:underline;
+}
+
+#main_content #more_lists{
+	margin:20px 0 0 0;
+	padding:0 0 40px 0;
+}
+
+
+#main_content #more_lists a:link{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:none;
+}
+
+#main_content #more_lists a:visited{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:none;
+}
+#main_content #more_lists a:hover{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:underline;
+}
+#main_content #more_lists a:active{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:none;
+}
+
+/* Startpage end */
+
+/* Surftrain */
+
+/*#search_departure_form_holder form{
+	margin:10px 0 20px 0;
+}
+
+#search_departure_form_holder p{
+	font:14px Trebuchet MS, Verdaa, sans-serif;
+	color:#333;
+}
+
+#search_departure_form_holder #search_departure_name, #search_departure_form_holder #search_departure_locomotive{
+	border:1px solid #ccc;
+	height:20px;
+	margin:0 20px 0 0;
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}*/
+
+/*#search_departure_form_holder #search_departure_date{
+	font:15px Trebuchet MS, Verdana, sans-serif;
+	margin:0 20px 0 0;
+	border:1px solid #ccc;
+	_font:11px Trebuchet MS, Verdana, sans-serif;	/* Really ugly IE6 Select Style hack */
+	/*_height:20px;									/* Does the trick but screws the validation */
+/*}*/
+/*
+#search_departure_form_holder div.time{
+	margin:0 0 0 0;
+}
+
+
+#search_departure_form_holder #search_departure_submit{
+	border:none;
+	margin:16px 0 0 0;
+	width:64px;
+	height:25px;
+	background:url(../gfx/search_btn.png) no-repeat;
+}
+
+#search_departure_form_holder #search_departure_name, #search_departure_form_holder #search_departure_locomotive{
+	width:120px;
+}
+
+#search_departure_form_holder #search_departure_time{
+	border:1px solid #ccc;
+	height:20px;
+	width:77px;
+	margin:0 20px 0 0;
+}*/
+
+
+#main_content .right_content #list_surftrain{
+	margin:50px 0 0 0;
+}
+
+#main_content .left_content #surftrain_departures_surftrain p{
+	font:16px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+#main_content .left_content #surftrain_departures_surftrain p.full{
+	font:16px Trebuchet MS, Verdana, sans-serif;
+	color:#ff0000;
+}
+#main_content .left_content #surftrain_departures_surftrain p.more_departures{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	margin:20px 0 0 0;
+}
+
+#main_content .left_content #surftrain_departures_surftrain div.odd{
+	height:30px;
+	padding:10px 0 0 0;
+	width:580px;
+	background:url(../gfx/odd_row_bg.jpg) repeat;
+}
+#main_content .left_content #surftrain_departures_surftrain div.even{
+	height:30px;
+	padding:10px 0 0 0;
+	width:580px;
+	background:#fff;
+}
+
+#main_content .left_content #surftrain_departures_surftrain div.plus_minus{
+	width:25px;
+}
+#main_content .left_content #surftrain_departures_surftrain div.name{
+	width:180px;
+}
+#main_content .left_content #surftrain_departures_surftrain div.time{
+	width:50px;
+}
+#main_content .left_content #surftrain_departures_surftrain div.date{
+	width:140px;
+}
+#main_content .left_content #surftrain_departures_surftrain div.locomotive_pic{
+	width:25px;
+	padding:3px 0 0 0;
+}
+#main_content .left_content #surftrain_departures_surftrain div.locomotive{
+	width:115px;
+}
+#main_content .left_content #surftrain_departures_surftrain div.surftrain_info{
+	padding:0 20px 5px 25px;
+	border-bottom:1px solid #ccc;
+}
+
+#main_content .left_content #surftrain_departures_surftrain div.surftrain_info p{
+	font-size:12px;
+	margin:5px 0 0 0;
+}
+
+
+
+#main_content .arrival_item{
+	width:auto;
+}
+
+#main_content .arrival_item p.date_header,
+#main_content .arrival_item p.locomotive_header,
+#main_content .arrival_item p.passengers_header,
+#main_content .arrival_item p.duration_header,
+#main_content .arrival_item p.date,
+#main_content .arrival_item p.locomotive,
+#main_content .arrival_item p.passengers,
+#main_content .arrival_item p.duration{
+	width:100px;
+}
+
+#main_content .arrival_item p.desc_header,
+#main_content .arrival_item p.name_header,
+#main_content .arrival_item p.desc,
+#main_content .arrival_item p.name{
+	width:200px;
+}
+
+#main_content .arrival_item p.desc,
+#main_content .arrival_item p.desc_header{
+	padding:0 20px 0 0;
+}
+
+#main_content .arrival_item p.date_header,
+#main_content .arrival_item p.name_header,
+#main_content .arrival_item p.locomotive_header,
+#main_content .arrival_item p.passengers_header,
+#main_content .arrival_item p.desc_header,
+#main_content .arrival_item p.duration_header{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	font-weight:bold;
+}
+
+#main_content .arrival_item p.date,
+#main_content .arrival_item p.name,
+#main_content .arrival_item p.locomotive,
+#main_content .arrival_item p.passengers,
+#main_content .arrival_item p.desc,
+#main_content .arrival_item p.duration{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+}
+
+#main_content .arrival_item div.separator{
+	padding:3px 0 3px 0;
+	border-top:1px solid #ccc;
+}
+
+#main_content .arrival_item div.odd{
+	background:url(../gfx/odd_row_bg.jpg) repeat;
+	width:auto;
+	height:auto;
+}
+
+
+#main_content .arrival_item a:link.check_it_out{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:underline;
+}
+#main_content .arrival_item a:visited.check_it_out{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:underline;
+}
+#main_content .arrival_item a:hover.check_it_out{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#000;
+	text-decoration:none;
+}
+#main_content .arrival_item a:active.check_it_out{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:underline;
+}
+
+#main_content #more_arrivals{
+	margin:10px 10px 0 0;
+}
+#main_content #less_arrivals{
+	margin:10px 0 0 0;
+}
+
+#main_content #more_schedules a:link,
+#main_content #less_schedules a:link,
+#main_content #more_arrivals a:link,
+#main_content #less_arrivals a:link{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:underline;
+}
+#main_content #more_schedules a:visited,
+#main_content #less_schedules a:visited,
+#main_content #more_arrivals a:visited,
+#main_content #less_arrivals a:visited{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:underline;
+}
+#main_content #more_schedules a:hover,
+#main_content #less_schedules a:hover,
+#main_content #more_arrivals a:hover,
+#main_content #less_arrivals a:hover{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#000;
+	text-decoration:none;
+}
+#main_content #more_schedules a:active,
+#main_content #less_schedules a:active,
+#main_content #more_arrivals a:active,
+#main_content #less_arrivals a:active{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:underline;
+}
+
+
+#main_content .arrival_item a:link.locomotive{
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content .arrival_item a:visited.locomotive{
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content .arrival_item a:hover.locomotive{
+	color:#6699ff;
+	text-decoration:underline;
+}
+#main_content .arrival_item a:active.locomotive{
+	color:#6699ff;
+	text-decoration:none;
+}
+
+#main_content .left_content .description{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	width:580px;
+	border-bottom:1px solid #ccc;
+	margin:0 0 10px 0;
+}
+
+#main_content .left_content .description a:link{
+	color:#333;
+	text-decoration:underline;
+}
+#main_content .left_content .description a:visited{
+	color:#333;
+	text-decoration:underline;
+}
+#main_content .left_content .description a:hover{
+	color:#000;
+	text-decoration:none;
+}
+#main_content .left_content .description a:active{
+	color:#333;
+	text-decoration:underline;
+}
+
+
+
+#main_content .left_content .train_info img{
+	margin:3px 5px 0 0;
+}
+
+#main_content .left_content .passenger_info{
+	margin:55px 0 0 50px;
+}
+
+#main_content .left_content .train_info p,
+#main_content .left_content .passenger_info p{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+#main_content .left_content .train_info p.stations{
+	margin:20px 0 0 0;
+}
+#main_content .left_content .train_info .odd{
+	background:url(../gfx/odd_row_bg.jpg) repeat;
+}
+#main_content .left_content .train_info p.station{
+	height:24px;
+	width:350px;
+}
+#main_content .left_comtent .passenger_info p.passenger{
+	height:24px;
+	width:200px;
+}
+
+
+
+#main_content .left_content .train_info p a:link{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:underline;
+}
+#main_content .left_content .train_info p a:visited{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:underline;
+}
+#main_content .left_content .train_info p a:hover{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#000;
+	text-decoration:none;
+}
+#main_content .left_content .train_info p a:active{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	text-decoration:underline;
+}
+
+#main_content .left_content .passenger_info p a:link{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content .left_content .passenger_info p a:visited{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content .left_content .passenger_info p a:hover{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#6699ff;
+	text-decoration:underline;
+}
+#main_content .left_content .passenger_info p a:active{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#6699ff;
+	text-decoration:none;
+}
+
+
+#main_content #create_surftrain_form p,
+#main_content #create_surftrain_form input[type="text"],
+#main_content #create_surftrain_form textarea
+{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+#main_content #create_surftrain_form input[type="submit"]{
+	width:46px;
+	height:25px;
+	background:url(../gfx/save_btn.jpg) no-repeat;
+	border:none;
+}
+
+
+#main_content #create_surftrain_form input[type="text"],
+#main_content #create_surftrain_form textarea
+{
+	border:1px solid #ccc;
+	margin:0 10px 3px 0;
+}
+
+#main_content #create_surftrain_form input[type="text"]{
+	height:20px;
+	width:200px;
+}
+#main_content #create_surftrain_form textarea{
+	height:100px;
+	width:410px;
+}
+
+#create_surftrain_response{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+#create_surftrain_respons p.errormsg{
+	color:#ff0000;
+}
+
+/* Surftrain End */
+
+
+/* Profile */
+
+#main_content .left_content .avatar{
+	width:205px;
+	height:205px;
+	border:1px solid #ccc;
+	margin:0 20px 20px 0;
+	text-align:center;
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+
+#main_content .left_content .avatar p{
+	margin:90px 0 0 0;
+}
+
+#main_content .left_content .personal_information{
+	width:300px;
+	margin:0 0 0 10px;
+}
+
+#main_content .left_content .personal_information p{
+	font:16px Trebuchet MS, Verdana, sans-serif;
+	margin:0 0 10px 0
+}
+
+#main_content .left_content .personal_information p.name{
+	color:#6699ff;
+	font-weight:bold;
+}
+
+#main_content .left_content .personal_information .gender{
+	margin:1px 0 0 10px;
+}
+
+#main_content .left_content .personal_information p.place{
+	color:#333;
+	margin:0 20px 0 0;
+}
+
+#main_content .left_content .personal_information .flag{
+	margin:4px 0 0 0;
+}
+
+#main_content .left_content .personal_information p.interests{
+	color:#333;
+}
+#main_content .left_content .personal_information p.online{
+	color:#33cc00;
+}
+#main_content .left_content .personal_information p.offline{
+	color:#ff0000;
+}
+
+#main_content .left_content .personal_information p.online_status a:link{
+	color:#ffcc00;
+	text-decoration:none;
+}
+#main_content .left_content .personal_information p.online_status a:visited{
+	color:#ffcc00;
+	text-decoration:none;
+}
+#main_content .left_content .personal_information p.online_status a:hover{
+	color:#ffcc00;
+	text-decoration:underline;
+}
+#main_content .left_content .personal_information p.online_status a:active{
+	color:#ffcc00;
+	text-decoration:none;
+}
+
+
+#main_content .left_content .profile_links p{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+}
+
+#main_content .left_content .profile_links a:link{
+	color:#333;
+	text-decoration:underline;
+}
+#main_content .left_content .profile_links a:visited{
+	color:#333;
+	text-decoration:underline;
+}
+#main_content .left_content .profile_links a:hover{
+	color:#000;
+	text-decoration:none;
+}
+#main_content .left_content .profile_links a:active{
+	color:#333;
+	text-decoration:underline;
+}
+
+
+/*
+ * Informationbelow may be removed?
+ */
+
+#main_content .right_content .shoutbox textarea{
+	margin:20px 0 20px 0;
+	width:280px;
+	height:135px;
+	border:1px solid #ccc;
+	font:14px Trebuchet MS, Verdana, sans-serif;
+}
+
+#main_content .right_content .shoutbox_messages p.date{
+	color:#000;
+	margin:0 0 5px 0;
+}
+#main_content .right_content .shoutbox_messages p.message{
+	margin:0 0 15px 0;
+}
+
+#main_content .right_content .shoutbox_messages p.sender a:link{
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content .right_content .shoutbox_messages p.sender a:visited{
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content .right_content .shoutbox_messages p.sender a:hover{
+	color:#6699ff;
+	text-decoration:underline;
+}
+#main_content .right_content .shoutbox_messages p.sender a:active{
+	color:#6699ff;
+	text-decoration:none;
+}
+
+
+/* Profile End */
+
+/* Wussaping */
+
+
+#main_content .left_content .wussaping p{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	width:580px;
+	margin:10px 0 0 0;
+}
+
+#main_content .left_content .wussaping img{
+	margin:10px 5px 5px 5px;
+}
+
+#main_content .left_content .wussaping a:link{
+	color:#6699ff;
+	text-decoration:underline;
+}
+#main_content .left_content .wussaping a:visited{
+	color:#6699ff;
+	text-decoration:underline;
+}
+#main_content .left_content .wussaping a:hover{
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content .left_content .wussaping a:active{
+	color:#6699ff;
+	text-decoration:underline;
+}
+
+#main_content .right_content .quotes img{
+	margin:3px 5px 0 0;
+}
+
+#main_content .right_content .quotes p.quote{
+	width:250px;
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	margin:0 0 10px 0;
+}
+
+#main_content .right_content .quoter{
+	color:#000;
+	margin:0 10px 20px 0;
+}
+/* Wussaping End */
+
+/* Download */
+
+
+#main_content .download {
+	width:880px;
+	margin:0;
+}
+
+#main_content .download p{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	margin:0 0 20px 0;
+}
+
+#main_content .download img{
+	margin:35px 10px 0 0;
+}
+
+#main_content .download ol{
+	width:500px;
+	margin:30px 0 20px 40px;
+}
+
+#main_content .download ol li{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	margin:0 0 5px 0;
+	list-style-type:decimal;
+}
+
+#main_content .download a:link{
+	text-decoration:underline;
+	color:#6699ff;
+}
+#main_content .download a:visited{
+	text-decoration:underline;
+	color:#6699ff;
+}
+#main_content .download a:hover{
+	text-decoration:none;
+	color:#6699ff;
+}
+#main_content .download a:active{
+	text-decoration:underline;
+	color:#6699ff;
+}
+
+
+/* Download End */
+
+
+/* Terms & Legal */
+
+#main_content .terms{
+	margin:10px 0 10px 20px;
+	list-style-type:decimal;
+}
+
+#main_content .terms li{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	margin:0 0 5px 0;
+	width:500px;
+}
+
+
+/* Terms & Legal end */
+
+
+/* Toplist */
+
+table.toplist{
+	width:280px;
+	margin:10px 0 0 0;
+}
+
+table.toplist td{
+	height:24px;
+	vertical-align:middle;
+}
+
+table.toplist td.odd{
+	background:url(../gfx/odd_row_bg.jpg) repeat;
+}
+
+table.toplist td.place{
+	width:25px;
+}
+table.toplist td.favicon{
+	width:25px;
+}
+
+table.toplist td.link{
+	width:200px;
+}
+
+.listholder p.errormsg{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#ff0000;
+}
+
+/*#main_content #toplist p{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	margin:5px 0 0 0;
+}*/
+
+table.toplist p{
+	font:12px Trebuchet MS, Verdana, sans-serif !important;
+}
+
+table.toplist a:link{
+	color:#333;
+	text-decoration:underline;
+}
+table.toplist a:visited{
+	color:#333;
+	text-decoration:underline;
+}
+table.toplist a:hover{
+	color:#000;
+	text-decoration:none;
+}
+table.toplist a:active{
+	color:#333;
+	text-decoration:underline;
+}
+
+#main_content #toplist .listholder{
+	margin:0 20px 20px 0;
+	width:280px;
+	height:auto;
+	overflow:hidden;
+}
+
+#main_content #toplist form{
+	margin:10px 0 10px 0;
+}
+
+#main_content #toplist .filter_form_holder{
+	width:920px;
+	margin:-20px 0 20px 0;
+}
+
+#main_content #toplist .filter_form_holder p{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+#main_content #toplist #filter_form select{
+	margin:0 10px 0 0;
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+/* Toplist End */
+
+/* FB login */
+
+#main_content div.fblogin p {
+	margin: 0 0 5px 0;
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+#main_content div.fblogin input#alias{
+	height:20px;
+	border:1px solid #ccc;
+	font: 12px Trebuchet MS, Verdana, sans-serif;
+}
+#main_content div.fblogin input[type="submit"]{
+	border:1px solid #ccc;
+	height:20px;
+	background:#eee;
+	margin:3px 0 0 0;
+	font: 12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+#main_content div.status{
+	margin:0 10px 0 0;
+}
+
+#main_content div.fblogin p.errormsg{
+	color:#ff0000;
+}
+
+#main_content div.fblogin a.root:link{
+	color:#ffcc00;
+	text-decoration:underline;
+}
+#main_content div.fblogin a.root:visited{
+	color:#ffcc00;
+	text-decoration:underline;
+}
+#main_content div.fblogin a.root:hover{
+	color:#ffcc00;
+	text-decoration:none;
+}
+#main_content div.fblogin a.root:active{
+	color:#ffcc00;
+	text-decoration:underline;
+}
+
+#main_content div.fblogin a.profile:link{
+	color:#6699ff;
+	text-decoration:underline;
+}
+#main_content div.fblogin a.profile:visited{
+	color:#6699ff;
+	text-decoration:underline;
+}
+#main_content div.fblogin a.profile:hover{
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content div.fblogin a.profile:active{
+	color:#6699ff;
+	text-decoration:underline;
+}
+
+#main_content div.fblogin a.terms:link{
+	color:#333;
+	text-decoration:underline;
+}
+#main_content div.fblogin a.terms:visited{
+	color:#333;
+	text-decoration:underline;
+}
+#main_content div.fblogin a.terms:hover{
+	color:#333;
+	text-decoration:none;
+}
+#main_content div.fblogin a.terms:active{
+	color:#333;
+	text-decoration:underline;
+}
+
+input.error {
+	border: 2px solid red;
+}
+
+/* FB login End */
+
+/* FAQ */
+
+#main_content .left_content .faq ol{
+	list-style-type:decimal;
+	margin:20px 0 40px 20px;
+}
+#main_content .left_content .faq ol li{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	margin:0 0 5px 0;
+}
+
+#main_content .left_content .faq p.answer{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	margin:5px 0 20px 0;
+}
+
+#main_content .left_content .faq p.answer a:link{
+	color:#3366ff;
+	text-decoration:underline;
+}
+#main_content .left_content .faq p.answer a:visited{
+	color:#3366ff;
+	text-decoration:underline;
+}
+#main_content .left_content .faq p.answer a:hover{
+	color:#3366ff;
+	text-decoration:none;
+}
+#main_content .left_content .faq p.answer a:active{
+	color:#3366ff;
+	text-decoration:underline;
+}
+
+#main_content .left_content .faq ol li a:link{
+	color:#3366ff;
+	text-decoration:underline;
+}
+#main_content .left_content .faq ol li a:visited{
+	color:#3366ff;
+	text-decoration:underline;
+}
+#main_content .left_content .faq ol li a:hover{
+	color:#3366ff;
+	text-decoration:none;
+}
+#main_content .left_content .faq ol li a:active{
+	color:#3366ff;
+	text-decoration:underline;
+}
+
+/* FAQ END */
+
+/* About, Careesrs */
+
+#main_content .left_content .about p,
+#main_content .left_content .careers p{
+	font:14px Trebuhet MS, Verdana, sans-serif;
+	color:#333;
+	margin:10px 0 0 0;
+}
+
+#main_content .left_content .about a:link,
+#main_content .left_content .careers a:link{
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content .left_content .about a:visited,
+#main_content .left_content .careers a:visited{
+	color:#6699ff;
+	text-decoration:none;
+}
+#main_content .left_content .about a:hover,
+#main_content .left_content .careers a:hover{
+	color:#6699ff;
+	text-decoration:underline;
+}
+#main_content .left_content .about a:active,
+#main_content .left_content .careers a:active{
+	color:#6699ff;
+	text-decoration:none;
+}
+
+
+/* About, Careers end */
+
+/* Sitemap */
+
+.left_content #sitemap{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+.left_content #sitemap .page{
+	margin:10px 0 0 20px;
+}
+.left_content #sitemap .subpage{
+	margin:3px 0 0 40px;
+}
+
+.left_content #sitemap a:link{
+	color:#333;
+	text-decoration:underline;
+}
+.left_content #sitemap a:visited{
+	color:#333;
+	text-decoration:underline;
+}
+.left_content #sitemap a:hover{
+	color:#000;
+	text-decoration:underline;
+}
+.left_content #sitemap a:active{
+	color:#333;
+	text-decoration:underline;
+}
+
+/* Sitemap end */
+
+
+/* Main Content end */
+
+/* Footer */
+
+#footer{
+	width:100%;
+	height:153px;
+	background:url(../gfx/footer_bg.jpg) repeat-x;
+	margin:100px 0 0 0;
+}
+
+#footer .content{
+	width:960px;
+	margin:0 auto 0 auto;
+}
+
+#footer .content ul{
+	margin:20px 0 0 20px;
+}
+
+#footer ul li{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	margin:0 0 3px 0;
+}
+
+#footer .content ul li a:link{
+	color:#333;
+	text-decoration:none;
+}
+#footer .content ul li a:visited{
+	color:#333;
+	text-decoration:none;
+}
+#footer .content ul li a:hover{
+	color:#000;
+	text-decoration:none;
+}
+#footer .content ul li a:active{
+	color:#333;
+	text-decoration:none;
+}
+#footer .content p{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	margin:20px 20px 0 0;
+}
+
+/* Footer End */
+
+/* Fixes and small classes */
+
+p.text{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+p.text_12px{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+p.text a:link{
+	text-decoration:none;
+	color:#336699;
+}
+p.text a:visited{
+	text-decoration:none;
+	color:#336699;
+}
+p.text a:hover{
+	text-decoration:underline;
+	color:#336699;
+}
+p.text a:active{
+	text-decoration:none;
+	color:#336699;
+}
+
+
+.floatleft{
+	float:left;
+}
+.floatright{
+	float:right;
+}
+.clear{
+	clear:both;
+}
+.text_align_center{
+	text-align:center;
+}
+.grey_333{
+	color:#333;
+}
+
+.yellow_ffcc00{
+	color:#ffcc00;
+}
+
+.blue_6699ff{
+	color:#6699ff;
+}
+
+div.info_text p{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+	margin:0 0 5px 0;
+}
+
+
+div.dynamic_list{
+	position:relative;
+}
+
+div.filter_link{
+	position:absolute;
+	top:5px;
+	right:0px;
+}
+
+
+div.filter_form select{
+	width:120px;
+}
+
+.page_not_found{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+.page_not_found a:link{
+	color:#333;
+	text-decoration:underline;
+}
+.page_not_found a:visited{
+	color:#333;
+	text-decoration:underline;
+}
+.page_not_found a:hover{
+	color:#000;
+	text-decoration:none;
+}
+.page_not_found a:active{
+	color:#333;
+	text-decoration:underline;
+}
+
+/* Fixes and small classes end */
+
+ /* Forms */
+
+
+#main_content .loginform_holder{
+	width:300px;
+	margin:35px 0 35px 20px;
+}
+
+#header .loginform_holder a:link{
+	color:#3366ff;
+	text-decoration:none;
+}
+#header .loginform_holder a:visited{
+	color:#3366ff;
+	text-decoration:none;
+}
+#header .loginform_holder a:hover{
+	color:#3366ff;
+	text-decoration:underline;
+}
+#header .loginform_holder a:active{
+	color:#3366ff;
+	text-decoration:none;
+}
+
+#header p#font_10px{
+	font-size:10px;
+}
+
+#main_content .lost_password_form_holder,
+#main_content .feedback_form_holder{
+	width:300px;
+	margin:10px 0 0 20px;
+}
+
+#main_content .feedback_form_holder{
+	width:500px;
+}
+
+
+
+#main_content #lost_password_form{
+	margin:20px 0 0 0
+}
+
+#header .loginform_holder p,
+#main_content .loginform_holder p,
+#main_content .lost_password_form_holder p,
+#main_content .feedback_form_holder p{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+#header .loginform_holder p.errosmsg,
+#main_content .loginform_holder p.errosmsg,
+#main_content .lost_password_form_holder p.errormsg,
+#main_content .feedback_form_holder p.errormsg{
+	color:#ff0000;
+}
+
+#main_content .lost_password_form_holder p.success,
+#main_content .feedback_form_holder p.success{
+	color:#3366ff;
+}
+
+#header .loginform_holder div.username_holder,
+#header .loginform_holder div.password_holder,
+#main_content .loginform_holder div.username_holder,
+#main_content .loginform_holder div.password_holder{
+	margin:0 5px 0 0;
+}
+
+#header .loginform_holder #username,
+#header .loginform_holder #password,
+#main_content .loginform_holder #username,
+#main_content .loginform_holder #password,
+#main_content .feedback_form_holder #feedback_email,
+#main_content .feedback_form_holder #feedback_subject,
+#main_content .feedback_form_holder #captcha_code{
+	width:110px;
+	height:20px;
+	border:1px solid #ccc;
+	margin:0 0 0 0;
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+#main_content .feedback_form_holder #feedback_email,
+#main_content .feedback_form_holder #feedback_subject{
+	width:230px;
+}
+
+#main_content .feedback_form_holder #feedback{
+	width:470px;
+	height:100px;
+	border:1px solid #ccc;
+	font:12px Trebuchet MS, Verdana, sans-serif;
+}
+
+#main_content .feedback_form_holder #feedback_form_submit{
+	width:46px;
+	height:25px;
+	background:url(../gfx/send_btn.jpg) no-repeat;
+	border:none;
+	margin:10px 0 0 0;
+}
+
+
+
+#header .loginform_holder #login_submit,
+#main_content .loginform_holder #login_submit{
+	margin:17px 0 0 0;
+	width:46px;
+	height:25px;
+	border:none;
+	background:url(../gfx/login_btn.png) no-repeat;
+}
+
+#enroll_form{
+	text-align:right;
+}
+
+#main_content #enroll_form #submit_enroll{
+	width:57px;
+	height:25px;
+	background:url(../gfx/signup_btn.jpg) no-repeat;
+	border:none;
+}
+
+#main_content #register_form{
+	margin:20px 0 0 0;
+}
+
+#main_content #register_form p,
+#main_content #update_information_form p{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+#main_content #register_response p{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+#main_content #register_response p.errormsg{
+	color:#ff0000;
+}
+
+
+#main_content #register_form input[type="text"],
+#main_content #register_form input[type="password"],
+#main_content #register_form select{
+	border:1px solid #ccc;
+	height:20px;
+	font:12px Trebucet MS, Verdana, sans-serif;
+	color:#333;
+	margin:0 10px 3px 0;
+}
+
+#main_content #register_form select{
+	margin:0 0 7px 0;
+}
+
+#main_content #register_form input[type="submit"]{
+	margin:5px 0 0 0;
+}
+
+#main_content #register_form .auto_sign_in{
+	margin:10px 0 0 0;
+}
+
+.reset_form{
+	margin:15px 0 0 0;
+}
+
+.reset_form a:link{
+	color:#333;
+	text-decoration:underline;
+}
+.reset_form a:visited{
+	color:#333;
+	text-decoration:underline;
+}
+.reset_form a:hover{
+	color:#000;
+	text-decoration:none;
+}
+.reset_form a:active{
+	color:#333;
+	text-decoration:underline;
+}
+
+.checkbox_holder{
+	margin:0 0 0 20px;
+}
+
+.checkbox_holder p{
+	font:12px Trebuchet MS, Verdana, sans-serif;
+	color:#333;
+}
+
+.checkbox_holder a:link{
+	text-decoration:underline;
+	color:#333;
+}
+.checkbox_holder a:visited{
+	text-decoration:underline;
+	color:#333;
+}
+.checkbox_holder a:hover{
+	text-decoration:none;
+	color:#000;
+}
+.checkbox_holder a:active{
+	text-decoration:underline;
+	color:#333;
+}
+
+#personal_settings_submit{
+	margin:20px 0 0 0;
+}
+
+#friend_settings{
+	padding:0 20px 0 0;
+}
+
+.edit_user_data_submit{
+	margin:10px 0 20px 0;
+	width:46px;
+	height:25px;
+	border:none;
+	background:url(../gfx/save_btn.jpg) no-repeat;
+}
+
+#update_about{
+	width:350px;
+	height:150px;
+}
+
+#update_interest_form p{
+	margin:2px 10px 0 0;
+}
+
+#birth_form select{
+	margin:0 10px 0 0;
+}
+
+p.success{
+	font:14px Trebuchet MS, Verdana, sans-serif;
+	color:green;
+	margin:0 0 10px 0;
+}
+
+#surftrain_cathegory{
+	margin:3px 0 10px 0;
+}
+
+ /* Forms end */
