@@ -1,13 +1,124 @@
 {% load flatpage_menu %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html charset="utf-8" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	lang="en">
+<head>
 
-<html>
-    <head>
-        <title>
-            {{ flatpage.title }}
-        </title>
-    </head>
-    <body>
-        {% flatpage_menu %}
-        {{ flatpage.content }}
-    </body>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="keywords"
+	content="wassap, wussap, wazzap, whatsup, whats up, Wassap, Wussap, Whatsup, Whats Up">
+<meta name="description"
+	content="Wussap takes web surfing to a new level by making it possible to surf together with others! Chat with people who visit the same web site as you, or jump on a Surf Train and co-browse the web together with others.">
+<title>{{ flatpage.title }}</title>
+<link rel="shortcut icon" href="http://www.wussap.com/favicon.ico">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../static/css/reset.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../static/css/style.css"><script type="text/javascript"
+	src="../static/js/jquery.js"></script> <script type="text/javascript"
+	src="../static/js/main.js"></script> <script type="text/javascript"
+	src="../static/js/latest_message.js"></script> <script
+	type="application/x-javascript">
+<!--
+function install (aEvent)
+{
+  var params = {
+    "Wussap": {
+             URL: aEvent.target.href,
+             IconURL: aEvent.target.getAttribute("iconURL"),
+             Hash: aEvent.target.getAttribute("hash"),
+             toString: function () { return this.URL; }
+    }
+  };
+  InstallTrigger.install(params);
+
+  return false;
+}
+-->
+</script>
+</head>
+<body>
+<div id="wrapper">
+<div id="header">
+	<div class="content">
+
+		<div class="logo floatleft">
+			<a href="http://www.wussap.com/index.php"><img src="../static/image/logo_beta.jpg" alt="Wussap - Socialize the web"></a>
+		</div>
+
+		<div style="display: block;" class="latest_message floatleft"><p class="message">will have to try and figure this out l8r</p><p><a href="http://www.wussap.com/profile.php?id=452" class="name">Krayakin</a> at <a href="http://en2.grepolis.com/" class="homepage">en2.grepolis.com</a></p></div>
+
+		<div class="clear"></div>
+	</div>
+
+	<div class="clear"></div>
+</div>
+
+<div id="menu">
+		
+	<div class="left floatleft"></div>
+	<div class="main floatleft">
+			
+		{% flatpage_menu %}
+			
+	</div>
+	<div class="right floatleft"></div>
+		
+	<div class="clear"></div>
+		
+</div>
+	<div class="submenu_left floatleft"></div>
+	<div class="submenu floatleft">
+	<p class="sublinks">
+
+		<a href="surftrain.php?page=create">Schedule</a>
+		<a href="surftrain.php?page=ongoing">Ongoing</a>
+		<a href="surftrain.php?page=departing">Departures</a>
+		<a href="surftrain.php?page=arrived">Arrived</a>
+		
+	</p>
+	</div>
+	<div class="submenu_right floatleft"></div>
+
+	
+	<div class="clear"></div>
+
+
+{{ flatpage.content }}
+
+<div class="clear"></div>
+</div>
+<div id="footer">
+
+<div class="content">
+<ul class="floatleft">
+	<li><a href="http://www.wussap.com/about.php">About</a></li>
+	<!-- <li><a href="javascript:alert('Not implemented yet');">Business</a></li>
+			<li><a href="javascript:alert('Not implemented yet');">Contact</a></li>-->
+	<li><a href="http://www.wussap.com/careers.php">Careers</a></li>
+	<li><a href="http://www.wussap.com/sitemap.php">Sitemap</a></li>
+</ul>
+
+<ul class="floatleft">
+	<li><a href="http://www.wussap.com/use.php?page=feedback">Feedback</a></li>
+	<li><a href="http://www.wussap.com/faq.php">Faq</a></li>
+	<!-- <li><a href="javascript:alert('Not implemented yet');">Support</a></li> -->
+	<li><a href="http://www.wussap.com/terms.php">Terms of Use
+	&amp; Privacy</a></li>
+</ul>
+
+<p class="floatright">© Wussap 2007 - 2009</p>
+</div>
+
+<script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script><script src="../static/js/ga.js" type="text/javascript"></script> <script
+	type="text/javascript">
+      var pageTracker = _gat._getTracker("UA-57102-3");
+      pageTracker._trackPageview();
+    </script></div>
+
+</body>
 </html>
