@@ -1,0 +1,13 @@
+{% load flatpage_menu %}
+
+<html>
+    <head>
+        <title>
+            {{ flatpage.title }}
+        </title>
+    </head>
+    <body>
+        {% flatpage_menu %}
+        {{ flatpage.content }}
+    </body>
+</html>
