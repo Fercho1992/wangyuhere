@@ -55,35 +55,10 @@ function install (aEvent)
 	<div class="clear"></div>
 </div>
 
-<div id="menu">
-		
-	<div class="left floatleft"></div>
-	<div class="main floatleft">
-			
-		{% flatpage_menu %}
-			
-	</div>
-	<div class="right floatleft"></div>
-		
-	<div class="clear"></div>
-		
-</div>
-	<div class="submenu_left floatleft"></div>
-	<div class="submenu floatleft">
-	<p class="sublinks">
-
-		<a href="surftrain.php?page=create">Schedule</a>
-		<a href="surftrain.php?page=ongoing">Ongoing</a>
-		<a href="surftrain.php?page=departing">Departures</a>
-		<a href="surftrain.php?page=arrived">Arrived</a>
-		
-	</p>
-	</div>
-	<div class="submenu_right floatleft"></div>
-
 	
-	<div class="clear"></div>
+{% flatpage_menu %}
 
+{% flatpage_submenu flatpage.url %}
 
 {{ flatpage.content }}
 
