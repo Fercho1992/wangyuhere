@@ -1,0 +1,19 @@
+{% if has_menu %}
+<div id="menu">
+
+	<div class="left floatleft"></div>
+	
+	<div class="main floatleft">
+		<ul>
+		{% for item in menu %}
+		<li><a href="{{ item.url }}">{{ item.title }}</a></li>
+		{% endfor %}
+		</ul>
+	</div>
+	
+	<div class="right floatleft"></div>
+	
+	<div class="clear"></div>
+		
+</div>
+{% endif %}

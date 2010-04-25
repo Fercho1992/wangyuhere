@@ -20,7 +20,7 @@ $(document).ready(function(){
 
 
 		var response = $.ajax({
-			url:		"ajax/latest_message.php",
+			url:		"http://www.wussap.com/ajax/latest_message.php",
 			type:		"POST",
 			cache:		false,
 			async:		false,

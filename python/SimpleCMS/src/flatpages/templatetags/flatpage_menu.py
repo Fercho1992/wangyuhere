@@ -1,16 +1,31 @@
-from django.template import Library, Node
+from django import template
 from django.contrib.flatpages.models import FlatPage
 
-register = Library()
+register = template.Library()
 
 def flatpage_menu():
-    pages = FlatPage.objects.all()
-    menu = '<ul>'
-    for i in range(len(pages)):
-        menu += '<li>'+'<a href = "'+pages[i].url+'" title = "' + pages[i].title + '">' + pages[i].title+'</a></li>'
+    menu = _get_menus(1, '')
+    t = template.loader.get_template('flatpages/menu.html')
+    return t.render(template.Context({'menu':menu, 'has_menu':len(menu)>0}))
 
-    menu += '</ul>'
+def flatpage_submenu(page_url):
+    submenu = _get_menus(2, page_url)
+    t = template.loader.get_template('flatpages/submenu.html')
+    return t.render(template.Context({'submenu':submenu, 'has_submenu':len(submenu)>0 }))
+
+def _get_menus(level, page_url):
+    pages = FlatPage.objects.all()
+    menu = []
+    
+    for i in range(len(pages)):
+        paths = pages[i].url.split('/')
+        while('' in paths):
+            paths.remove('')
+        if((len(paths) == level and level == 1) or (len(paths) == level and level == 2 and paths[1] == page_url) ):
+            menu.append({'url':pages[i].url, 'title':pages[i].title})
+
     return menu
 
 register.simple_tag(flatpage_menu)
+register.simple_tag(flatpage_submenu)
 

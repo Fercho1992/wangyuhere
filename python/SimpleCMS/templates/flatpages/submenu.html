@@ -1,0 +1,18 @@
+{% if has_submenu %}
+<div class="submenu_left floatleft"></div>
+<div class="submenu floatleft">
+	<p class="sublinks">
+
+
+		{% for item in submenu %}
+		<a href="{{ item.url }}">{{ item.title }}</a>
+		{% endfor %}
+
+		
+	</p>
+</div>
+
+<div class="submenu_right floatleft"></div>
+
+<div class="clear"></div>
+{% endif %}
