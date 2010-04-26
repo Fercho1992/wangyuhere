@@ -288,19 +288,19 @@ h3.settings{
 #menu .left{
 	width:24px;
 	height:46px;
-	background:url(../image/menu_left_bg.jpg) no-repeat;
+	background:url(/static/image/menu_left_bg.jpg) no-repeat;
 }
 
 #menu .main{
 	width:916px;
 	height:46px;
-	background:url(../image/menu_main_bg.jpg) repeat-x;
+	background:url(/static/image/menu_main_bg.jpg) repeat-x;
 }
 
 #menu .right{
 	width:20px;
 	height:46px;
-	background:url(../image/menu_right_bg.jpg) no-repeat;
+	background:url(/static/image/menu_right_bg.jpg) no-repeat;
 }
 
 #menu ul{
@@ -349,20 +349,20 @@ h3.settings{
 	width:10px;
 	height:30px;
 	margin:0 0 0 25px;
-	background:url(../image/submenu_left_bg.jpg) no-repeat;
+	background:url(/static/image/submenu_left_bg.jpg) no-repeat;
 }
 
 #wrapper .submenu{
 	width:auto;
 	height:30px;
-	background:url(../image/submenu_bg.jpg) repeat-x;
+	background:url(/static/image/submenu_bg.jpg) repeat-x;
 	padding:6px 0 0 0;
 }
 
 #wrapper .submenu_right{
 	width:11px;
 	height:30px;
-	background:url(../image/submenu_right_bg.jpg) no-repeat;
+	background:url(/static/image/submenu_right_bg.jpg) no-repeat;
 }
 
 #wrapper .submenu a:link{
