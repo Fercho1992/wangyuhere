@@ -32,366 +32,382 @@ import se.sics.kompics.timer.SchedulePeriodicTimeout;
 import se.sics.kompics.timer.Timer;
 
 public final class Peer extends ComponentDefinition {
-	public static BigInteger RING_SIZE = new BigInteger(2 + "")
+	public static BigInteger RING_SIZE = new BigInteger("2")
 			.pow(Configuration.Log2Ring);
 	public static int FINGER_SIZE = Configuration.Log2Ring;
 	public static int SUCC_SIZE = Configuration.Log2Ring;
-	private static int STABILIZING_PERIOD = 1000;
 	private static int WAIT_TIME_TO_REJOIN = 5;
 
 	Negative<PeerPort> msPeerPort = negative(PeerPort.class);
 
 	Positive<Network> network = positive(Network.class);
 	Positive<Timer> timer = positive(Timer.class);
-
-	private Component fd, bootstrap;
-
+	private Component fd;
+	private Component bootstrap;
 	private Address self;
 	private PeerAddress peerSelf;
-
 	private PeerAddress pred;
 	private PeerAddress succ;
 	private PeerAddress[] fingers = new PeerAddress[FINGER_SIZE];
 	private PeerAddress[] succList = new PeerAddress[SUCC_SIZE];
 
-	private HashMap<Address, UUID> fdRequests;
-	private HashMap<Address, PeerAddress> fdPeers;
-
 	private int fingerIndex = 0;
 	private int joinCounter = 0;
 	private boolean started = false;
 	private boolean bootstrapped = false;
-
-	// -------------------------------------------------------------------
-	public Peer() {
-		fdRequests = new HashMap<Address, UUID>();
-		fdPeers = new HashMap<Address, PeerAddress>();
-
-		for (int i = 0; i < SUCC_SIZE; i++)
-			this.succList[i] = null;
-
-		for (int i = 0; i < FINGER_SIZE; i++)
-			this.fingers[i] = null;
-
-		fd = create(PingFailureDetector.class);
-		bootstrap = create(BootstrapClient.class);
-
-		connect(network, fd.getNegative(Network.class));
-		connect(network, bootstrap.getNegative(Network.class));
-		connect(timer, fd.getNegative(Timer.class));
-		connect(timer, bootstrap.getNegative(Timer.class));
-
-		subscribe(handleInit, control);
-		subscribe(handlePeriodicStabilization, timer);
-		subscribe(handleJoin, msPeerPort);
-		subscribe(handleLookup, msPeerPort);
-		subscribe(handleFindSucc, network);
-		subscribe(handleFindSuccReply, network);
-		subscribe(handleWhoIsPred, network);
-		subscribe(handleWhoIsPredReply, network);
-		subscribe(handleNotify, network);
-		subscribe(handleBootstrapResponse, bootstrap
-				.getPositive(P2pBootstrap.class));
-		subscribe(handlePeerFailureSuspicion, fd
-				.getPositive(FailureDetector.class));
-	}
-
-	// -------------------------------------------------------------------
+	private int stabilizePeriod;
+	private HashMap<Address, UUID> fdRequests;
+	private HashMap<Address, PeerAddress> fdPeers;
 	Handler<PeerInit> handleInit = new Handler<PeerInit>() {
 		public void handle(PeerInit init) {
-			peerSelf = init.getMSPeerSelf();
-			self = peerSelf.getPeerAddress();
+			Peer.this.peerSelf = init.getMSPeerSelf();
+			Peer.this.self = Peer.this.peerSelf.getPeerAddress();
+			// TODO
+			Peer.this.stabilizePeriod = 1000;
 
-			trigger(new BootstrapClientInit(self, init
-					.getBootstrapConfiguration()), bootstrap.getControl());
-			trigger(
-					new PingFailureDetectorInit(self, init.getFdConfiguration()),
-					fd.getControl());
+			Peer.this.trigger(new BootstrapClientInit(Peer.this.self, init
+					.getBootstrapConfiguration()), Peer.this.bootstrap
+					.getControl());
+			Peer.this.trigger(new PingFailureDetectorInit(Peer.this.self, init
+					.getFdConfiguration()), Peer.this.fd.getControl());
 		}
 	};
 
-	// -------------------------------------------------------------------
 	Handler<JoinPeer> handleJoin = new Handler<JoinPeer>() {
 		public void handle(JoinPeer event) {
-			Snapshot.addPeer(peerSelf);
+			Snapshot.addPeer(Peer.this.peerSelf);
 			BootstrapRequest request = new BootstrapRequest("chord", 1);
-			trigger(request, bootstrap.getPositive(P2pBootstrap.class));
+			Peer.this.trigger(request, Peer.this.bootstrap
+					.getPositive(P2pBootstrap.class));
 		}
 	};
 
-	// -------------------------------------------------------------------
 	Handler<BootstrapResponse> handleBootstrapResponse = new Handler<BootstrapResponse>() {
 		public void handle(BootstrapResponse event) {
-			if (bootstrapped) {
-				bootstrapped = true;
-				Set<PeerEntry> peers = event.getPeers();
+			if (!Peer.this.bootstrapped) {
+				Peer.this.bootstrapped = true;
+				Set<PeerEntry> somePeers = event.getPeers();
 
-				if (peers.size() == 0) {
-					pred = null;
-					succ = peerSelf;
-					succList[0] = peerSelf;
-					Snapshot.setPred(peerSelf, pred);
-					Snapshot.setSucc(peerSelf, succ);
-					joinCounter = -1;
-					trigger(new BootstrapCompleted("chord", peerSelf),
-							bootstrap.getPositive(P2pBootstrap.class));
+				if (somePeers.size() == 0) {
+					Peer.this.pred = null;
+					Peer.this.succ = Peer.this.peerSelf;
+					Peer.this.succList[0] = succ;
+					Snapshot.setPred(Peer.this.peerSelf, Peer.this.pred);
+					Snapshot.setSucc(Peer.this.peerSelf, Peer.this.succ);
+					Peer.this.joinCounter = -1;
+					Peer.this.trigger(new BootstrapCompleted("chord",
+							Peer.this.peerSelf), Peer.this.bootstrap
+							.getPositive(P2pBootstrap.class));
 				} else {
-					pred = null;
-					PeerAddress peer = (PeerAddress) peers.iterator().next()
-							.getOverlayAddress();
-					trigger(new FindSucc(peerSelf, peer, peerSelf, peerSelf
-							.getPeerId(), 0, 0, false), network);
-					Snapshot.setPred(peerSelf, pred);
+					Peer.this.pred = null;
+					PeerAddress existingPeer = (PeerAddress) ((PeerEntry) somePeers
+							.iterator().next()).getOverlayAddress();
+					Peer.this.trigger(new FindSucc(Peer.this.peerSelf,
+							existingPeer, Peer.this.peerSelf,
+							Peer.this.peerSelf.getPeerId(), 0, 0, false),
+							Peer.this.network);
+					Snapshot.setPred(Peer.this.peerSelf, Peer.this.pred);
 				}
 
-				if (!started) {
+				if (!Peer.this.started) {
 					SchedulePeriodicTimeout spt = new SchedulePeriodicTimeout(
-							STABILIZING_PERIOD, STABILIZING_PERIOD);
+							Peer.this.stabilizePeriod,
+							Peer.this.stabilizePeriod);
 					spt.setTimeoutEvent(new PeriodicStabilization(spt));
-					trigger(spt, timer);
-					started = true;
+					Peer.this.trigger(spt, Peer.this.timer);
+					Peer.this.started = true;
 				}
 			}
 		}
 	};
 
-	// -------------------------------------------------------------------
 	Handler<FindSucc> handleFindSucc = new Handler<FindSucc>() {
 		public void handle(FindSucc event) {
 			BigInteger id = event.getID();
 			PeerAddress initiator = event.getInitiator();
 			int fingerIndex = event.getFingerIndex();
 			int hopCount = event.getHopCount();
-			boolean lookup = event.isLookup();
+			boolean lookup = event.isItLookup();
 
-			if ((succ != null)
-					&& (RingKey.belongsTo(id, peerSelf.getPeerId(), succ
-							.getPeerId(), RingKey.IntervalBounds.OPEN_CLOSED,
-							Peer.RING_SIZE))) {
-				trigger(new FindSuccReply(peerSelf, initiator, succ, id,
-						fingerIndex, hopCount, lookup), network);
+			if ((Peer.this.succ != null)
+					&& (RingKey.belongsTo(id, Peer.this.peerSelf.getPeerId(),
+							Peer.this.succ.getPeerId(),
+							RingKey.IntervalBounds.OPEN_CLOSED, Peer.RING_SIZE))) {
+				Peer.this.trigger(new FindSuccReply(Peer.this.peerSelf,
+						initiator, Peer.this.succ, id, fingerIndex, hopCount,
+						lookup), Peer.this.network);
 			} else {
-				PeerAddress nextPeer = closestPrecedingNode(id);
-				trigger(new FindSucc(peerSelf, nextPeer, initiator, id,
-						fingerIndex, hopCount + 1, lookup), network);
+				PeerAddress nextPeer = Peer.this.closestPrecedingNode(id);
+				Peer.this.trigger(new FindSucc(Peer.this.peerSelf, nextPeer,
+						initiator, id, fingerIndex, hopCount + 1, lookup),
+						Peer.this.network);
 			}
 		}
 	};
 
-	// -------------------------------------------------------------------
 	Handler<FindSuccReply> handleFindSuccReply = new Handler<FindSuccReply>() {
 		public void handle(FindSuccReply event) {
 			PeerAddress responsible = event.getResponsible();
 			int fingerIndex = event.getFingerIndex();
-			boolean lookup = event.isLookup();
+			boolean lookup = event.isItLookup();
 
 			if (!lookup) {
 				if (fingerIndex == 0) {
-					succ = new PeerAddress(responsible);
-					succList[0] = new PeerAddress(responsible);
-					Snapshot.setSucc(peerSelf, succ);
-					trigger(new BootstrapCompleted("chord", peerSelf),
-							bootstrap.getPositive(P2pBootstrap.class));
-					fdRegister(succ);
-					joinCounter = -1;
+					Peer.this.succ = new PeerAddress(responsible);
+					Peer.this.succList[0] = new PeerAddress(responsible);
+					Snapshot.setSucc(Peer.this.peerSelf, Peer.this.succ);
+					Peer.this.trigger(new BootstrapCompleted("chord",
+							Peer.this.peerSelf), Peer.this.bootstrap
+							.getPositive(P2pBootstrap.class));
+					Peer.this.fdRegister(Peer.this.succ);
+					Peer.this.joinCounter = -1;
 				}
 
-				fingers[fingerIndex] = new PeerAddress(responsible);
-				Snapshot.setFingers(peerSelf, fingers);
+				Peer.this.fingers[fingerIndex] = new PeerAddress(responsible);
+				Snapshot.setFingers(Peer.this.peerSelf, Peer.this.fingers);
 			} else {
-				BigInteger id = event.getId();
+				BigInteger id = event.getID();
 				int hopCount = event.getHopCount();
 				Snapshot.setLookup(id, responsible, hopCount);
 			}
 		}
 	};
 
-	// -------------------------------------------------------------------
 	Handler<PeriodicStabilization> handlePeriodicStabilization = new Handler<PeriodicStabilization>() {
 		public void handle(PeriodicStabilization event) {
-			if ((succ == null) && (joinCounter != -1)) {
-				if (joinCounter++ > WAIT_TIME_TO_REJOIN) {
-					joinCounter = 0;
-					bootstrapped = false;
+			if ((Peer.this.succ == null) && (Peer.this.joinCounter != -1)) {
+				if (Peer.this.joinCounter++ > Peer.WAIT_TIME_TO_REJOIN) {
+					Peer.this.joinCounter = 0;
+					Peer.this.bootstrapped = false;
 
 					BootstrapRequest request = new BootstrapRequest("chord", 1);
-					trigger(request, bootstrap.getPositive(P2pBootstrap.class));
+					Peer.this.trigger(request, Peer.this.bootstrap
+							.getPositive(P2pBootstrap.class));
 				}
 			}
 
-			if (succ != null) {
-				trigger(new WhoIsPred(peerSelf, succ), network);
+			if (Peer.this.succ != null) {
+				Peer.this.trigger(new WhoIsPred(Peer.this.peerSelf,
+						Peer.this.succ), Peer.this.network);
 				Snapshot.sentMsg();
 			}
 
-			if (succ == null) {
+			if (Peer.this.succ == null) {
 				return;
 			}
-			fingerIndex += 1;
-			if (fingerIndex == FINGER_SIZE) {
-				fingerIndex = 1;
+			Peer.this.fingerIndex += 1;
+			if (Peer.this.fingerIndex == Peer.FINGER_SIZE) {
+				Peer.this.fingerIndex = 1;
 			}
-			BigInteger index = new BigInteger("2").pow(fingerIndex);
-			BigInteger id = peerSelf.getPeerId().add(index).mod(RING_SIZE);
+			BigInteger index = new BigInteger("2").pow(Peer.this.fingerIndex);
+			BigInteger id = Peer.this.peerSelf.getPeerId().add(index).mod(
+					Peer.RING_SIZE);
 
-			if (RingKey.belongsTo(id, peerSelf.getPeerId(), succ.getPeerId(),
+			if (RingKey.belongsTo(id, Peer.this.peerSelf.getPeerId(),
+					Peer.this.succ.getPeerId(),
 					RingKey.IntervalBounds.OPEN_CLOSED, Peer.RING_SIZE)) {
-				fingers[fingerIndex] = new PeerAddress(succ);
+				Peer.this.fingers[Peer.this.fingerIndex] = new PeerAddress(
+						Peer.this.succ);
 			} else {
-				PeerAddress nextPeer = closestPrecedingNode(id);
-				trigger(new FindSucc(peerSelf, nextPeer, peerSelf, id,
-						fingerIndex, 0, false), network);
+				PeerAddress nextPeer = Peer.this.closestPrecedingNode(id);
+				Peer.this.trigger(
+						new FindSucc(Peer.this.peerSelf, nextPeer,
+								Peer.this.peerSelf, id, Peer.this.fingerIndex,
+								0, false), Peer.this.network);
 			}
 		}
 	};
 
-	// -------------------------------------------------------------------
 	Handler<WhoIsPred> handleWhoIsPred = new Handler<WhoIsPred>() {
 		public void handle(WhoIsPred event) {
 			PeerAddress requester = event.getMSPeerSource();
-			trigger(new WhoIsPredReply(peerSelf, requester, pred, succList),
-					network);
+			Peer.this.trigger(new WhoIsPredReply(Peer.this.peerSelf, requester,
+					Peer.this.pred, Peer.this.succList), Peer.this.network);
 		}
 	};
 
-	// -------------------------------------------------------------------
 	Handler<WhoIsPredReply> handleWhoIsPredReply = new Handler<WhoIsPredReply>() {
 		public void handle(WhoIsPredReply event) {
 			PeerAddress succPred = event.getPred();
 			PeerAddress[] succSuccList = event.getSuccList();
 
-			if (succ == null) {
+			if (Peer.this.succ == null) {
 				return;
 			}
 			if ((succPred != null)
-					&& (RingKey.belongsTo(succPred.getPeerId(), peerSelf
-							.getPeerId(), succ.getPeerId(),
+					&& (RingKey.belongsTo(succPred.getPeerId(),
+							Peer.this.peerSelf.getPeerId(), Peer.this.succ
+									.getPeerId(),
 							RingKey.IntervalBounds.OPEN_OPEN, Peer.RING_SIZE))) {
-				succ = new PeerAddress(succPred);
-				fingers[0] = peerSelf;
-				succList[0] = peerSelf;
-				Snapshot.setSucc(peerSelf, succ);
-				Snapshot.setFingers(peerSelf, fingers);
-				fdRegister(succ);
-				joinCounter = -1;
+				Peer.this.succ = new PeerAddress(succPred);
+				Peer.this.fingers[0] = succ;
+				Peer.this.succList[0] = succ;
+				Snapshot.setSucc(Peer.this.peerSelf, Peer.this.succ);
+				Snapshot.setFingers(Peer.this.peerSelf, Peer.this.fingers);
+				Peer.this.fdRegister(Peer.this.succ);
+				Peer.this.joinCounter = -1;
 			}
 
 			for (int i = 1; i < succSuccList.length; ++i) {
 				if (succSuccList[(i - 1)] != null) {
-					succList[i] = new PeerAddress(succSuccList[(i - 1)]);
+					Peer.this.succList[i] = new PeerAddress(
+							succSuccList[(i - 1)]);
 				}
 			}
-			Snapshot.setSuccList(peerSelf, succList);
+			Snapshot.setSuccList(Peer.this.peerSelf, Peer.this.succList);
 
-			if (succ != null)
-				trigger(new Notify(peerSelf, succ, peerSelf), network);
+			if (Peer.this.succ != null)
+				Peer.this.trigger(new Notify(Peer.this.peerSelf,
+						Peer.this.succ, Peer.this.peerSelf), Peer.this.network);
 		}
 	};
 
-	// -------------------------------------------------------------------
 	Handler<Notify> handleNotify = new Handler<Notify>() {
 		public void handle(Notify event) {
 			PeerAddress newPred = event.getID();
 
-			if ((pred == null)
-					|| (RingKey.belongsTo(newPred.getPeerId(),
-							pred.getPeerId(), peerSelf.getPeerId(),
+			if ((Peer.this.pred == null)
+					|| (RingKey.belongsTo(newPred.getPeerId(), Peer.this.pred
+							.getPeerId(), Peer.this.peerSelf.getPeerId(),
 							RingKey.IntervalBounds.OPEN_OPEN, Peer.RING_SIZE))) {
-				pred = new PeerAddress(newPred);
-				fdRegister(pred);
-				Snapshot.setPred(peerSelf, newPred);
+				Peer.this.pred = new PeerAddress(newPred);
+				Peer.this.fdRegister(Peer.this.pred);
+				Snapshot.setPred(Peer.this.peerSelf, newPred);
 			}
 		}
 	};
 
 	Handler<LookupPeer> handleLookup = new Handler<LookupPeer>() {
 		public void handle(LookupPeer event) {
-			if (succ == null) {
+			if (Peer.this.succ == null) {
 				return;
 			}
 			BigInteger id = event.getID();
 			Snapshot.startLookup();
 
-			if ((succ != null)
-					&& (RingKey.belongsTo(id, peerSelf.getPeerId(), succ
-							.getPeerId(), RingKey.IntervalBounds.OPEN_CLOSED,
-							Peer.RING_SIZE))) {
-				trigger(new FindSuccReply(peerSelf, peerSelf, succ, id,
-						fingerIndex, 0, true), network);
+			if ((Peer.this.succ != null)
+					&& (RingKey.belongsTo(id, Peer.this.peerSelf.getPeerId(),
+							Peer.this.succ.getPeerId(),
+							RingKey.IntervalBounds.OPEN_CLOSED, Peer.RING_SIZE))) {
+				Peer.this.trigger(new FindSuccReply(Peer.this.peerSelf,
+						Peer.this.peerSelf, Peer.this.succ, id,
+						Peer.this.fingerIndex, 0, true), Peer.this.network);
 			} else {
-				PeerAddress nextPeer = closestPrecedingNode(id);
-				trigger(new FindSucc(peerSelf, nextPeer, peerSelf, id,
-						fingerIndex, 0, true), network);
+				PeerAddress nextPeer = Peer.this.closestPrecedingNode(id);
+				Peer.this.trigger(
+						new FindSucc(Peer.this.peerSelf, nextPeer,
+								Peer.this.peerSelf, id, Peer.this.fingerIndex,
+								0, true), Peer.this.network);
 			}
 		}
 	};
 
-	// -------------------------------------------------------------------
 	Handler<PeerFailureSuspicion> handlePeerFailureSuspicion = new Handler<PeerFailureSuspicion>() {
 		public void handle(PeerFailureSuspicion event) {
 			Address suspectedPeerAddress = event.getPeerAddress();
 
 			if (event.getSuspicionStatus().equals(SuspicionStatus.SUSPECTED)) {
-				if ((!fdPeers.containsKey(suspectedPeerAddress))
-						|| (!fdRequests.containsKey(suspectedPeerAddress))) {
+				if ((!Peer.this.fdPeers.containsKey(suspectedPeerAddress))
+						|| (!Peer.this.fdRequests
+								.containsKey(suspectedPeerAddress))) {
 					return;
 				}
-				PeerAddress suspectedPeer = (PeerAddress) fdPeers
+				PeerAddress suspectedPeer = (PeerAddress) Peer.this.fdPeers
 						.get(suspectedPeerAddress);
-				fdUnregister(suspectedPeer);
+				Peer.this.fdUnregister(suspectedPeer);
 
-				if (suspectedPeer.equals(pred)) {
-					pred = null;
+				if (suspectedPeer.equals(Peer.this.pred)) {
+					Peer.this.pred = null;
 				}
-				if (suspectedPeer.equals(succ)) {
-					for (int i = 1; i < Peer.SUCC_SIZE; ++i) {
-						if ((succList[i] != null)
-								&& (!succList[i].equals(peerSelf))
-								&& (!succList[i].equals(suspectedPeer))) {
-							succ = succList[i];
-							fingers[0] = peerSelf;
-							joinCounter = -1;
-							fdRegister(succ);
+				if (suspectedPeer.equals(Peer.this.succ)) {
+					int i = 1;
+					for (i = 1; i < Peer.SUCC_SIZE; ++i) {
+						if ((Peer.this.succList[i] != null)
+								&& (!Peer.this.succList[i]
+										.equals(Peer.this.peerSelf))
+								&& (!Peer.this.succList[i]
+										.equals(suspectedPeer))) {
+							Peer.this.succ = Peer.this.succList[i];
+							Peer.this.fingers[0] = succ;
+							Peer.this.joinCounter = -1;
+							Peer.this.fdRegister(Peer.this.succ);
 							break;
 						}
-						succ = null;
+						Peer.this.succ = null;
 					}
 
-					if (succ == null) {
-						joinCounter = 0;
-						bootstrapped = false;
+					if (Peer.this.succ == null) {
+						Peer.this.joinCounter = 0;
+						Peer.this.bootstrapped = false;
 
 						BootstrapRequest request = new BootstrapRequest(
 								"chord", 1);
-						trigger(request, bootstrap
+						Peer.this.trigger(request, Peer.this.bootstrap
 								.getPositive(P2pBootstrap.class));
 					}
 
-					Snapshot.setSucc(peerSelf, succ);
-					Snapshot.setFingers(peerSelf, fingers);
+					Snapshot.setSucc(Peer.this.peerSelf, Peer.this.succ);
+					Snapshot.setFingers(Peer.this.peerSelf, Peer.this.fingers);
 
-					for (int i = 1; i < Peer.SUCC_SIZE; ++i) {
-						succList = Peer.this.leftshift(succList);
+					for (; i > 0; --i) {
+						Peer.this.succList = Peer.this
+								.leftshift(Peer.this.succList);
 					}
 				}
 				for (int i = 1; i < Peer.SUCC_SIZE; ++i)
-					if ((succList[i] != null)
-							&& (succList[i].equals(suspectedPeer)))
-						succList[i] = null;
+					if ((Peer.this.succList[i] != null)
+							&& (Peer.this.succList[i].equals(suspectedPeer)))
+						Peer.this.succList[i] = null;
 			}
 		}
+		/* 308 */
 	};
+
+	public Peer() {
+		this.fdRequests = new HashMap<Address, UUID>();
+		this.fdPeers = new HashMap<Address, PeerAddress>();
+
+		for (int i = 0; i < SUCC_SIZE; ++i) {
+			this.succList[i] = null;
+		}
+		for (int i = 0; i < FINGER_SIZE; ++i) {
+			this.fingers[i] = null;
+		}
+		this.fd = create(PingFailureDetector.class);
+		this.bootstrap = create(BootstrapClient.class);
+
+		connect(this.network, this.fd.getNegative(Network.class));
+		connect(this.network, this.bootstrap.getNegative(Network.class));
+		connect(this.timer, this.fd.getNegative(Timer.class));
+		connect(this.timer, this.bootstrap.getNegative(Timer.class));
+
+		subscribe(this.handleJoin, this.msPeerPort);
+		subscribe(this.handleLookup, this.msPeerPort);
+
+		subscribe(this.handleFindSucc, this.network);
+		subscribe(this.handleFindSuccReply, this.network);
+		subscribe(this.handleWhoIsPred, this.network);
+		subscribe(this.handleWhoIsPredReply, this.network);
+		subscribe(this.handleNotify, this.network);
+
+		subscribe(this.handleInit, this.control);
+		subscribe(this.handlePeriodicStabilization, this.timer);
+		subscribe(this.handleBootstrapResponse, this.bootstrap
+				.getPositive(P2pBootstrap.class));
+		subscribe(this.handlePeerFailureSuspicion, this.fd
+				.getPositive(FailureDetector.class));
+	}
 
 	private PeerAddress closestPrecedingNode(BigInteger id) {
 		for (int i = FINGER_SIZE - 1; i >= 0; --i) {
-			if ((fingers[i] != null)
-					&& (RingKey.belongsTo(fingers[i].getPeerId(), peerSelf
-							.getPeerId(), id, RingKey.IntervalBounds.OPEN_OPEN,
-							RING_SIZE))) {
-				return fingers[i];
+			if ((this.fingers[i] != null)
+					&& (RingKey.belongsTo(this.fingers[i].getPeerId(),
+							this.peerSelf.getPeerId(), id,
+							RingKey.IntervalBounds.OPEN_OPEN, RING_SIZE))) {
+				return this.fingers[i];
 			}
 		}
-		return peerSelf;
+		return this.peerSelf;
 	}
 
 	private PeerAddress[] leftshift(PeerAddress[] list) {
@@ -405,26 +421,24 @@ public final class Peer extends ComponentDefinition {
 		return newList;
 	}
 
-	// -------------------------------------------------------------------
 	private void fdRegister(PeerAddress peer) {
 		Address peerAddress = peer.getPeerAddress();
 		StartProbingPeer spp = new StartProbingPeer(peerAddress, peer);
-		fdRequests.put(peerAddress, spp.getRequestId());
-		trigger(spp, fd.getPositive(FailureDetector.class));
+		this.fdRequests.put(peerAddress, spp.getRequestId());
+		trigger(spp, this.fd.getPositive(FailureDetector.class));
 
-		fdPeers.put(peerAddress, peer);
+		this.fdPeers.put(peerAddress, peer);
 	}
 
-	// -------------------------------------------------------------------
 	private void fdUnregister(PeerAddress peer) {
-		if (peer == null)
+		if (peer == null) {
 			return;
-
+		}
 		Address peerAddress = peer.getPeerAddress();
-		trigger(new StopProbingPeer(peerAddress, fdRequests.get(peerAddress)),
-				fd.getPositive(FailureDetector.class));
-		fdRequests.remove(peerAddress);
+		trigger(new StopProbingPeer(peerAddress, (UUID) this.fdRequests
+				.get(peerAddress)), this.fd.getPositive(FailureDetector.class));
+		this.fdRequests.remove(peerAddress);
 
-		fdPeers.remove(peerAddress);
+		this.fdPeers.remove(peerAddress);
 	}
 }
