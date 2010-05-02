@@ -21,14 +21,14 @@ public class ScenarioQ4 extends Scenario {
 		// process3 -> churn in the system. 5 peers join and 5 peers fail.
 		StochasticProcess process3 = new StochasticProcess() {{
 			
-			eventInterArrivalTime(exponential(500));
+			eventInterArrivalTime(exponential(1000));
 			raise(70, Operations.peerJoin, uniform(Configuration.Log2Ring));
 			raise(30, Operations.peerFail, uniform(Configuration.Log2Ring));
 		}};
 
 		// process4 -> 20 lookups
 		StochasticProcess process4 = new StochasticProcess() {{
-			eventInterArrivalTime(constant(500));
+			eventInterArrivalTime(exponential(1000));
 			raise(100, Operations.peerLookup, uniform(Configuration.Log2Ring));
 		}};
 

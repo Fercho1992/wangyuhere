@@ -8,9 +8,9 @@ public class Main {
 		
 		//Scenario scenario = new SampleScenario();
 		//Scenario scenario = new ScenarioQ1();
-		Scenario scenario = new ScenarioQ2();
+		//Scenario scenario = new ScenarioQ2();
 		//Scenario scenario = new ScenarioQ4();
-		//Scenario scenario = new ScenarioQ6();
+		Scenario scenario = new ScenarioQ6();
 		scenario.setSeed(System.currentTimeMillis());
 		scenario.simulate();
 	}
