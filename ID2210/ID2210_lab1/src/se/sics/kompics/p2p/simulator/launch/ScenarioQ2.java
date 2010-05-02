@@ -27,7 +27,7 @@ public class ScenarioQ2 extends Scenario {
 
 		// process4 -> 100 lookups
 		StochasticProcess process4 = new StochasticProcess() {{
-			eventInterArrivalTime(exponential(500));
+			eventInterArrivalTime(constant(3000));
 			raise(100, Operations.peerLookup, uniform(Configuration.Log2Ring));
 		}};
 
