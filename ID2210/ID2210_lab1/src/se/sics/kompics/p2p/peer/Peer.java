@@ -62,8 +62,7 @@ public final class Peer extends ComponentDefinition {
 		public void handle(PeerInit init) {
 			Peer.this.peerSelf = init.getMSPeerSelf();
 			Peer.this.self = Peer.this.peerSelf.getPeerAddress();
-			// TODO
-			Peer.this.stabilizePeriod = 1000;
+			Peer.this.stabilizePeriod = init.getMSConfiguration().getStabilizePeriod();
 
 			Peer.this.trigger(new BootstrapClientInit(Peer.this.self, init
 					.getBootstrapConfiguration()), Peer.this.bootstrap

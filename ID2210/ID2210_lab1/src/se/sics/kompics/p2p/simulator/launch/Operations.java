@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import se.sics.kompics.p2p.experiment.dsl.adaptor.Operation1;
 import se.sics.kompics.p2p.simulator.PeerFail;
 import se.sics.kompics.p2p.simulator.PeerJoin;
+import se.sics.kompics.p2p.simulator.PeerLookup;
 
 @SuppressWarnings("serial")
 public class Operations {
@@ -22,4 +23,12 @@ public class Operations {
 			return new PeerFail(id);
 		}
 	};
+
+//-------------------------------------------------------------------
+	static Operation1<PeerLookup, BigInteger> peerLookup = new Operation1<PeerLookup, BigInteger>() {
+		public PeerLookup generate(BigInteger id) {
+			return new PeerLookup(id);
+		}
+	};
+
 }
