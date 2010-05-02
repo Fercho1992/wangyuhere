@@ -1,6 +1,8 @@
 package se.sics.kompics.p2p.simulator;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import se.sics.kompics.ChannelFilter;
@@ -16,6 +18,7 @@ import se.sics.kompics.network.Network;
 import se.sics.kompics.p2p.bootstrap.BootstrapConfiguration;
 import se.sics.kompics.p2p.fd.ping.PingFailureDetectorConfiguration;
 import se.sics.kompics.p2p.peer.JoinPeer;
+import se.sics.kompics.p2p.peer.LookupPeer;
 import se.sics.kompics.p2p.peer.Peer;
 import se.sics.kompics.p2p.peer.PeerAddress;
 import se.sics.kompics.p2p.peer.PeerConfiguration;
@@ -56,6 +59,7 @@ public final class Simulator extends ComponentDefinition {
 		
 		subscribe(handlePeerJoin, simulator);
 		subscribe(handlePeerFail, simulator);
+		subscribe(handlePeerLookup, simulator);
 	}
 
 //-------------------------------------------------------------------	
@@ -112,6 +116,16 @@ public final class Simulator extends ComponentDefinition {
 			stopAndDestroyPeer(id);
 		}
 	};
+	
+	Handler<PeerLookup> handlePeerLookup = new Handler<PeerLookup>() {
+	    public void handle(PeerLookup event) {
+	      BigInteger id = event.getID();
+	      ArrayList<Component> nodes = new ArrayList<Component>(Simulator.this.peers.values());
+	      Collections.shuffle(nodes);
+
+	      Simulator.this.trigger(new LookupPeer(id), ((Component)nodes.get(0)).getPositive(PeerPort.class));
+	    }
+	  };
 
 //-------------------------------------------------------------------	
 	Handler<GenerateReport> handleGenerateReport = new Handler<GenerateReport>() {

@@ -104,12 +104,32 @@ public class Snapshot {
 		str += "current time: " + counter++ + "\n";
 		str += reportNetworkState();
 		str += reportDetailes();
+		str = str + reportTraffic();
+		str = str + reportLookupState();
 		str += "###\n";
 
 		System.out.println(str);
 
 		FileIO.append(str, FILENAME);
 		generateGraphVizReport();
+	}
+
+	private static String reportTraffic() {
+		return "avg generated traffic: " + traffic / peers.size() + "\n";
+	}
+
+	private static String reportLookupState() {
+		String str = new String();
+
+		if (totalLookup > 0) {
+			str = str + "total lookups: " + totalLookup + "\n";
+			str = str + "correct lookups: " + correctLookup + "\n";
+			str = str + "successfull lookups: " + successfulLookup + "\n";
+			str = str + "avg hop count: " + (double) hopCount / totalLookup
+					+ "\n";
+		}
+
+		return str;
 	}
 
 	// -------------------------------------------------------------------

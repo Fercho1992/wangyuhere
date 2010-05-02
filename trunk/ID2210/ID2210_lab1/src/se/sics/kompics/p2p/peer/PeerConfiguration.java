@@ -11,17 +11,23 @@ public final class PeerConfiguration {
 
 	private final int viewSize;
 	private final int snapshotPeriod;
+	private final int stabilizePeriod;
 
 	// -------------------------------------------------------------------
-	public PeerConfiguration(int viewSize, int snapshotPeriod) {
+	public PeerConfiguration(int viewSize, int snapshotPeriod, int stabilizePeriod) {
 		super();
 		this.viewSize = viewSize;
 		this.snapshotPeriod = snapshotPeriod;
+		this.stabilizePeriod = stabilizePeriod;
 	}
 
 	// -------------------------------------------------------------------
 	public int getViewSize() {
 		return this.viewSize;
+	}
+	
+	public int getStabilizePeriod() {
+		return stabilizePeriod;
 	}
 
 	// -------------------------------------------------------------------
@@ -34,6 +40,7 @@ public final class PeerConfiguration {
 		Properties p = new Properties();
 		p.setProperty("viewSize", "" + this.viewSize);
 		p.setProperty("snapshotPeriod", "" + this.snapshotPeriod);
+		p.setProperty("stabilizePeriod", "" + this.stabilizePeriod);
 
 		Writer writer = new FileWriter(file);
 		p.store(writer, "se.sics.kompics.p2p.ms");
@@ -47,7 +54,8 @@ public final class PeerConfiguration {
 
 		int viewSize = Integer.parseInt(p.getProperty("viewSize"));
 		int snapshotPeriod = Integer.parseInt(p.getProperty("snapshotPeriod"));
+		int stabilizePeriod = Integer.parseInt(p.getProperty("stabilizePeriod"));
 
-		return new PeerConfiguration(viewSize, snapshotPeriod);
+		return new PeerConfiguration(viewSize, snapshotPeriod, stabilizePeriod);
 	}
 }
