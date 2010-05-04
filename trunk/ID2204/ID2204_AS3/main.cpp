@@ -22,8 +22,8 @@ public:
     SquarePacking(const int n) : x(*this, n, 1, n*(n - 1) / 2), y(*this, n, 1, n*(n - 1) / 2), size(*this, 1, n*(n + 1) / 2) {
         // Restrict position according to square size
         for (int i = 0; i < n; i++) {
-            rel(*this, x[i], IRT_LQ, size - (n - i));
-            rel(*this, y[i], IRT_LQ, size - (n - i));
+            rel(*this, x[i], IRT_LQ, size.val() - (n - i));
+            rel(*this, y[i], IRT_LQ, size.val() - (n - i));
         }
 
         // Squares do not overlap
