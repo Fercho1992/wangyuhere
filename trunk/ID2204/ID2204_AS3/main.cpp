@@ -142,7 +142,7 @@ public:
  */
 int main(int argc, char** argv) {
 
-    SquarePacking * sp = new SquarePacking(26);
+    SquarePacking * sp = new SquarePacking(18);
     DFS<SquarePacking> e(sp);
     delete sp;
     if (SquarePacking * s = e.next()) {
