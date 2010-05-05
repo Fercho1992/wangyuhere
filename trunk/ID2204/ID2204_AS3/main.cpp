@@ -6,6 +6,7 @@
  */
 
 #include <stdlib.h>
+#include <math.h>
 #include <gecode/int.hh>
 #include <gecode/search.hh>
 #include <gecode/minimodel.hh>
@@ -20,10 +21,12 @@ protected:
 public:
 
     SquarePacking(const int n) : x(*this, n, 1, n*(n - 1) / 2), y(*this, n, 1, n*(n - 1) / 2), size(*this, 1, n*(n + 1) / 2) {
+        rel(*this, size, IRT_GQ, sqrt(n*(n+1)*(2*n+1)/6));
+
         // Restrict position according to square size
         for (int i = 0; i < n; i++) {
-            rel(*this, x[i], IRT_LQ, size.val() - (n - i));
-            rel(*this, y[i], IRT_LQ, size.val() - (n - i));
+            post(*this, x[i] + n-i <= size);
+            post(*this, y[i] + n-i <= size);
         }
 
         // Squares do not overlap
