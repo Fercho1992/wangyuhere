@@ -1,0 +1,23 @@
+Using the Nooverlap propagator: 
+Size: 21
+S10: 0, 0
+S9: 0, 10
+S8: 9, 13
+S7: 14, 6
+S6: 15, 0
+S5: 10, 0
+S4: 10, 5
+S3: 9, 10
+S2: 0, 19
+
+Not using the Nooverlap propagator: 
+Size: 21
+S10: 0, 0
+S9: 0, 10
+S8: 9, 13
+S7: 14, 6
+S6: 15, 0
+S5: 10, 0
+S4: 10, 5
+S3: 9, 10
+S2: 0, 19
