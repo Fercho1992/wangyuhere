@@ -76,10 +76,25 @@ public:
 
     virtual ExecStatus propagate(Space& home, const ModEventDelta&) {
 
-        //
-        // This is what YOU have to add!
-        //
+        
+        for(int i = 0; i < x.size(); i++) {
+            for(int j = i+1; j < y.size(); j++) {
+                if((x[i].min() + w[i] > x[j].max()) && (x[j].min() + w[j] > x[i].max()) &&
+                    (y[i].min() + h[i] > y[j].max()) && (y[j].min() + h[j] > y[i].max()))
+                    return ES_FAILED;
+            }
+        }
 
+        bool assigned = true;
+        for(int i = 0; i < x.size(); i++) {
+            if(!x[i].assigned() || !y[i].assigned())
+                assigned = false;
+        }
+
+        if(assigned)
+            return home.ES_SUBSUMED(*this);
+        else
+            return ES_NOFIX;
     }
 
     // Dispose propagator and return its size

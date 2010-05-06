@@ -6,10 +6,13 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 #include <gecode/int.hh>
 #include <gecode/search.hh>
 #include <gecode/minimodel.hh>
+
+#include "nooverlap.h"
 
 using namespace Gecode;
 
@@ -20,7 +23,7 @@ protected:
     IntVar size;
 public:
 
-    SquarePacking(const int n) : x(*this, n, 0, n*(n + 1) / 2 - 1),
+    SquarePacking(const int n, bool use_nooverlap = false) : x(*this, n, 0, n*(n + 1) / 2 - 1),
     y(*this, n, 0, n*(n + 1) / 2 - 1),
     size(*this, sqrt(n * (n + 1)*(2 * n + 1) / 6), n*(n + 1) / 2) {
 
@@ -32,11 +35,23 @@ public:
             post(*this, y[i] <= size - (n - i));
         }
 
-        // Squares do not overlap
-        for (int i = 0; i < n; i++)
-            for (int j = i + 1; j < n; j++)
-                post(*this, tt((x[i] + (n - i) <= x[j]) || (x[j] + (n - j) <= x[i]) ||
-                    (y[i] + (n - i) <= y[j]) || (y[j] + (n - j) <= y[i])));
+        if (use_nooverlap) {
+            IntVarArgs xva(n), yva(n);
+            IntArgs wa(n), ha(n);
+            for (int i = 0; i < n; i++) {
+                xva[i] = x[i];
+                yva[i] = y[i];
+                wa[i] = n - i;
+                ha[i] = n - i;
+            }
+            nooverlap(*this, xva, wa, yva, ha);
+        } else {
+            // Squares do not overlap
+            for (int i = 0; i < n; i++)
+                for (int j = i + 1; j < n; j++)
+                    post(*this, tt((x[i] + (n - i) <= x[j]) || (x[j] + (n - j) <= x[i]) ||
+                        (y[i] + (n - i) <= y[j]) || (y[j] + (n - j) <= y[i])));
+        }
 
         // the sum of the sizes of the squares occuping space at column x or row y must be less than or equal to size.
         IntArgs sa(n);
@@ -130,25 +145,32 @@ public:
     void print(void) const {
         std::cout << "Size: " << size << std::endl;
         int n = x.size();
-        for (int i = 0; i < n-1; i++) {
-            std::cout << "S" << n-i << ": " << x[i] << ", " << y[i];
+        for (int i = 0; i < n - 1; i++) {
+            std::cout << "S" << n - i << ": " << x[i] << ", " << y[i];
             std::cout << std::endl;
         }
     }
 };
 
-/*
- * 
- */
-int main(int argc, char** argv) {
-
-    SquarePacking * sp = new SquarePacking(18);
+void runSquarePacking(int n, bool use_nooverlap) {
+    SquarePacking * sp = new SquarePacking(n, use_nooverlap);
     DFS<SquarePacking> e(sp);
     delete sp;
     if (SquarePacking * s = e.next()) {
         s->print();
         delete s;
     }
+}
+
+/*
+ * 
+ */
+int main(int argc, char** argv) {
+
+    std::cout<<"Using the Nooverlap propagator: "<<std::endl;
+    runSquarePacking(10, true);
+    std::cout<<"\nNot using the Nooverlap propagator: "<<std::endl;
+    runSquarePacking(10, false);
     return (EXIT_SUCCESS);
 }
 
