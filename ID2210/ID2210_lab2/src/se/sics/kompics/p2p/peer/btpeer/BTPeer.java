@@ -1,24 +1,29 @@
 package se.sics.kompics.p2p.peer.btpeer;
 
+import java.util.Hashtable;
+
 import se.sics.kompics.ComponentDefinition;
 import se.sics.kompics.Handler;
 import se.sics.kompics.Negative;
 import se.sics.kompics.Positive;
-import se.sics.kompics.timer.SchedulePeriodicTimeout;
-import se.sics.kompics.timer.Timer;
 import se.sics.kompics.p2p.peer.CloseConnection;
+import se.sics.kompics.p2p.peer.CompleteUploaders;
 import se.sics.kompics.p2p.peer.DataMessage;
 import se.sics.kompics.p2p.peer.DownloadRequest;
+import se.sics.kompics.p2p.peer.GetUploaderRequest;
 import se.sics.kompics.p2p.peer.GetUploaderResponse;
 import se.sics.kompics.p2p.peer.HandshakeRequest;
 import se.sics.kompics.p2p.peer.HandshakeResponse;
+import se.sics.kompics.p2p.peer.HandshakeStatus;
 import se.sics.kompics.p2p.peer.MessagePort;
 import se.sics.kompics.p2p.peer.PeerAddress;
 import se.sics.kompics.p2p.peer.PeerPort;
-import se.sics.kompics.p2p.peer.CompleteUploaders;
 import se.sics.kompics.p2p.peer.RegisterPeer;
+import se.sics.kompics.p2p.peer.UpdateBuffer;
 import se.sics.kompics.p2p.simulator.launch.PeerType;
 import se.sics.kompics.p2p.simulator.snapshot.Snapshot;
+import se.sics.kompics.timer.SchedulePeriodicTimeout;
+import se.sics.kompics.timer.Timer;
 
 public final class BTPeer extends ComponentDefinition {
 	Negative<PeerPort> peerPort = negative(PeerPort.class);
@@ -34,6 +39,13 @@ public final class BTPeer extends ComponentDefinition {
 	private int pieceSize;
 	
     private Boolean[] buffer;
+    
+    //TODO ...
+    //private boolean isSeed = false;
+    private Hashtable<Integer, PeerAddress> uploaders;
+    private int downloaders = 0;
+    private int finishedCounter = 0;
+    //private ArrayList<Integer> pendingPieces;
 	
 //-------------------------------------------------------------------
 	public BTPeer() {
@@ -59,6 +71,9 @@ public final class BTPeer extends ComponentDefinition {
 			tracker = init.getTracker();
 			
 			buffer = new Boolean[numOfPieces];
+			
+			uploaders = new Hashtable<Integer, PeerAddress>();
+			//pendingPieces = new ArrayList<Integer>();
 		}
 	};
 
@@ -74,6 +89,8 @@ public final class BTPeer extends ComponentDefinition {
 				SchedulePeriodicTimeout spt = new SchedulePeriodicTimeout(5000, 5000);
 				spt.setTimeoutEvent(new CompleteUploaders(spt));
 				trigger(spt, timer);
+			} else {
+				finishedCounter = numOfPieces;
 			}
 		}
 	};
@@ -81,30 +98,60 @@ public final class BTPeer extends ComponentDefinition {
 //-------------------------------------------------------------------
 	Handler<CompleteUploaders> handleCompleteUploaders = new Handler<CompleteUploaders>() {
 		public void handle(CompleteUploaders event) {
+			// not a seed
+			if(finishedCounter != numOfPieces) {
+				int freeDownloadSlots = indegree-uploaders.size();
+				if(freeDownloadSlots>0) {
+					for(int i = 0; i < freeDownloadSlots; i++) {
+						trigger(new GetUploaderRequest(peerSelf, tracker), network);
+					}
+				}
+			}
 		}
 	};
 
 //-------------------------------------------------------------------
 	Handler<GetUploaderResponse> handleGetUploaderResponse = new Handler<GetUploaderResponse>() {
 		public void handle(GetUploaderResponse event) {
+			if(event.getPiece() == -1 || event.getUploader() == null) {
+				return;
+			}
+			// P is not already connected to Q
+			if(!uploaders.containsKey(event.getUploader())) {
+				trigger(new HandshakeRequest(peerSelf, event.getUploader(), event.getPiece()), network);
+			}
 		}
 	};
 	
 //-------------------------------------------------------------------
 	Handler<HandshakeRequest> handleHandshakeRequest = new Handler<HandshakeRequest>() {
 		public void handle(HandshakeRequest event) {
+			int freeUploadSlot = outdegree - downloaders;
+			if(freeUploadSlot > 0) { // accept
+				trigger(new HandshakeResponse(peerSelf, event.getPeerSource(), event.getPiece(), HandshakeStatus.ACCEPT), network);
+				downloaders++;
+			} else { // reject
+				trigger(new HandshakeResponse(peerSelf, event.getPeerSource(), event.getPiece(), HandshakeStatus.REJECT), network);
+			}
 		}
 	};
 
 //-------------------------------------------------------------------
 	Handler<HandshakeResponse> handleHandshakeResponse = new Handler<HandshakeResponse>() {
 		public void handle(HandshakeResponse event) {
+			// Q accepts P's request
+			if(event.getHandshakeStatus() == HandshakeStatus.ACCEPT) {
+				uploaders.put(event.getPiece(), event.getPeerSource());
+				trigger(new DownloadRequest(peerSelf, event.getPeerSource(), event.getPiece()), network);
+			}
+			
 		}
 	};
 
 //-------------------------------------------------------------------
 	Handler<DownloadRequest> handleDownloadRequest = new Handler<DownloadRequest>() {
 		public void handle(DownloadRequest event) {
+			trigger(new DataMessage(peerSelf, event.getPeerSource(), event.getPiece(), pieceSize), network);
 		}
 	};
 
@@ -113,12 +160,21 @@ public final class BTPeer extends ComponentDefinition {
 		public void handle(DataMessage event) {
 			int piece = event.getPiece();
 			Snapshot.addPiece(peerSelf, piece);
+			
+			trigger(new CloseConnection(peerSelf, event.getPeerSource()), network);
+			trigger(new UpdateBuffer(peerSelf, tracker, piece), network);
+			
+			finishedCounter++;
+			buffer[piece] = true;
+			uploaders.remove(piece);
+			
 		}
 	};
 
 //-------------------------------------------------------------------
 	Handler<CloseConnection> handleCloseConnection = new Handler<CloseConnection>() {
 		public void handle(CloseConnection event) {
+			downloaders --;
 		}
 	};
 }
