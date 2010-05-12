@@ -1,5 +1,6 @@
 package se.sics.kompics.p2p.peer.btpeer;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import se.sics.kompics.ComponentDefinition;
@@ -37,15 +38,10 @@ public final class BTPeer extends ComponentDefinition {
 	private int outdegree;
 	private int numOfPieces;
 	private int pieceSize;
-	
-    private Boolean[] buffer;
     
-    //TODO ...
-    //private boolean isSeed = false;
     private Hashtable<Integer, PeerAddress> uploaders;
-    private int downloaders = 0;
-    private int finishedCounter = 0;
-    //private ArrayList<Integer> pendingPieces;
+    private int numOfDownloaders = 0;
+    private ArrayList<Integer> downloadPieces;
 	
 //-------------------------------------------------------------------
 	public BTPeer() {
@@ -70,10 +66,8 @@ public final class BTPeer extends ComponentDefinition {
 			pieceSize = init.getPieceSize();
 			tracker = init.getTracker();
 			
-			buffer = new Boolean[numOfPieces];
-			
 			uploaders = new Hashtable<Integer, PeerAddress>();
-			//pendingPieces = new ArrayList<Integer>();
+			downloadPieces = new ArrayList<Integer>();
 		}
 	};
 
@@ -90,7 +84,7 @@ public final class BTPeer extends ComponentDefinition {
 				spt.setTimeoutEvent(new CompleteUploaders(spt));
 				trigger(spt, timer);
 			} else {
-				finishedCounter = numOfPieces;
+				//finishedCounter = numOfPieces;
 			}
 		}
 	};
@@ -99,7 +93,7 @@ public final class BTPeer extends ComponentDefinition {
 	Handler<CompleteUploaders> handleCompleteUploaders = new Handler<CompleteUploaders>() {
 		public void handle(CompleteUploaders event) {
 			// not a seed
-			if(finishedCounter != numOfPieces) {
+			if(downloadPieces.size() != numOfPieces) {
 				int freeDownloadSlots = indegree-uploaders.size();
 				if(freeDownloadSlots>0) {
 					for(int i = 0; i < freeDownloadSlots; i++) {
@@ -126,10 +120,10 @@ public final class BTPeer extends ComponentDefinition {
 //-------------------------------------------------------------------
 	Handler<HandshakeRequest> handleHandshakeRequest = new Handler<HandshakeRequest>() {
 		public void handle(HandshakeRequest event) {
-			int freeUploadSlot = outdegree - downloaders;
+			int freeUploadSlot = outdegree - numOfDownloaders;
 			if(freeUploadSlot > 0) { // accept
 				trigger(new HandshakeResponse(peerSelf, event.getPeerSource(), event.getPiece(), HandshakeStatus.ACCEPT), network);
-				downloaders++;
+				numOfDownloaders++;
 			} else { // reject
 				trigger(new HandshakeResponse(peerSelf, event.getPeerSource(), event.getPiece(), HandshakeStatus.REJECT), network);
 			}
@@ -140,9 +134,10 @@ public final class BTPeer extends ComponentDefinition {
 	Handler<HandshakeResponse> handleHandshakeResponse = new Handler<HandshakeResponse>() {
 		public void handle(HandshakeResponse event) {
 			// Q accepts P's request
-			if(event.getHandshakeStatus() == HandshakeStatus.ACCEPT) {
+			if(event.getHandshakeStatus() == HandshakeStatus.ACCEPT && ! downloadPieces.contains(event.getPiece())) {
 				uploaders.put(event.getPiece(), event.getPeerSource());
 				trigger(new DownloadRequest(peerSelf, event.getPeerSource(), event.getPiece()), network);
+				downloadPieces.add(event.getPiece());
 			}
 			
 		}
@@ -164,8 +159,6 @@ public final class BTPeer extends ComponentDefinition {
 			trigger(new CloseConnection(peerSelf, event.getPeerSource()), network);
 			trigger(new UpdateBuffer(peerSelf, tracker, piece), network);
 			
-			finishedCounter++;
-			buffer[piece] = true;
 			uploaders.remove(piece);
 			
 		}
@@ -174,7 +167,7 @@ public final class BTPeer extends ComponentDefinition {
 //-------------------------------------------------------------------
 	Handler<CloseConnection> handleCloseConnection = new Handler<CloseConnection>() {
 		public void handle(CloseConnection event) {
-			downloaders --;
+			numOfDownloaders --;
 		}
 	};
 }
