@@ -1,6 +1,8 @@
 package se.sics.kompics.p2p.peer.tracker;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import se.sics.kompics.ComponentDefinition;
 import se.sics.kompics.Handler;
@@ -25,6 +27,7 @@ public final class Tracker extends ComponentDefinition {
 	private PeerAddress peerSelf;
 	private int numOfPieces;
 	private HashMap<PeerAddress, Boolean[]> peers = new HashMap<PeerAddress, Boolean[]>();
+	private Random random = new Random();
 
 	// -------------------------------------------------------------------
 	public Tracker() {
@@ -83,19 +86,26 @@ public final class Tracker extends ComponentDefinition {
 			int piece = -1;
 			PeerAddress uploader = null;
 			
+			ArrayList<Integer> pieces = new ArrayList<Integer>();
 			for (int i = 0; i < numOfPieces; i++) {
 				if (!peers.get(event.getPeerSource())[i]) {
-					piece = i;
-					break;
+					pieces.add(i);
 				}
 			}
+			if(pieces.size() > 0) {
+				piece = pieces.get(random.nextInt(pieces.size()));
+			}
 
+			ArrayList<PeerAddress> nodes = new ArrayList<PeerAddress>();
 			if (piece != -1) {
 				
 				for (PeerAddress node : peers.keySet()) {
 					if (peers.get(node)[piece]) {
-						uploader = node;
+						nodes.add(node);
 					}
+				}
+				if(nodes.size() > 0) {
+					uploader = nodes.get(random.nextInt(nodes.size()));
 				}
 			}
 			
