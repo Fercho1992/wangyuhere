@@ -83,8 +83,6 @@ public final class BTPeer extends ComponentDefinition {
 				SchedulePeriodicTimeout spt = new SchedulePeriodicTimeout(5000, 5000);
 				spt.setTimeoutEvent(new CompleteUploaders(spt));
 				trigger(spt, timer);
-			} else {
-				//finishedCounter = numOfPieces;
 			}
 		}
 	};
