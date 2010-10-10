@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<!--
+    ant: build
+    ant all: build and test
+    ant test: only test
+    ant clean: clean class and jar
+-->
+
+<project default="build" basedir=".">
+
+	<property name="src" location="src" />
+	<property name="build" location="build" />
+
+	<property name="run" value="program.jar" />
+	<property name="main" value="Main" />
+	<property name="input.file" value="../problem2_input.txt" />
+
+	<target name="clean">
+		<delete dir="${build}" />
+		<delete file="${run}" />
+	</target>
+
+	<target name="build" depends="clean">
+		<mkdir dir="${build}" />
+		<javac srcdir="${src}" destdir="${build}" />
+		<jar destfile="${run}" basedir="${build}">
+			<manifest>
+				<attribute name="Main-Class" value="${main}" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="all" depends="build,test" />
+
+	<target name="test">
+
+		<echo message="Input:" />
+		<loadfile property="test.input" srcFile="${input.file}" />
+		<echo message="${test.input}" />
+
+		<echo />
+		<echo message="Output:" />
+		<java fork="true" jar="${run}">
+			<arg value="${input.file}" />
+		</java>
+	</target>
+
+</project>
